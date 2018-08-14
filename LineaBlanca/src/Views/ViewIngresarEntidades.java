@@ -11,4 +11,41 @@ package Views;
  */
 public class ViewIngresarEntidades {
     
+    private ViewIngresarArticulos ingresoArticulos;
+    private ViewIngresarUsers ingresoUsers;
+    private ViewIngresarClientes ingresoClientes;
+    private ViewRegistrarTransacciones ingresoTransacciones;
+
+    public ViewIngresarArticulos getIngresoArticulos() {
+        return ingresoArticulos;
+    }
+
+    public void setIngresoArticulos(ViewIngresarArticulos ingresoArticulos) {
+        this.ingresoArticulos = ingresoArticulos;
+    }
+
+    public ViewIngresarUsers getIngresoUsers() {
+        return ingresoUsers;
+    }
+
+    public void setIngresoUsers(ViewIngresarUsers ingresoUsers) {
+        this.ingresoUsers = ingresoUsers;
+    }
+
+    public ViewIngresarClientes getIngresoClientes() {
+        return ingresoClientes;
+    }
+
+    public void setIngresoClientes(ViewIngresarClientes ingresoClientes) {
+        this.ingresoClientes = ingresoClientes;
+    }
+
+    public ViewRegistrarTransacciones getIngresoTransacciones() {
+        return ingresoTransacciones;
+    }
+
+    public void setIngresoTransacciones(ViewRegistrarTransacciones ingresoTransacciones) {
+        this.ingresoTransacciones = ingresoTransacciones;
+    }
+    
 }

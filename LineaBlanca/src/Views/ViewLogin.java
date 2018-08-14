@@ -13,7 +13,10 @@ import Controladores.*;
  */
 public class ViewLogin {
     
-    ControlLogin ctrLogin;
+    private ControlLogin ctrLogin;
+    private ViewInicioAdministrador inicioAdmin;
+    private ViewInicioGerente inicioGerente;
+    private ViewInicioVendedor inicioVendedor;
     
     public void render(){
          //INSERTAR CODIGO
@@ -26,5 +29,31 @@ public class ViewLogin {
     public void setCtrLogin(ControlLogin ctrLogin) {
         this.ctrLogin = ctrLogin;
     }
+
+    public ViewInicioAdministrador getInicioAdmin() {
+        return inicioAdmin;
+    }
+
+    public void setInicioAdmin(ViewInicioAdministrador inicioAdmin) {
+        this.inicioAdmin = inicioAdmin;
+    }
+
+    public ViewInicioGerente getInicioGerente() {
+        return inicioGerente;
+    }
+
+    public void setInicioGerente(ViewInicioGerente inicioGerente) {
+        this.inicioGerente = inicioGerente;
+    }
+
+    public ViewInicioVendedor getInicioVendedor() {
+        return inicioVendedor;
+    }
+
+    public void setInicioVendedor(ViewInicioVendedor inicioVendedor) {
+        this.inicioVendedor = inicioVendedor;
+    }
+    
+    
     
 }

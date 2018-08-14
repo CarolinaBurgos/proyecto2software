@@ -11,6 +11,10 @@ package Views;
  */
 public class ViewBuscarEntidades {
     
+    private ViewCotizarArticulo cotizarArticulo;
+    private ViewVerCliente verCliente;
+    private ViewBuscarTransacciones buscarTransaccione;
+    
     public void update(){
          //INSERTAR CODIGO
     }
@@ -21,6 +25,30 @@ public class ViewBuscarEntidades {
     
     public void mostrarDatosFiltro(){
          //INSERTAR CODIGO
+    }
+
+    public ViewCotizarArticulo getCotizarArticulo() {
+        return cotizarArticulo;
+    }
+
+    public void setCotizarArticulo(ViewCotizarArticulo cotizarArticulo) {
+        this.cotizarArticulo = cotizarArticulo;
+    }
+
+    public ViewVerCliente getVerCliente() {
+        return verCliente;
+    }
+
+    public void setVerCliente(ViewVerCliente verCliente) {
+        this.verCliente = verCliente;
+    }
+
+    public ViewBuscarTransacciones getBuscarTransaccione() {
+        return buscarTransaccione;
+    }
+
+    public void setBuscarTransaccione(ViewBuscarTransacciones buscarTransaccione) {
+        this.buscarTransaccione = buscarTransaccione;
     }
     
 }

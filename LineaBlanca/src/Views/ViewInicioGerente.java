@@ -25,5 +25,5 @@ public class ViewInicioGerente {
 
     public void setControlGerente(ControlGerente controlGerente) {
         this.controlGerente = controlGerente;
-    }
+    }  
 }

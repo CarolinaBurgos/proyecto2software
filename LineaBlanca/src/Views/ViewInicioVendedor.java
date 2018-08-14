@@ -18,5 +18,12 @@ public class ViewInicioVendedor {
     public void update(){
          //INSERTAR CODIGO
     }
-    
+
+    public ControlVendedor getControlVendedor() {
+        return controlVendedor;
+    }
+
+    public void setControlVendedor(ControlVendedor controlVendedor) {
+        this.controlVendedor = controlVendedor;
+    }
 }

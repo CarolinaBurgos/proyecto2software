@@ -26,5 +26,4 @@ public class ViewInicioAdministrador {
     public void setControlAdministrador(ControlAdministrador controlAdministrador) {
         this.controlAdministrador = controlAdministrador;
     }
-    
 }

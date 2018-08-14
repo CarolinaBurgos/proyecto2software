@@ -11,8 +11,18 @@ package Views;
  */
 public class ViewBuscarUser {
     
+    private ViewModificar_EliminarUser user;
+    
     public void update(){
          //INSERTAR CODIGO
+    }
+
+    public ViewModificar_EliminarUser getUser() {
+        return user;
+    }
+
+    public void setUser(ViewModificar_EliminarUser user) {
+        this.user = user;
     }
     
 }
