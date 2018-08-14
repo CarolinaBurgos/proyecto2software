@@ -10,17 +10,24 @@ package Modelo;
  * @author Angel Moya
  */
 public class Empleado extends Ciudadano{
-    private String userName;
-    private String permiso;
-    private String psswd;
+    protected String userName;
+    protected String permiso;
+    protected String psswd;
 
     public Empleado(String id_entidad, String nombre, String correo, String telefono, String direccion) {
         super(id_entidad, nombre, correo, telefono, direccion);
     }
 
-    public Empleado(String apellido, String id_entidad, String nombre, String correo, String telefono, String direccion) {
+    public Empleado(String userName, String permiso, String psswd, String apellido, String id_entidad, String nombre, String correo, String telefono, String direccion) {
         super(apellido, id_entidad, nombre, correo, telefono, direccion);
+        this.userName = userName;
+        this.permiso = permiso;
+        this.psswd = psswd;
     }
+
+    
+
+    
 
     
     
