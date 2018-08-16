@@ -3,7 +3,7 @@
  <!-- Configure the database connection here -->
  <jdbc>
  <driver>org.postgresql.Driver</driver>
- <url>jdbc:postgresql://localhost:5432/postgres</url>
+ <url>jdbc:postgresql://localhost:5432/PruebaLineaBlanca</url>
  <user>postgres</user>
  <password></password>
  </jdbc>
@@ -11,12 +11,12 @@
 <generator>
  <!-- The default code generator. You can override this one, to generate your own code style
  Defaults to org.jooq.util.DefaultGenerator -->
- <name>org.jooq.util.DefaultGenerator</name>
+ <name>org.jooq.codegen.DefaultGenerator</name>
 
 <database>
  <!-- The database type. The format here is:
  org.util.[database].[database]Database -->
- <name>org.jooq.util.postgres.PostgresDatabase</name>
+ <name>org.jooq.meta.postgres.PostgresDatabase</name>
 
 <!-- The database schema (or in the absence of schema support, in your RDBMS this
  can be the owner, user, database name) to be generated -->
@@ -35,10 +35,10 @@
 
 <target>
  <!-- The destination package of your generated classes (within the destination directory) -->
- <packageName>test.generated</packageName>
+ <packageName>org.jooq.shared.workspace</packageName>
 
 <!-- The destination directory of your generated classes -->
- <directory>/Users/Shared/workspace</directory>
+ <directory>C:\Users\user\Desktop\proyecto2software\LineaBlanca\src\shared\workspace</directory>
  </target>
  </generator>
 </configuration>

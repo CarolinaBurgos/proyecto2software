@@ -13,7 +13,7 @@
    <children>
       <AnchorPane layoutX="153.0" prefHeight="43.0" prefWidth="595.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <ChoiceBox layoutX="431.0" layoutY="9.0" prefWidth="150.0" style="-fx-background-color: blue;" />
+            <ChoiceBox fx:id="choGerente" layoutX="431.0" layoutY="9.0" prefWidth="150.0" style="-fx-background-color: blue;" />
             <Label layoutX="431.0" layoutY="13.0" prefHeight="17.0" prefWidth="115.0" text="Gerente Login" textFill="#f8f8f8">
                <font>
                   <Font name="System Bold" size="12.0" />

@@ -5,9 +5,13 @@
  */
 package Controladores;
 
+import Conexion.ConexionesDataBase;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -15,7 +19,10 @@ import javafx.fxml.Initializable;
  * @author user
  */
 public class FXMLLoginController implements Initializable {
-
+    
+    @FXML
+    private Button BtnClick;
+    
     /**
      * Initializes the controller class.
      */
@@ -24,4 +31,9 @@ public class FXMLLoginController implements Initializable {
         // TODO
     }    
     
+    
+    
+    public void Conectarse(MouseEvent event){
+        ConexionesDataBase.conect();
+    }
 }

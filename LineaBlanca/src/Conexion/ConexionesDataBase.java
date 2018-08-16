@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Conexion;
+import java.sql.Connection;
 import java.sql.DriverManager;
 /**
  *
@@ -12,7 +13,18 @@ import java.sql.DriverManager;
 public class ConexionesDataBase {
    
     
-    public void conect(){
-        
+    public static void conect(){
+        String userName = "postgres";
+        String password = "postgres";
+        String url = "jdbc:postgresql://localhost:5432/PruebaLineaBlanca";
+
+        try  {
+            Connection conn = DriverManager.getConnection(url, userName, password); 
+        } 
+
+       catch (Exception e) {
+           e.printStackTrace();
+       }
+
     }
 }
