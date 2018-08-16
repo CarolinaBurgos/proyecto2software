@@ -4,11 +4,15 @@
  * and open the template in the editor.
  */
 package Conexion;
-
+import java.sql.DriverManager;
 /**
  *
  * @author Carolina
  */
 public class ConexionesDataBase {
+   
     
+    public void conect(){
+        
+    }
 }
