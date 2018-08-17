@@ -5,12 +5,15 @@
  */
 package Controladores;
 
-import Conexion.ConexionesDataBase;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -21,6 +24,12 @@ import javafx.scene.input.MouseEvent;
 public class FXMLLoginController implements Initializable {
     
     @FXML
+    private TextField lblUser;
+    
+    @FXML
+    private TextField lblPass;
+    
+    @FXML
     private Button BtnClick;
     
     /**
@@ -29,11 +38,30 @@ public class FXMLLoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }     
     
-    
-    
-    public void Conectarse(MouseEvent event){
-        ConexionesDataBase.conect();
+    public void Conectarse(MouseEvent event) throws IOException {
+        //ConexionesDataBase.conect();
+        String usr = lblUser.getText();
+        String pass = lblUser.getText();
+        
+        boolean state = false;
+        
+        if(!usr.isEmpty() && !pass.isEmpty()){
+            state = true;
+        }
+        System.out.println(state);
+        if(state){
+            try{
+                Node n = (Node) event.getSource();
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLInicioAdmin.fxml")));
+            }catch(Exception e){
+                System.out.println("Excepcion");
+                System.out.println(e);
+            }
+        }else{
+            System.out.println("No registrado");
+        }           
+
     }
 }
