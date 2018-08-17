@@ -25,10 +25,10 @@ class Conexion{
     */
     
     
-    private static final String driver = "com.mysql.jdbc.Driver"; //driver (se queda siempre igual, si se usa mysql)
-    private static final String usuario = "root"; //usuario de la base de datos
-    private static final String contrasenna = "stayaway8"; //contraseña del usuario
-    private static final String url = "jdbc:mysql://localhost:3306/transMaritimo"; //basicamnete es la informacion del servidor de la base deatos y es jdbc:mysql://(direccionIp):(puerto)/(nombreDeLaBaseDeDatos)
+    private static final String driver = "org.postgresql.Driver"; //driver (se queda siempre igual, si se usa postgres)
+    private static final String usuario = "postgres"; //usuario de la base de datos
+    private static final String contrasenna = "postgres"; //contraseña del usuario
+    private static final String url = "jdbc:postgresql://localhost:5432/PruebaLineaBlanca"; //basicamnete es la informacion del servidor de la base deatos y es jdbc:mysql://(direccionIp):(puerto)/(nombreDeLaBaseDeDatos)
     
     
     /*
@@ -42,7 +42,7 @@ class Conexion{
             Class.forName(driver);
             conn = DriverManager.getConnection(url, usuario, contrasenna);
             if ( conn != null){
-                System.out.println("Se ha realizado una conexion exitosa!");
+                System.out.println("Se ha realizado una conexion exitosa!"); //debemos reemplazar esto por alertas genericas en el gui
             }
         }catch( ClassNotFoundException | SQLException e){
             System.out.println("Ha sucecido un problema");
