@@ -54,8 +54,8 @@ public class FXMLInicioVendedorController implements Initializable {
         }
         
         //DataBase es mi clase conexion de la base de datos
-        Conexion haciendoConexion = new Conexion();
-        Connection instanciaConexion = haciendoConexion.getConnection();
+        ConexionesDataBase haciendoConexion = new ConexionesDataBase();
+        Connection instanciaConexion = haciendoConexion.getConn();
         Statement stmt;
             Label label = new Label();
             label.setText("nombre");

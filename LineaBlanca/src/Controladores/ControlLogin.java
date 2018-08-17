@@ -5,11 +5,13 @@
  */
 package Controladores;
 
+import Conexion.ConexionesDataBase;
+
 /**
  *
  * @author Carolina
  */
-public class ControlLogin  {
+public class ControlLogin  extends ConexionesDataBase{
     
     
     

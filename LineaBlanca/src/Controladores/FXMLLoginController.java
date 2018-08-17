@@ -25,7 +25,7 @@ import Conexion.*;
  *
  * @author user
  */
-public class FXMLLoginController implements Initializable {
+public class FXMLLoginController extends ControlLogin implements Initializable {
     
     
     
