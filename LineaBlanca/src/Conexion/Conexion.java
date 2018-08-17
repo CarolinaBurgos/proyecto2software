@@ -28,7 +28,7 @@ class Conexion{
     private static final String driver = "org.postgresql.Driver"; //driver (se queda siempre igual, si se usa postgres)
     private static final String usuario = "postgres"; //usuario de la base de datos
     private static final String contrasenna = "postgres"; //contraseña del usuario
-    private static final String url = "jdbc:postgresql://localhost:5432/PruebaLineaBlanca"; //basicamnete es la informacion del servidor de la base deatos y es jdbc:mysql://(direccionIp):(puerto)/(nombreDeLaBaseDeDatos)
+    private static final String url = "jdbc:postgresql://190.130.200.169:5432/PruebaLineaBlanca"; //basicamnete es la informacion del servidor de la base deatos y es jdbc:mysql://(direccionIp):(puerto)/(nombreDeLaBaseDeDatos)
     
     
     /*
