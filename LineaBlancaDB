@@ -1,0 +1,274 @@
+CREATE TABLE "Registro_eventos_empleado" (
+  "id_registro" int,
+  "id_empleado" char(10),
+  "id_empleado_modificado" char(10),
+  "fecha_modificacion" date,
+  "tipo_accion_realizada" varchar(50),
+  PRIMARY KEY ("id_registro")
+);
+
+
+CREATE TABLE "Cliente_contribuyente_registrado" (
+  "RUC" char(13),
+  "id_cliente" int,
+  "razon_social" varchar(250),
+  "es_contrib_especial" int,
+  "reg_eliminado" int,
+  PRIMARY KEY ("RUC")
+);
+
+
+CREATE TABLE "Articulos_vendidos" (
+  "id_compra" int,
+  "id_articulo" int,
+  "cantidad_articulo" int
+);
+
+CREATE TABLE "Registro_eventos_almacen" (
+  "id_registro" int,
+  "id_empleado" char(10),
+  "id_almacen" int,
+  "fecha_modificacion" date,
+  "tipo_accion_realizada" varchar(50),
+  PRIMARY KEY ("id_registro")
+);
+
+
+CREATE TABLE "Forma_de_pago" (
+  "id_forma_de_pago" int,
+  "nombre_fdp" varchar(50),
+  "tasa_fdp" float,
+  PRIMARY KEY ("id_forma_de_pago")
+);
+
+CREATE TABLE "Registro_eventos_compra" (
+  "id_registro" int,
+  "id_empleado" char(10),
+  "id_compra" int,
+  "fecha_modificacion" date,
+  "tipo_accion_realizada" varchar(50),
+  PRIMARY KEY ("id_registro")
+);
+
+CREATE TABLE "Cotiza" (
+  "id_cotizacion" int,
+  "fecha_cotizacion" int,
+  "monto_estimado" float(4),
+  "id_cliente" int,
+  "id_empleado" char(10),
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_cotizacion")
+);
+
+CREATE TABLE "Empleado" (
+  "num_cedula" char(10),
+  "nombres" varchar(50),
+  "apellidos" varchar(50),
+  "usuario" varchar(25),
+  "correo" varchar(100),
+  "direccion" varchar(250),
+  "contraseña" varchar(25),
+  "rol_actual" varchar(50),
+  "fecha_contratacion" date,
+  "fecha_actualizacion" date,
+  "empleado activo" int,
+  "id_almacen" int,
+  PRIMARY KEY ("num_cedula")
+);
+
+CREATE TABLE "Articulo_almacenado" (
+  "id_almacen" int,
+  "id_articulo" int,
+  "fecha_llegada" date,
+  "cantidad_articulo_disponible" int,
+  "reabastecimiento_solicitado" int
+);
+
+CREATE TABLE "telefono_empelado" (
+  "id_telefono" int,
+  "num_cedula_empleado" char(13),
+  "num_telefono" char(9),
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_telefono")
+);
+
+CREATE TABLE "Pago_estimado" (
+  "id_pago" int,
+  "id_compra" int,
+  "id_forma_de_pago" int,
+  PRIMARY KEY ("id_pago")
+);
+
+
+CREATE TABLE "Comprobante_retencion_cliente" (
+  "id_comprobante_retencion" int,
+  "numero_autorizacion" varchar(50),
+  "tipo_comprobante_venta" varchar(50),
+  "valor_retenido" float,
+  "tipo_de_impuesto" varchar(50),
+  "ejercicio_fiscal" varchar(50),
+  "codigo_del_impuesto" varchar(50),
+  "porcentaje_de_retencion" int,
+  "id_compra" int,
+  PRIMARY KEY ("id_comprobante_retencion")
+);
+
+
+CREATE TABLE "Cliente" (
+  "id_cliente" int,
+  "nombre" varchar(50),
+  "correo" varchar(100),
+  "direccion" varchar(250),
+  "fecha_creacion" date,
+  "fecha_ultima_actualizacion" date,
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_cliente")
+);
+
+CREATE TABLE "Compra" (
+  "id_compra" int,
+  "fecha_compra" int,
+  "monto" float(4),
+  "id_cliente" int,
+  "id_empleado" char(10),
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_compra")
+);
+
+CREATE TABLE "Proveedor_CR" (
+  "id_proveedor" char(13),
+  "razon_social" varchar(250),
+  "direccion" varchar(250),
+  "correo" varchar(250),
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_proveedor")
+);
+
+CREATE TABLE "Registro_eventos_cliente" (
+  "id_registro" int,
+  "id_empleado" char(10),
+  "id_cliente" int,
+  "fecha_modificacion" date,
+  "tipo_accion_realizada" varchar(50),
+  PRIMARY KEY ("id_registro")
+);
+
+CREATE TABLE "Registro_eventos_proveedor" (
+  "id_registro" int,
+  "id_empleado" char(10),
+  "id_proveedor" char(13),
+  "fecha_modificacion" date,
+  "tipo_accion_realizada" varchar(50),
+  PRIMARY KEY ("id_registro")
+);
+
+CREATE TABLE "Articulo" (
+  "id_articulo" int,
+  "descripcion" varchar(50),
+  "categoria" varchar(50),
+  "marca" varchar(50),
+  "color" varchar(16),
+  "consumo_electrico" int,
+  "precio_cliente_sin_iva" float,
+  "costo_proveedor" float,
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_articulo")
+);
+
+CREATE TABLE "Registro_eventos_cotizacion" (
+  "id_registro" int,
+  "id_empleado" char(10),
+  "id_cotizacion" int,
+  "fecha_modificacion" date,
+  "tipo_accion_realizada" varchar(50),
+  PRIMARY KEY ("id_registro")
+);
+
+CREATE TABLE "Pago" (
+  "id_pago" int,
+  "id_compra" int,
+  "id_forma_de_pago" int,
+  "pago_verificado" int,
+  PRIMARY KEY ("id_pago")
+);
+
+CREATE TABLE "telefono_c_ciudadano" (
+  "id_telefono" int,
+  "num_cedula" char(10),
+  "num_telefono" char(9),
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_telefono")
+);
+
+CREATE TABLE "Almacen" (
+  "id_almacen" int,
+  "nombre" varchar(250),
+  "codigo" varchar(50),
+  "area" float,
+  "es_matriz" int,
+  "es_bodega" int,
+  "fecha_creación" date,
+  "fecha_actualizacion" date,
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_almacen")
+);
+
+CREATE TABLE "telefono_proveedor" (
+  "id_telefono" int,
+  "id_proveedor" char(13),
+  "num_telefono" char(9),
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_telefono")
+);
+
+CREATE INDEX "FK" ON  "telefono_proveedor" ("id_proveedor");
+
+CREATE TABLE "Registro_eventos_articulo" (
+  "id_registro" int,
+  "id_empleado" char(10),
+  "id_articulo" int,
+  "fecha_modificacion" date,
+  "tipo_accion_realizada" varchar(50),
+  PRIMARY KEY ("id_registro")
+);
+
+CREATE TABLE "telefono_c_contribuyente_registrado" (
+  "id_telefono" int,
+  "RUC" char(13),
+  "num_telefono" char(9),
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_telefono")
+);
+
+CREATE TABLE "Articulos_cotizados" (
+  "id_cotizacion" int,
+  "id_articulo" int,
+  "cantidad_articulo" int
+);
+
+
+CREATE TABLE "Cliente_ciudadano" (
+  "num_cedula" char(13),
+  "id_cliente" int,
+  "apellidos" varchar(50),
+  "reg_eliminado" int,
+  PRIMARY KEY ("num_cedula")
+);
+
+CREATE TABLE "Articulo_solicitado" (
+  "id_solicitud" int,
+  "id_proveedor" char(13),
+  "id_articulo" int,
+  "id_empleado" char(10),
+  "cantidad_articulo_solicitado" int,
+  PRIMARY KEY ("id_solicitud")
+);
+
+
+CREATE TABLE "telefono_almacen" (
+  "id_telefono" int,
+  "id_almacen" char(13),
+  "num_telefono" char(9),
+  "reg_eliminado" int,
+  PRIMARY KEY ("id_telefono")
+);
