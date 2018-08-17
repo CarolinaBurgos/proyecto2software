@@ -128,11 +128,11 @@ CREATE TABLE "LBSASQL"."Articulo_almacenado" (
   "cantidad_articulo_disponible" INT,
   "reabastecimiento_solicitado" BOOLEAN,
   PRIMARY KEY ("id_articulo"),  
-  CONSTRAINT id_almacen FOREIGN KEY (id_almacen),
+  CONSTRAINT id_almacen FOREIGN KEY (id_almacen)
   REFERENCES "LBSASQL"."Almacen" (id_almacen) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,  
-  CONSTRAINT id_articulo FOREIGN KEY (id_articulo),
+  CONSTRAINT id_articulo FOREIGN KEY (id_articulo)
   REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -172,7 +172,7 @@ CREATE TABLE "LBSASQL"."Cliente_contribuyente_registrado" (
   "es_contrib_especial" BOOLEAN,
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("RUC"),
-  CONSTRAINT id_cliente FOREIGN KEY (id_cliente),
+  CONSTRAINT id_cliente FOREIGN KEY (id_cliente)
   REFERENCES "LBSASQL"."Cliente" (id_cliente) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -192,7 +192,7 @@ CREATE TABLE "LBSASQL"."telefono_c_contribuyente_registrado" (
   "num_telefono" CHAR(9),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_telefono"),
-  CONSTRAINT RUC FOREIGN KEY (RUC),
+  CONSTRAINT RUC FOREIGN KEY (RUC)
   REFERENCES "LBSASQL"."Cliente_contribuyente_registrado" (RUC) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -212,7 +212,7 @@ CREATE TABLE "LBSASQL"."Cliente_ciudadano" (
   "apellidos" VARCHAR(50),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("num_cedula"),
-  CONSTRAINT id_cliente FOREIGN KEY (id_cliente),
+  CONSTRAINT id_cliente FOREIGN KEY (id_cliente)
   REFERENCES "LBSASQL"."Cliente" (id_cliente) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -231,7 +231,7 @@ COMMENT ON TABLE "LBSASQL"."Cliente_ciudadano"
   "num_telefono" CHAR(9),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_telefono"),
-  CONSTRAINT num_cedula FOREIGN KEY (num_cedula),
+  CONSTRAINT num_cedula FOREIGN KEY (num_cedula)
   REFERENCES "LBSASQL"."Cliente_ciudadano" (num_cedula) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -272,7 +272,7 @@ CREATE TABLE "LBSASQL"."telefono_proveedor" (
   "num_telefono" CHAR(9),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_telefono"),
-  CONSTRAINT id_proveedor FOREIGN KEY (id_proveedor),
+  CONSTRAINT id_proveedor FOREIGN KEY (id_proveedor)
   REFERENCES "LBSASQL"."Proveedor_CR" (id_proveedor) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -302,11 +302,11 @@ CREATE TABLE "LBSASQL"."Compra" (
   "id_empleado" CHAR(10),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_compra","tipo_comprobante_venta"),
-  CONSTRAINT id_cliente FOREIGN KEY (id_cliente),
+  CONSTRAINT id_cliente FOREIGN KEY (id_cliente)
   REFERENCES "LBSASQL"."Cliente" (id_cliente) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado),
+  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -326,7 +326,7 @@ CREATE TABLE "LBSASQL"."Articulos_vendidos" (
   "id_articulo" INT,
   "cantidad_articulo" INT,
   PRIMARY KEY ("id_compra","id_articulo"),  
-  CONSTRAINT id_articulo FOREIGN KEY (id_articulo),
+  CONSTRAINT id_articulo FOREIGN KEY (id_articulo)
   REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -346,11 +346,11 @@ CREATE TABLE "LBSASQL"."Pago" (
   "id_forma_de_pago" INT,
   "pago_verificado" BOOLEAN,
   PRIMARY KEY ("id_pago"),  
-  CONSTRAINT id_compra FOREIGN KEY (id_compra),
+  CONSTRAINT id_compra FOREIGN KEY (id_compra)
   REFERENCES "LBSASQL"."Compra" (id_compra) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,  
-  CONSTRAINT id_forma_de_pago FOREIGN KEY (id_forma_de_pago),
+  CONSTRAINT id_forma_de_pago FOREIGN KEY (id_forma_de_pago)
   REFERENCES "LBSASQL"."Forma_de_pago" (id_forma_de_pago) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -399,11 +399,11 @@ CREATE TABLE "LBSASQL"."Cotizacion" (
   "id_empleado" CHAR(10),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_cotizacion"),
-  CONSTRAINT id_cliente FOREIGN KEY (id_cliente),
+  CONSTRAINT id_cliente FOREIGN KEY (id_cliente)
   REFERENCES "LBSASQL"."Cliente" (id_cliente) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado),
+  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -423,11 +423,11 @@ CREATE TABLE "LBSASQL"."Pago_estimado" (
   "id_cotizacion" INT,
   "id_forma_de_pago" INT,
   PRIMARY KEY ("id_pago"),  
-  CONSTRAINT id_cotizacion FOREIGN KEY (id_cotizacion),
+  CONSTRAINT id_cotizacion FOREIGN KEY (id_cotizacion)
   REFERENCES "LBSASQL"."Cotizacion" (id_cotizacion) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,  
-  CONSTRAINT id_forma_de_pago FOREIGN KEY (id_forma_de_pago),
+  CONSTRAINT id_forma_de_pago FOREIGN KEY (id_forma_de_pago)
   REFERENCES "LBSASQL"."Forma_de_pago" (id_forma_de_pago) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -447,7 +447,7 @@ CREATE TABLE "LBSASQL"."Articulos_cotizados" (
   "id_articulo" INT,
   "cantidad_articulo" INT,
   PRIMARY KEY ("id_cotizacion","id_articulo"),  
-  CONSTRAINT id_articulo FOREIGN KEY (id_articulo),
+  CONSTRAINT id_articulo FOREIGN KEY (id_articulo)
   REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -470,15 +470,15 @@ CREATE TABLE "LBSASQL"."Articulo_solicitado" (
   "id_empleado" CHAR(10),
   "cantidad_articulo_solicitado" INT,
   PRIMARY KEY ("id_solicitud"),  
-  CONSTRAINT id_articulo FOREIGN KEY (id_articulo),
+  CONSTRAINT id_articulo FOREIGN KEY (id_articulo)
   REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado),
+  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,
-  CONSTRAINT id_proveedor FOREIGN KEY (id_proveedor),
+  CONSTRAINT id_proveedor FOREIGN KEY (id_proveedor)
   REFERENCES "LBSASQL"."Proveedor_CR" (id_proveedor) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -504,11 +504,11 @@ CREATE TABLE "LBSASQL"."Registro_eventos_almacen" (
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado),
+  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,  
-  CONSTRAINT id_almacen FOREIGN KEY (id_almacen),
+  CONSTRAINT id_almacen FOREIGN KEY (id_almacen)
   REFERENCES "LBSASQL"."Almacen" (id_almacen) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -527,11 +527,11 @@ CREATE TABLE "LBSASQL"."Registro_eventos_empleado" (
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado),
+  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,
-  CONSTRAINT id_empleado_modificado FOREIGN KEY (id_empleado_modificado),
+  CONSTRAINT id_empleado_modificado FOREIGN KEY (id_empleado_modificado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado_modificado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -552,11 +552,11 @@ CREATE TABLE "LBSASQL"."Registro_eventos_articulo" (
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado),
+  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,  
-  CONSTRAINT id_articulo FOREIGN KEY (id_articulo),
+  CONSTRAINT id_articulo FOREIGN KEY (id_articulo)
   REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -575,11 +575,11 @@ CREATE TABLE "LBSASQL"."Registro_eventos_cliente" (
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado),
+  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,
-  CONSTRAINT id_cliente FOREIGN KEY (id_cliente),
+  CONSTRAINT id_cliente FOREIGN KEY (id_cliente)
   REFERENCES "LBSASQL"."Cliente" (id_cliente) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -598,11 +598,11 @@ CREATE TABLE "LBSASQL"."Registro_eventos_proveedor" (
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado),
+  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION, 
-  CONSTRAINT id_proveedor FOREIGN KEY (id_proveedor),
+  CONSTRAINT id_proveedor FOREIGN KEY (id_proveedor)
   REFERENCES "LBSASQL"."Proveedor_CR" (id_proveedor) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -622,11 +622,11 @@ CREATE TABLE "LBSASQL"."Registro_eventos_cotizacion" (
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado),
+  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,  
-  CONSTRAINT id_cotizacion FOREIGN KEY (id_cotizacion),
+  CONSTRAINT id_cotizacion FOREIGN KEY (id_cotizacion)
   REFERENCES "LBSASQL"."Cotizacion" (id_cotizacion) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
@@ -650,15 +650,15 @@ CREATE TABLE "LBSASQL"."Registro_eventos_compra" (
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado),
+  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
   REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,  
-  CONSTRAINT id_compra FOREIGN KEY (id_compra),
+  CONSTRAINT id_compra FOREIGN KEY (id_compra)
   REFERENCES "LBSASQL"."Compra" (id_compra) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,  
-  CONSTRAINT id_pago FOREIGN KEY (id_pago),
+  CONSTRAINT id_pago FOREIGN KEY (id_pago)
   REFERENCES "LBSASQL"."Pago" (id_pago) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
