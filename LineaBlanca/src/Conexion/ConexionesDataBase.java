@@ -6,26 +6,44 @@
 package Conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Carolina
  */
 public class ConexionesDataBase {
    
+    private static Connection conn;
+    private static final String driver = "org.postgresql.Driver"; //driver (se queda siempre igual, si se usa postgres)
+    private static final String usuario = "postgres"; //usuario de la base de datos
+    private static final String contrasenna = "postgres"; //contraseña del usuario
+    private static final String url = "jdbc:postgresql://192.168.0.9:5432/PruebaLineaBlanca";
+
+    public Connection getConn() {
+        return conn;
+    }
     
     public static void conect(){
-        String userName = "postgres";
-        String password = "postgres";
-        String url = "jdbc:postgresql://192.168.0.9:5432/PruebaLineaBlanca";
+        
 
         try  {
-            Connection conn = DriverManager.getConnection(url, userName, password); 
-            System.out.println("Surprise mudafaka");
+            conn = DriverManager.getConnection(url, usuario, contrasenna); 
         } 
 
        catch (Exception e) {
            e.printStackTrace();
        }
 
+    }
+    
+    public static void closeConnection(){
+        try {
+            if(!conn.isClosed())
+                conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionesDataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

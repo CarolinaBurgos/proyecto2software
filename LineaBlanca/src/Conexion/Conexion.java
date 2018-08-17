@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author joset
+ * @author 
  */
 
 //Aqui haremos la conexion a la base de datos
@@ -45,7 +45,6 @@ class Conexion{
                 System.out.println("Se ha realizado una conexion exitosa!"); //debemos reemplazar esto por alertas genericas en el gui
             }
         }catch( ClassNotFoundException | SQLException e){
-            System.out.println("Ha sucecido un problema");
             e.printStackTrace();
         }
     }
