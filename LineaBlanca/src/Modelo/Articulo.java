@@ -24,6 +24,12 @@ public class Articulo {
         this.marca = marca;
     }
 
+    public Articulo(int id, String descripcion, double precio_sin_iva, String marca) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.precio_sin_iva = precio_sin_iva;
+        this.marca = marca;
+    }
     public int getId() {
         return id;
     }

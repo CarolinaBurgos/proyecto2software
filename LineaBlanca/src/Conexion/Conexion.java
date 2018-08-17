@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 
 //Aqui haremos la conexion a la base de datos
-class Conexion{
+public class Conexion{
     //la conexion propiamente dicha
     private static Connection conn;
     /*
