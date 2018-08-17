@@ -1,6 +1,8 @@
 -- -----------------------------------------------------
 -- Schema LBSASQL Linea Blanca SA SQL
 -- -----------------------------------------------------
+
+
 CREATE SCHEMA IF NOT EXISTS "LBSASQL"
     AUTHORIZATION postgres;
 
@@ -11,7 +13,7 @@ COMMENT ON SCHEMA "LBSASQL"
 --Almacen de Linea Blanca SA
 -- -----------------------------------------------------
 CREATE TABLE "LBSASQL"."Almacen" (
-  "id_almacen" SERIAL,
+  "id_almacen" SERIAL UNIQUE NOT NULL,
   "nombre" VARCHAR(250),
   "codigo" VARCHAR(50),
   "area" FLOAT(4),
@@ -32,8 +34,8 @@ COMMENT ON TABLE "LBSASQL"."Almacen"
 --Telefonos del almacen	
 -- -----------------------------------------------------
 CREATE TABLE "LBSASQL"."telefono_almacen" (
-  "id_telefono" SERIAL,
-  "id_almacen" CHAR(13),
+  "id_telefono" SERIAL UNIQUE NOT NULL,
+  "id_almacen" INT,
   "num_telefono" CHAR(9),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_telefono"),
@@ -52,7 +54,7 @@ COMMENT ON TABLE "LBSASQL"."telefono_almacen"
 --Empleados del almacen
 -- -----------------------------------------------------
 CREATE TABLE "LBSASQL"."Empleado" (
-  "num_cedula" CHAR(10),
+  "num_cedula" CHAR(10) UNIQUE NOT NULL,
   "nombres" VARCHAR(50),
   "apellidos" VARCHAR(50),
   "usuario" VARCHAR(25),
@@ -79,8 +81,8 @@ COMMENT ON TABLE "LBSASQL"."Empleado"
 -- -----------------------------------------------------
 --Telefonos de los empleados
 -- -----------------------------------------------------
-CREATE TABLE "telefono_empleado" (
-  "id_telefono" INT,
+CREATE TABLE "LBSASQL"."telefono_empleado" (
+  "id_telefono" SERIAL UNIQUE NOT NULL,
   "num_cedula" CHAR(13),
   "num_telefono" CHAR(9),
   "reg_eliminado" BOOLEAN,
@@ -101,7 +103,7 @@ COMMENT ON TABLE "LBSASQL"."telefono_empleado"
 --Articulos de Linea Blanca SA
 -- -----------------------------------------------------
 CREATE TABLE "LBSASQL"."Articulo" (
-  "id_articulo" SERIAL,
+  "id_articulo" SERIAL UNIQUE NOT NULL,
   "descripcion" VARCHAR(50),
   "categoria" VARCHAR(50),
   "marca" VARCHAR(50),
@@ -122,8 +124,8 @@ COMMENT ON TABLE "LBSASQL"."Articulo"
 --Articulos en inventario de los locales de Linea Blanca SA
 -- ---------------------------------------------------------
 CREATE TABLE "LBSASQL"."Articulo_almacenado" (
-  "id_almacen" INT,
-  "id_articulo" INT,
+  "id_almacen" INT NOT NULL,
+  "id_articulo" INT NOT NULL,
   "fecha_llegada" TIMESTAMP,
   "cantidad_articulo_disponible" INT,
   "reabastecimiento_solicitado" BOOLEAN,
@@ -147,7 +149,7 @@ COMMENT ON TABLE "LBSASQL"."Articulo_almacenado"
 --Clientes de Linea Blanca SA
 -- -----------------------------------------------------
 CREATE TABLE "LBSASQL"."Cliente" (
-  "id_cliente" SERIAL,
+  "id_cliente" SERIAL UNIQUE NOT NULL,
   "nombre" VARCHAR(50),
   "correo" VARCHAR(100),
   "direccion" VARCHAR(250),
@@ -166,7 +168,7 @@ COMMENT ON TABLE "LBSASQL"."Cliente"
 --Clientes que son contribuyentes registrados
 -- -----------------------------------------------------	
 CREATE TABLE "LBSASQL"."Cliente_contribuyente_registrado" (
-  "RUC" CHAR(13),
+  "RUC" CHAR(13) UNIQUE NOT NULL,
   "id_cliente" INT,
   "razon_social" VARCHAR(250),
   "es_contrib_especial" BOOLEAN,
@@ -187,19 +189,19 @@ COMMENT ON TABLE "LBSASQL"."Cliente_contribuyente_registrado"
 --Telefonos de los Clientes contribuyentes registrados
 -- -----------------------------------------------------	
 CREATE TABLE "LBSASQL"."telefono_c_contribuyente_registrado" (
-  "id_telefono" SERIAL,
+  "id_telefono" SERIAL UNIQUE NOT NULL,
   "RUC" CHAR(13),
   "num_telefono" CHAR(9),
   "reg_eliminado" BOOLEAN,
-  PRIMARY KEY ("id_telefono"),
-  CONSTRAINT RUC FOREIGN KEY (RUC)
-  REFERENCES "LBSASQL"."Cliente_contribuyente_registrado" (RUC) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION
+  PRIMARY KEY ("id_telefono")
 );
 
 ALTER TABLE "LBSASQL"."telefono_c_contribuyente_registrado"
-    OWNER to postgres;
+    OWNER to postgres,
+    ADD CONSTRAINT RUC FOREIGN KEY ("RUC")
+    REFERENCES "LBSASQL"."Cliente_contribuyente_registrado" ("RUC") MATCH FULL
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
 COMMENT ON TABLE "LBSASQL"."telefono_c_contribuyente_registrado"
     IS 'Tabla que contiene la informacion de los telefonos de los clientes ( de tipo contribuyente registrado) de Linea Blanca SA';
 
@@ -207,7 +209,7 @@ COMMENT ON TABLE "LBSASQL"."telefono_c_contribuyente_registrado"
 -- Clientes que no son contribuyentes registrados
 -- -----------------------------------------------------
 CREATE TABLE "LBSASQL"."Cliente_ciudadano" (
-  "num_cedula" CHAR(10),
+  "num_cedula" CHAR(10) UNIQUE NOT NULL,
   "id_cliente" INT,
   "apellidos" VARCHAR(50),
   "reg_eliminado" BOOLEAN,
@@ -226,7 +228,7 @@ COMMENT ON TABLE "LBSASQL"."Cliente_ciudadano"
 --Telefonos de los Clientes que no son contribuyentes registrados
 -- -----------------------------------------------------	
 	CREATE TABLE "LBSASQL"."telefono_c_ciudadano" (
-  "id_telefono" INT,
+  "id_telefono" SERIAL UNIQUE NOT NULL,
   "num_cedula" CHAR(10),
   "num_telefono" CHAR(9),
   "reg_eliminado" BOOLEAN,
@@ -248,7 +250,7 @@ COMMENT ON TABLE "LBSASQL"."telefono_c_ciudadano"
 -- -----------------------------------------------------
 	
 CREATE TABLE "LBSASQL"."Proveedor_CR" (
-  "id_proveedor" CHAR(13),
+  "id_proveedor" CHAR(13) UNIQUE NOT NULL,
   "razon_social" VARCHAR(250),
   "direccion" VARCHAR(250),
   "correo" VARCHAR(250),
@@ -267,7 +269,7 @@ COMMENT ON TABLE "LBSASQL"."Proveedor_CR"
 
 
 CREATE TABLE "LBSASQL"."telefono_proveedor" (
-  "id_telefono" INT,
+  "id_telefono" SERIAL UNIQUE NOT NULL,
   "id_proveedor" CHAR(13),
   "num_telefono" CHAR(9),
   "reg_eliminado" BOOLEAN,
@@ -283,7 +285,7 @@ CREATE TABLE "LBSASQL"."telefono_proveedor" (
 --Formas de pago de Linea Blanca SA 
 -- -----------------------------------------------------	
 CREATE TABLE "LBSASQL"."Forma_de_pago" (
-  "id_forma_de_pago" SERIAL,
+  "id_forma_de_pago" SERIAL UNIQUE NOT NULL,
   "nombre_fdp" VARCHAR(50),
   "tasa_fdp" FLOAT(4),
   PRIMARY KEY ("id_forma_de_pago")
@@ -294,20 +296,16 @@ CREATE TABLE "LBSASQL"."Forma_de_pago" (
 -- -------------------------------------------------------	
 
 CREATE TABLE "LBSASQL"."Compra" (
-  "id_compra" SERIAL,
+  "id_compra" SERIAL UNIQUE NOT NULL,
   "tipo_comprobante_venta" VARCHAR(3),
   "fecha_compra" INT,
   "monto" FLOAT(4),
   "id_cliente" INT,
-  "id_empleado" CHAR(10),
+  "id_empleado" CHAR(10)  REFERENCES "LBSASQL"."Empleado" ("num_cedula"),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_compra","tipo_comprobante_venta"),
   CONSTRAINT id_cliente FOREIGN KEY (id_cliente)
   REFERENCES "LBSASQL"."Cliente" (id_cliente) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION,
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
 );
@@ -322,14 +320,17 @@ COMMENT ON TABLE "LBSASQL"."Compra"
 -- -------------------------------------------------------------------
 	
 CREATE TABLE "LBSASQL"."Articulos_vendidos" (
+  "id_articulo_vendido" SERIAL,
   "id_compra" INT,
   "id_articulo" INT,
   "cantidad_articulo" INT,
-  PRIMARY KEY ("id_compra","id_articulo"),  
+  PRIMARY KEY ("id_articulo_vendido"),  
   CONSTRAINT id_articulo FOREIGN KEY (id_articulo)
-  REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION
+  REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE,
+  CONSTRAINT id_compra FOREIGN KEY (id_compra)
+  REFERENCES "LBSASQL"."Compra" (id_compra) MATCH SIMPLE
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
 );
 ALTER TABLE "LBSASQL"."Articulos_vendidos"
     OWNER to postgres;
@@ -341,7 +342,7 @@ COMMENT ON TABLE "LBSASQL"."Articulos_vendidos"
 -- -------------------------------------------------------------------	
 	
 CREATE TABLE "LBSASQL"."Pago" (
-  "id_pago" INT,
+  "id_pago" SERIAL UNIQUE NOT NULL,
   "id_compra" INT,
   "id_forma_de_pago" INT,
   "pago_verificado" BOOLEAN,
@@ -368,15 +369,15 @@ COMMENT ON TABLE "LBSASQL"."Pago"
 
 
 CREATE TABLE "LBSASQL"."Comprobante_retencion_cliente" (
-  "id_comprobante_retencion" INT,
-  "numero_autorizacion" VARCHAR(50),
+  "id_comprobante_retencion" INT UNIQUE NOT NULL,
+  "numero_autorizacion" VARCHAR(50) NOT NULL,
   "tipo_comprobante_venta" VARCHAR(50),
   "valor_retenido" FLOAT(4),
   "tipo_de_impuesto" VARCHAR(50),
   "ejercicio_fiscal" VARCHAR(50),
   "codigo_del_impuesto" VARCHAR(50),
   "porcentaje_de_retencion" INT,
-  "id_compra" INT,
+  "id_compra" INT NOT NULL,
   PRIMARY KEY ("id_comprobante_retencion","numero_autorizacion","id_compra")
 );
 ALTER TABLE "LBSASQL"."Comprobante_retencion_cliente"
@@ -392,19 +393,15 @@ COMMENT ON TABLE "LBSASQL"."Comprobante_retencion_cliente"
 
 
 CREATE TABLE "LBSASQL"."Cotizacion" (
-  "id_cotizacion" SERIAL,
+  "id_cotizacion" SERIAL UNIQUE NOT NULL,
   "fecha_cotizacion" INT,
   "monto_estimado" FLOAT(4),
   "id_cliente" INT,
-  "id_empleado" CHAR(10),
+  "id_empleado" CHAR(10) REFERENCES "LBSASQL"."Empleado" ("num_cedula"),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_cotizacion"),
   CONSTRAINT id_cliente FOREIGN KEY (id_cliente)
   REFERENCES "LBSASQL"."Cliente" (id_cliente) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION,
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION
 );
@@ -419,7 +416,7 @@ COMMENT ON TABLE "LBSASQL"."Cotizacion"
 -- -----------------------------------------------------------------------------------
 
 CREATE TABLE "LBSASQL"."Pago_estimado" (
-  "id_pago" INT,
+  "id_pago" SERIAL UNIQUE NOT NULL,
   "id_cotizacion" INT,
   "id_forma_de_pago" INT,
   PRIMARY KEY ("id_pago"),  
@@ -464,18 +461,14 @@ COMMENT ON TABLE "LBSASQL"."Articulos_cotizados"
 -- -----------------------------------------------------------------------------------
 
 CREATE TABLE "LBSASQL"."Articulo_solicitado" (
-  "id_solicitud" SERIAL,
+  "id_solicitud" SERIAL UNIQUE NOT NULL,
   "id_proveedor" CHAR(13),
   "id_articulo" INT,
-  "id_empleado" CHAR(10),
+  "id_empleado" CHAR(10) REFERENCES "LBSASQL"."Empleado" (num_cedula),
   "cantidad_articulo_solicitado" INT,
   PRIMARY KEY ("id_solicitud"),  
   CONSTRAINT id_articulo FOREIGN KEY (id_articulo)
   REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION,
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
   ON UPDATE NO ACTION
   ON DELETE NO ACTION,
   CONSTRAINT id_proveedor FOREIGN KEY (id_proveedor)
@@ -498,16 +491,12 @@ COMMENT ON TABLE "LBSASQL"."Articulos_cotizados"
 --Registros en tabla Almacen 
 -- -----------------------------------------------------------------------------------
 CREATE TABLE "LBSASQL"."Registro_eventos_almacen" (
-  "id_registro" SERIAL,
-  "id_empleado" CHAR(10),
+  "id_registro" SERIAL UNIQUE NOT NULL,
+  "id_empleado" CHAR(10) REFERENCES "LBSASQL"."Empleado" (num_cedula),
   "id_almacen" INT,
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION,  
   CONSTRAINT id_almacen FOREIGN KEY (id_almacen)
   REFERENCES "LBSASQL"."Almacen" (id_almacen) MATCH SIMPLE
   ON UPDATE NO ACTION
@@ -521,20 +510,12 @@ ALTER TABLE "LBSASQL"."Registro_eventos_almacen"
 -- -----------------------------------------------------------------------------------
 
 CREATE TABLE "LBSASQL"."Registro_eventos_empleado" (
-  "id_registro" SERIAL,
-  "id_empleado" CHAR(10),
-  "id_empleado_modificado" CHAR(10),
+  "id_registro" SERIAL UNIQUE NOT NULL,
+  "id_empleado" CHAR(10)  REFERENCES "LBSASQL"."Empleado" (num_cedula),
+  "id_empleado_modificado" CHAR(10)  REFERENCES "LBSASQL"."Empleado" (num_cedula),
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
-  PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION,
-  CONSTRAINT id_empleado_modificado FOREIGN KEY (id_empleado_modificado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado_modificado) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION
+  PRIMARY KEY ("id_registro")
 );
 
 
@@ -546,16 +527,12 @@ ALTER TABLE "LBSASQL"."Registro_eventos_empleado"
 -- -----------------------------------------------------------------------------------
 
 CREATE TABLE "LBSASQL"."Registro_eventos_articulo" (
-  "id_registro" SERIAL,
-  "id_empleado" CHAR(10),
+  "id_registro" SERIAL UNIQUE NOT NULL,
+  "id_empleado" CHAR(10)  REFERENCES "LBSASQL"."Empleado" (num_cedula),
   "id_articulo" INT,
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
-  PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION,  
+  PRIMARY KEY ("id_registro"), 
   CONSTRAINT id_articulo FOREIGN KEY (id_articulo)
   REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE
   ON UPDATE NO ACTION
@@ -569,16 +546,12 @@ ALTER TABLE "LBSASQL"."Registro_eventos_articulo"
 --Registros en tabla Cliente 
 -- -----------------------------------------------------------------------------------
 CREATE TABLE "LBSASQL"."Registro_eventos_cliente" (
-  "id_registro" SERIAL,
-  "id_empleado" CHAR(10),
+  "id_registro" SERIAL UNIQUE NOT NULL,
+  "id_empleado" CHAR(10)  REFERENCES "LBSASQL"."Empleado" (num_cedula),
   "id_cliente" INT,
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION,
   CONSTRAINT id_cliente FOREIGN KEY (id_cliente)
   REFERENCES "LBSASQL"."Cliente" (id_cliente) MATCH SIMPLE
   ON UPDATE NO ACTION
@@ -592,16 +565,12 @@ ALTER TABLE "LBSASQL"."Registro_eventos_cliente"
 -- -----------------------------------------------------------------------------------
 
 CREATE TABLE "LBSASQL"."Registro_eventos_proveedor" (
-  "id_registro" SERIAL,
-  "id_empleado" CHAR(10),
+  "id_registro" SERIAL UNIQUE NOT NULL,
+  "id_empleado" CHAR(10)  REFERENCES "LBSASQL"."Empleado" (num_cedula),
   "id_proveedor" CHAR(13),
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION, 
   CONSTRAINT id_proveedor FOREIGN KEY (id_proveedor)
   REFERENCES "LBSASQL"."Proveedor_CR" (id_proveedor) MATCH SIMPLE
   ON UPDATE NO ACTION
@@ -616,16 +585,12 @@ ALTER TABLE "LBSASQL"."Registro_eventos_proveedor"
 -- -----------------------------------------------------------------------------------
 
 CREATE TABLE "LBSASQL"."Registro_eventos_cotizacion" (
-  "id_registro" SERIAL,
-  "id_empleado" CHAR(10),
+  "id_registro" SERIAL UNIQUE NOT NULL,
+  "id_empleado" CHAR(10)  REFERENCES "LBSASQL"."Empleado" (num_cedula),
   "id_cotizacion" INT,
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
   PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION,  
   CONSTRAINT id_cotizacion FOREIGN KEY (id_cotizacion)
   REFERENCES "LBSASQL"."Cotizacion" (id_cotizacion) MATCH SIMPLE
   ON UPDATE NO ACTION
@@ -643,17 +608,13 @@ ALTER TABLE "LBSASQL"."Registro_eventos_cotizacion"
 -- -----------------------------------------------------------------------------------
 
 CREATE TABLE "LBSASQL"."Registro_eventos_compra" (
-  "id_registro" SERIAL,
-  "id_empleado" CHAR(10),
+  "id_registro" SERIAL UNIQUE NOT NULL,
+  "id_empleado" CHAR(10)  REFERENCES "LBSASQL"."Empleado" (num_cedula),
   "id_compra" INT,
   "id_pago" INT,
   "fecha_modificacion" TIMESTAMP,
   "tipo_accion_realizada" VARCHAR(50),
-  PRIMARY KEY ("id_registro"),
-  CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
-  REFERENCES "LBSASQL"."Empleado" (id_empleado) MATCH SIMPLE
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION,  
+  PRIMARY KEY ("id_registro"), 
   CONSTRAINT id_compra FOREIGN KEY (id_compra)
   REFERENCES "LBSASQL"."Compra" (id_compra) MATCH SIMPLE
   ON UPDATE NO ACTION
@@ -666,7 +627,5 @@ CREATE TABLE "LBSASQL"."Registro_eventos_compra" (
 
 ALTER TABLE "LBSASQL"."Registro_eventos_compra"
     OWNER to postgres;
-
-
 
 
