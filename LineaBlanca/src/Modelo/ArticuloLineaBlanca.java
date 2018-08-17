@@ -15,12 +15,14 @@ public class ArticuloLineaBlanca extends Articulo{
     private Color color;
     private int consumoElectrico;
     
-    public ArticuloLineaBlanca(int id, String descripcion, double precio_sin_iva, double costo_proveedor, String marca) {
+    public ArticuloLineaBlanca(int id, String descripcion, double precio_sin_iva, double costo_proveedor, String marca,Color color, int consumoElectrico) {
         super(id, descripcion, precio_sin_iva, costo_proveedor, marca);
+        this.color = color;
+        this.consumoElectrico = consumoElectrico;
     }
-
-    public ArticuloLineaBlanca(Color color, int consumoElectrico, int id, String descripcion, double precio_sin_iva, double costo_proveedor, String marca) {
-        super(id, descripcion, precio_sin_iva, costo_proveedor, marca);
+    
+    public ArticuloLineaBlanca(int id, String descripcion, double precio_sin_iva, String marca,Color color, int consumoElectrico){
+        super(id, descripcion, precio_sin_iva, marca);
         this.color = color;
         this.consumoElectrico = consumoElectrico;
     }
