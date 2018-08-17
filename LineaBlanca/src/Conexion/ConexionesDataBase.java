@@ -16,10 +16,11 @@ public class ConexionesDataBase {
     public static void conect(){
         String userName = "postgres";
         String password = "postgres";
-        String url = "jdbc:postgresql://localhost:5432/PruebaLineaBlanca";
+        String url = "jdbc:postgresql://192.168.0.9:5432/PruebaLineaBlanca";
 
         try  {
             Connection conn = DriverManager.getConnection(url, userName, password); 
+            System.out.println("Surprise mudafaka");
         } 
 
        catch (Exception e) {
