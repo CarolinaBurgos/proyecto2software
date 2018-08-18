@@ -2,14 +2,16 @@
 
 <?import com.gluonhq.charm.glisten.control.TextField?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="594.0" prefWidth="774.0" style="-fx-background-color: #4DBACB;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLBusquedaGenericaController">
+<AnchorPane id="AnchorPane" prefHeight="594.0" prefWidth="774.0" style="-fx-background-color: #FDFBFB;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLBusquedaGenericaController">
    <children>
       <TabPane layoutX="-8.0" layoutY="89.0" prefHeight="505.0" prefWidth="786.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -46,66 +48,6 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                     </children></AnchorPane>
-               </content>
-            </Tab>
-          <Tab text="ARTICULOS">
-               <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #883A47;">
-                     <children>
-                        <Label layoutX="28.0" layoutY="58.0" text="Código" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="166.0" layoutY="56.0" />
-                        <Button layoutX="391.0" layoutY="56.0" mnemonicParsing="false" text="Buscar">
-                           <font>
-                              <Font name="System Bold Italic" size="15.0" />
-                           </font>
-                        </Button>
-                        <Label layoutX="28.0" layoutY="231.0" text="Descripción" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextArea layoutX="165.0" layoutY="226.0" prefHeight="200.0" prefWidth="189.0" />
-                        <TextField layoutX="166.0" layoutY="110.0" />
-                        <TextField layoutX="554.0" layoutY="110.0" />
-                        <Label layoutX="28.0" layoutY="112.0" text="Categoría" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="391.0" layoutY="112.0" text="Marca" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="28.0" layoutY="153.0" prefHeight="64.0" prefWidth="134.0" text="Consumo eléctrico" textFill="WHITE" wrapText="true">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="166.0" layoutY="169.0" />
-                        <TextField layoutX="554.0" layoutY="170.0" />
-                        <TextField layoutX="554.0" layoutY="231.0" />
-                        <Label layoutX="391.0" layoutY="171.0" text="Stock" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="387.0" layoutY="233.0" text="Precio cliente" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="387.0" layoutY="288.0" text="Costo proveedor" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="554.0" layoutY="286.0" prefWidth="187.0" />
                      </children></AnchorPane>
                </content>
             </Tab>
@@ -162,6 +104,54 @@
                         </Label>
                      </children></AnchorPane>
               </content>
+            </Tab>
+          <Tab text="ARTICULOS">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #883A47;">
+                     <children>
+                        <Label layoutX="30.0" layoutY="30.0" text="Tipo de búsqueda" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="30.0" layoutY="128.0" text="Descripción" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="30.0" layoutY="83.0" text="Categoría" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="465.0" layoutY="81.0" />
+                        <Label layoutX="358.0" layoutY="83.0" text="Nombre" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <ComboBox layoutX="206.0" layoutY="28.0" prefHeight="31.0" prefWidth="446.0" promptText="Elegir tipo de búsqueda..." />
+                        <ComboBox layoutX="158.0" layoutY="81.0" prefHeight="31.0" prefWidth="186.0" promptText="Elegir categoría..." />
+                        <Button layoutX="683.0" layoutY="95.0" mnemonicParsing="false" text="Buscar">
+                           <font>
+                              <Font name="System Bold Italic" size="15.0" />
+                           </font>
+                        </Button>
+                        <TextField layoutX="158.0" layoutY="126.0" prefHeight="31.0" prefWidth="497.0" />
+                        <TableView layoutX="29.0" layoutY="186.0" prefHeight="262.0" prefWidth="734.0">
+                          <columns>
+                            <TableColumn prefWidth="74.0" text="Código" />
+                            <TableColumn prefWidth="106.0" text="Descripción" />
+                              <TableColumn prefWidth="94.0" text="Categoría" />
+                              <TableColumn text="Marca" />
+                              <TableColumn prefWidth="75.0" text="Color" />
+                              <TableColumn prefWidth="154.0" text="Consumo eléctrico" />
+                              <TableColumn prefWidth="76.0" text="Precio" />
+                              <TableColumn prefWidth="74.0" text="Stock" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+               </content>
             </Tab>
         </tabs>
       </TabPane>
