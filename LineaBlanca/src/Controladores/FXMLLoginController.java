@@ -64,7 +64,7 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
         requestedUser = this.returnView(requestedUser);
         boolean state = false;
         
-        if(!usr.isEmpty() && !pass.isEmpty()){
+        if(!usr.isEmpty() && !pass.isEmpty()&&requestedUser!=null){
             state = true;
         }
         
@@ -117,12 +117,13 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
     
     
     public String returnView(String permiso){
+        if(permiso==null)
+            return "";
         String[] views = {"Vendedor", "Admin","Gerente", "SuperAdmin"};
-        
         for(String perm: views){
-            if(perm.equalsIgnoreCase(perm.substring(0, 3)))
-                System.out.println(perm);
-                return perm;
+            String perm1=perm.toLowerCase();
+            if(permiso.startsWith(perm1.substring(0, 3))){
+                return perm;}
         }
         return "";
     }
