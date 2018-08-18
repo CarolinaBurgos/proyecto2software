@@ -8,11 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-<<<<<<< HEAD
-    <jar href="LineaBlanca.jar" size="167618" download="eager" />
-=======
-    <jar href="LineaBlanca.jar" size="165824" download="eager" />
->>>>>>> ae23b7bc0ab24b01c7bb5a53a09b32da1bc3d43b
+    <jar href="LineaBlanca.jar" size="168408" download="eager" />
     <jar href="lib\jfoenix-8.0.7.jar" size="2631271" download="eager" />
     <jar href="lib\jooq-3.11.4.jar" size="2352586" download="eager" />
     <jar href="lib\jooq-codegen-3.11.4.jar" size="148647" download="eager" />

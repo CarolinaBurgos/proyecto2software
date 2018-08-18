@@ -22,6 +22,7 @@ import Conexion.*;
 import Modelo.Empleado;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -56,12 +57,11 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
     }     
     
     public void Conectarse(MouseEvent event) throws IOException {
-        //ConexionesDataBase.conect();
         String usr = lblUser.getText();
         String pass = lblPass.getText();
         
         String requestedUser = this.requestUser(super.getConn(),usr,pass);
-        
+        requestedUser = this.returnView(requestedUser);
         boolean state = false;
         
         if(!usr.isEmpty() && !pass.isEmpty()){
@@ -88,14 +88,14 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
-               // System.out.println(rs.getNString(1)+ rs.getNString(2)+ rs.getNString(3)+ rs.getNString(4)+ rs.getNString(5)+rs.getNString(7)+ rs.getNString(8)+ Date.valueOf(rs.getNString(9)));
+//               System.out.println(rs.getNString(1)+ rs.getNString(2)+ rs.getNString(3)+ rs.getNString(4)+ rs.getNString(5)+rs.getNString(7)+ rs.getNString(8)+ Date.valueOf(rs.getNString(9)));
                 this.emp = this.setEmpleado(rs);
-                return rs.getNString(8); //cargo
+                return rs.getString(8); //cargo
             }else{
                 JOptionPane.showMessageDialog(null, "Usuario no registrado", "Error de ingreso", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
-            System.out.println("ha sucecido un problema");
+            e.printStackTrace();
         }
         return null;
     }
@@ -103,10 +103,7 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
     public Empleado setEmpleado(ResultSet rs){
         Empleado user = null;
         try {
-           /* user = new Empleado(rs.getNString(1),rs.getNString(2),
-                    rs.getNString(3),rs.getNString(4),rs.getNString(5),rs.getNString(6),rs.getNString(7)
-                    ,rs.getNString(8),rs.getNString(9));*/
-        user = new Empleado(rs.getNString(1), rs.getNString(2), rs.getNString(3), rs.getNString(4), rs.getNString(5), rs.getNString(7), rs.getNString(8), Date.valueOf(rs.getNString(9)), Date.valueOf(rs.getNString(10)), Boolean.getBoolean(rs.getString(11)));
+        user = new Empleado(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(7), rs.getString(8), new Date(rs.getTimestamp(9).getTime()), new Date(rs.getTimestamp(10).getTime()), Boolean.getBoolean(rs.getString(11)));
             user.toString();
         } catch (SQLException ex) {
             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,6 +113,18 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
     
     public Empleado getEmpleado(){
         return this.emp;
+    }
+    
+    
+    public String returnView(String permiso){
+        String[] views = {"Vendedor", "Admin","Gerente", "SuperAdmin"};
+        
+        for(String perm: views){
+            if(perm.equalsIgnoreCase(perm.substring(0, 3)))
+                System.out.println(perm);
+                return perm;
+        }
+        return "";
     }
     
 }

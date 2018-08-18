@@ -91,7 +91,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     }
 
     
-    private void FillTables(){
+    public void FillTables(MouseEvent event){
         data = FXCollections.observableArrayList();
         String code_Search = this.nombre.getText();
         try {

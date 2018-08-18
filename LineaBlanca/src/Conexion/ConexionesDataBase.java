@@ -20,7 +20,7 @@ public class ConexionesDataBase {
     private static final String usuario = "postgres"; //usuario de la base de datos
     private static final String contrasenna = "root"; //contraseña del usuario
     //private static final String url = "jdbc:postgresql://192.168.0.9:5432/PruebaLineaBlanca";
-    private static final String url = "jdbc:postgresql://localhost:5432/LineaBlancaDB";
+    private static final String url = "jdbc:postgresql://localhost:5432/PruebaLineaBlanca";
 
 
     public Connection getConn() {
