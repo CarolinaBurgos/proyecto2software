@@ -629,4 +629,18 @@ CREATE TABLE "LBSASQL"."Registro_eventos_compra" (
 ALTER TABLE "LBSASQL"."Registro_eventos_compra"
     OWNER to postgres;
 
+CREATE OR REPLACE FUNCTION BucarCliente(IN cedula VARCHAR(10), OUT nameCL VARCHAR(50), OUT dirCL VARCHAR(250), OUT correoCL VARCHAR(100)) 
+	RETURNS SETOF RECORD AS $BODY$
+		DECLARE
+			reg RECORD;																																
+		BEGIN																														 
+			FOR reg IN SELECT nombre, direccion, correo FROM "LBSASQL"."Cliente" WHERE id_cliente = cedula LOOP
+				nameCL := reg.nombre;
+				dirCL := reg.direccion;
+				correoCL := reg.correo;
+				RETURN NEXT;	
+				END LOOP;
+				RETURN ;																																	
+		END																											 
+	$BODY$ 	LANGUAGE 'plpgsql'
 
