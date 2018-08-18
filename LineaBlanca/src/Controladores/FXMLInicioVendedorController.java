@@ -20,11 +20,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+
+import javafx.scene.control.ComboBox;
+
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -39,7 +46,8 @@ import javafx.scene.input.MouseEvent;
 public class FXMLInicioVendedorController extends ControlLogin implements Initializable {
     
     @FXML
-    private TextField nombre;
+    private TextField nombre, TxtCIclient;
+
 
     @FXML
     private TableView tablaProductos;
@@ -51,6 +59,15 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     private Connection conn;
     
     private ObservableList<ObservableList> data;
+    
+    @FXML
+    private Label TxtValornoIva, TxtValorIVA;
+
+
+    
+    @FXML
+    private ComboBox btnCategorias;
+    
     /**
      * Initializes the controller class.
      */
@@ -59,38 +76,18 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
         super.connectar();
         conn = this.getConn();
     }    
+
    
     
     //String pass = lblUser.getText();
-    
-    
-    //El
-    public void BusquedaTodosProductos( Object clase, int tipo) {
-        //Vaciar tabla antes de llenarla
-        for (int i = 0; i < tablaProductos.getHeight(); i++) {            
-        }
-        
-        //DataBase es mi clase conexion de la base de datos
-        //ConexionesDataBase haciendoConexion = new ConexionesDataBase();
-        //Connection instanciaConexion = haciendoConexion.getConn();
-        Statement stmt;
-            Label label = new Label();
-            label.setText("nombre");
-        try {
-            stmt = conn.createStatement();
-            Articulo articulo = (Articulo) clase;
-            //query para obtener todos los objetos articulos
-           // String sq4 = "select art.codigoArticulo,art.descripcion,factExt.noFactura, dist.idDistribuidora,cart.precioUnitario,cart.cantidad from articulo art join compraarticulo cart on art.codigoArticulo=cart.codigoArticulo join facturaExterna factExt on cart.noRegistro=factExt.noRegistro join distribuidora dist on factExt.idDistribuidora=dist.idDistribuidora where descripcion like'" + "%" + articulo.getTxtDescripcion().getText() + "%';";
-            //System.out.println(sq4);
-            //ResultSet rs4 = stmt.executeQuery(sq4);
 
-            //while (rs4.next()) {
-                //Object datosArticulos[] = {rs4.getString(1), rs4.getString(2), rs4.getString(3), rs4.getString(4), rs4.getString(5), rs4.getString(6)};
-                //articulo.getModelo().addRow(datosArticulos);
-            //}
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    
+    
+    @FXML
+    private void inicializar(ActionEvent event) {
+        btnCategorias.getItems().removeAll(btnCategorias.getItems());
+        btnCategorias.getItems().addAll("codigo", "descripcion", "marca");
+       // categorias.getSelectionModel().select("Option B");
     }
 
     
@@ -146,6 +143,9 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
                 System.out.println(e);
             }
     }
+
+    }
+
     
-    
-}
+  
+

@@ -12,7 +12,12 @@
    <children>
       <AnchorPane layoutX="153.0" prefHeight="43.0" prefWidth="595.0" style="-fx-background-color: #FFFFFF;">
          <children>
+<<<<<<< HEAD
             <Label layoutX="449.0" layoutY="13.0" prefHeight="17.0" prefWidth="115.0" textAlignment="CENTER" textFill="#655757">
+=======
+            <ChoiceBox layoutX="431.0" layoutY="9.0" prefHeight="17.0" prefWidth="150.0" style="-fx-background-color: #CAFAF0;" />
+            <Label layoutX="449.0" layoutY="13.0" prefHeight="17.0" prefWidth="115.0" text="Super Admin Login" textAlignment="CENTER" textFill="#655757">
+>>>>>>> ae23b7bc0ab24b01c7bb5a53a09b32da1bc3d43b
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
