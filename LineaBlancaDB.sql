@@ -629,10 +629,10 @@ CREATE TABLE "LBSASQL"."Registro_eventos_compra" (
 ALTER TABLE "LBSASQL"."Registro_eventos_compra"
     OWNER to postgres;
 
-CREATE OR REPLACE FUNCTION BucarCliente(IN cedula VARCHAR(10), OUT nameCL VARCHAR(50), OUT dirCL VARCHAR(250), OUT correoCL VARCHAR(100)) 
+CREATE OR REPLACE FUNCTION BuscarCliente(IN cedula int, OUT nameCL VARCHAR(50), OUT dirCL VARCHAR(250), OUT correoCL VARCHAR(100)) 
 	RETURNS SETOF RECORD AS $BODY$
 		DECLARE
-			reg RECORD;																																
+			reg RECORD;																															
 		BEGIN																														 
 			FOR reg IN SELECT nombre, direccion, correo FROM "LBSASQL"."Cliente" WHERE id_cliente = cedula LOOP
 				nameCL := reg.nombre;
@@ -644,20 +644,23 @@ CREATE OR REPLACE FUNCTION BucarCliente(IN cedula VARCHAR(10), OUT nameCL VARCHA
 		END																											 
 	$BODY$ 	LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE FUNCTION BucarEmpleadoUsuario(IN cedula CHAR(10), OUT nameEM VARCHAR(50), OUT apellidoEM VARCHAR(40), OUT usEM VARCHAR(25), OUT correoEM VARCHAR(100), OUT dirEM VARCHAR(250), OUT cargoEM VARCHAR(50)) 
+CREATE OR REPLACE FUNCTION BuscarEmpleadoUsuario(IN cedula CHAR(10), OUT nameEM VARCHAR(50), OUT apellidoEM VARCHAR(40), OUT usEM VARCHAR(25), OUT correoEM VARCHAR(100), OUT dirEM VARCHAR(250), OUT cargoEM VARCHAR(50)) 
 	RETURNS SETOF RECORD AS $BODY$
 		DECLARE
 			regEM RECORD;																																
 		BEGIN																														 
-			FOR regEM IN SELECT nombres, apellidos, usuario, correo, direccion, rol_actual FROM "LBSASQL"."Cliente" WHERE num_cedula = cedula LOOP
+			FOR regEM IN SELECT nombres, apellidos, usuario, correo, direccion, rol_actual FROM "LBSASQL"."Empleado" WHERE num_cedula = cedula LOOP
 				nameEM := regEM.nombres;
 				apellidoEM := regEM.apellidos;
 				usEM := regEM.usuario;
-				dirEM := reg.direccion;
-				correoEM := reg.correo;
-				cargoEM := reg.rol_actual;
+				dirEM := regEM.direccion;
+				correoEM := regEM.correo;
+				cargoEM := regEM.rol_actual;
 				RETURN NEXT;	
 				END LOOP;
 				RETURN ;																																	
 		END																											 
 	$BODY$ 	LANGUAGE 'plpgsql';
+
+SELECT BuscarEmpleadoUsuario('474334522');
+SELECT BuscarCliente(2);
