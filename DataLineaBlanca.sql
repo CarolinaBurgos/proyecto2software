@@ -35,4 +35,16 @@ INSERT INTO "LBSASQL"."Articulo_almacenado"(
 		   (5, 1, '2019-08-12', 8, false);	
 		   
 --delete from "LBSASQL"."Articulo_almacenado";
-select * from "LBSASQL"."Articulo_almacenado";
+--select * from "LBSASQL"."Articulo_almacenado";
+
+INSERT INTO "LBSASQL"."Cliente"( 
+	nombre, correo, direccion, fecha_creacion, fecha_ultima_actualizacion, reg_eliminado)
+	VALUES ("Ivan Correa","ivcorrea@hotmail.com" , "Urdesa Central",'2019-08-12', CURRENT_TIMESTAMP, false),
+		   ("julio Rosado","jurosado@hotmail.com" , "Guasmo Sur",'2019-08-12', CURRENT_TIMESTAMP, false),
+		   ("Angel Moya","anmoya@hotmail.com" , "La joya",'2019-08-12', CURRENT_TIMESTAMP, false),
+		   ("Han Solo","hasolo@hotmail.com" , "samanes",'2019-08-12', CURRENT_TIMESTAMP, false),
+		   ("Pedro Garcia","pegarcia@hotmail.com" , "Urdesa Central",'2019-08-12', CURRENT_TIMESTAMP, false),
+		   ("Carlos Marquez","camarquez@hotmail.com" , "Chongon",'2019-08-12', CURRENT_TIMESTAMP, false),
+		   ("Bryan Correa","brycorrea@hotmail.com" , "Portete y la 17",'2019-08-12', CURRENT_TIMESTAMP, false);
+	
+	select * from "LBSASQL"."Cliente"
