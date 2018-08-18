@@ -130,7 +130,7 @@ CREATE TABLE "LBSASQL"."Articulo_almacenado" (
   "fecha_llegada" TIMESTAMP,
   "cantidad_articulo_disponible" INT,
   "reabastecimiento_solicitado" BOOLEAN,
-  PRIMARY KEY ("id_art_alm),  
+  PRIMARY KEY ("id_art_alm"),  
   CONSTRAINT id_almacen FOREIGN KEY (id_almacen)
   REFERENCES "LBSASQL"."Almacen" (id_almacen) MATCH SIMPLE
   ON UPDATE NO ACTION
