@@ -662,5 +662,50 @@ CREATE OR REPLACE FUNCTION BuscarEmpleadoUsuario(IN cedula CHAR(10), OUT nameEM 
 		END																											 
 	$BODY$ 	LANGUAGE 'plpgsql';
 
-SELECT BuscarEmpleadoUsuario('474334522');
-SELECT BuscarCliente(2);
+CREATE OR REPLACE FUNCTION BuscarArticuloCategoria(IN cat VARCHAR(50), OUT cod int, OUT des VARCHAR(50),OUT cat2 VARCHAR(50), OUT mar VARCHAR(50), OUT col VARCHAR(16), OUT consumo int, OUT precio FLOAT, OUT stck int)
+	RETURNS SETOF RECORD AS $BODY$
+		DECLARE
+			regCat RECORD;
+			regID RECORD;
+		BEGIN																														 
+			FOR regCAT IN SELECT id_articulo, descripcion, categoria, marca, color, consumo_electrico, precio_cliente_sin_iva FROM "LBSASQL"."Articulo" WHERE categoria = cat LOOP
+				cod := regCAT.id_articulo;
+				des := regCAT.descripcion;
+				cat2 := regCAT.categoria;
+				mar := regCAT.marca;
+				col := regCAT.color;
+				consumo := regCAT.consumo_electrico;
+				precio := regCAT.precio_cliente_sin_iva;
+				FOR regID IN SELECT cantidad_articulo_disponible FROM "LBSASQL"."Articulo_almacenado" WHERE cod = "LBSASQL"."Articulo_almacenado".id_articulo LOOP
+					stck := regID.cantidad_articulo_disponible;
+					END LOOP;
+				RETURN NEXT;	
+				END LOOP;
+				RETURN ;																																	
+		END																											 
+$BODY$ LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE FUNCTION BuscarArticuloDescripcion(IN d VARCHAR(50), OUT cod int, OUT des VARCHAR(50),OUT cat2 VARCHAR(50), OUT mar VARCHAR(50), OUT col VARCHAR(16), OUT consumo int, OUT precio FLOAT, OUT stck int)
+	RETURNS SETOF RECORD AS $BODY$
+		DECLARE
+			regCat RECORD;
+			regID RECORD;
+		BEGIN																														 
+			FOR regCAT IN SELECT id_articulo, descripcion, categoria, marca, color, consumo_electrico, precio_cliente_sin_iva FROM "LBSASQL"."Articulo" WHERE descripcion = d LOOP
+				cod := regCAT.id_articulo;
+				des := regCAT.descripcion;
+				cat2 := regCAT.categoria;
+				mar := regCAT.marca;
+				col := regCAT.color;
+				consumo := regCAT.consumo_electrico;
+				precio := regCAT.precio_cliente_sin_iva;
+				FOR regID IN SELECT cantidad_articulo_disponible FROM "LBSASQL"."Articulo_almacenado" WHERE cod = "LBSASQL"."Articulo_almacenado".id_articulo LOOP
+					stck := regID.cantidad_articulo_disponible;
+					END LOOP;
+				RETURN NEXT;	
+				END LOOP;
+				RETURN ;																																	
+		END																											 
+$BODY$ LANGUAGE 'plpgsql';
+
+SELECT BuscarArticuloDescripcion('Cocina Induccion 3 hornillas');
