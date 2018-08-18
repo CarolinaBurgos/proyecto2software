@@ -9,13 +9,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="748.0" style="-fx-background-color: #F5F5F5;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Controladores.FXMLInicioAdministradorController">
+<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="748.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLInicioAdministradorController">
    <children>
       <AnchorPane layoutX="153.0" prefHeight="43.0" prefWidth="595.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <ChoiceBox layoutX="431.0" layoutY="9.0" prefWidth="150.0" style="-fx-background-color: yellow;" />
-            <Label layoutX="431.0" layoutY="13.0" prefHeight="17.0" prefWidth="115.0" text="Super Admin Login" textFill="#f8f8f8">
+            <ChoiceBox layoutX="431.0" layoutY="9.0" prefHeight="17.0" prefWidth="150.0" style="-fx-background-color: #CAFAF0;" />
+            <Label layoutX="449.0" layoutY="13.0" prefHeight="17.0" prefWidth="115.0" text="Super Admin Login" textAlignment="CENTER" textFill="#655757">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
