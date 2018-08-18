@@ -124,12 +124,13 @@ COMMENT ON TABLE "LBSASQL"."Articulo"
 --Articulos en inventario de los locales de Linea Blanca SA
 -- ---------------------------------------------------------
 CREATE TABLE "LBSASQL"."Articulo_almacenado" (
+  "id_art_alm" SERIAL UNIQUE NOT NULL,
   "id_almacen" INT NOT NULL,
   "id_articulo" INT NOT NULL,
   "fecha_llegada" TIMESTAMP,
   "cantidad_articulo_disponible" INT,
   "reabastecimiento_solicitado" BOOLEAN,
-  PRIMARY KEY ("id_articulo"),  
+  PRIMARY KEY ("id_art_alm),  
   CONSTRAINT id_almacen FOREIGN KEY (id_almacen)
   REFERENCES "LBSASQL"."Almacen" (id_almacen) MATCH SIMPLE
   ON UPDATE NO ACTION
@@ -320,7 +321,7 @@ COMMENT ON TABLE "LBSASQL"."Compra"
 -- -------------------------------------------------------------------
 	
 CREATE TABLE "LBSASQL"."Articulos_vendidos" (
-  "id_articulo_vendido" SERIAL,
+  "id_articulo_vendido" SERIAL UNIQUE NOT NULL,
   "id_compra" INT,
   "id_articulo" INT,
   "cantidad_articulo" INT,
@@ -440,10 +441,11 @@ COMMENT ON TABLE "LBSASQL"."Pago_estimado"
 --Articulos asociados a las cotizaciones de los clientes de Linea Blanca SA 
 -- -----------------------------------------------------------------------------------
 CREATE TABLE "LBSASQL"."Articulos_cotizados" (
+  "id_art_cotizado" SERIAL UNIQUE NOT NULL,
   "id_cotizacion" INT,
   "id_articulo" INT,
   "cantidad_articulo" INT,
-  PRIMARY KEY ("id_cotizacion","id_articulo"),  
+  PRIMARY KEY ("id_cart_cotizado"),  
   CONSTRAINT id_articulo FOREIGN KEY (id_articulo)
   REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE
   ON UPDATE NO ACTION
