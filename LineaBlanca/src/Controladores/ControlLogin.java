@@ -6,6 +6,7 @@
 package Controladores;
 
 import Conexion.ConexionesDataBase;
+import java.sql.Connection;
 
 /**
  *
@@ -13,6 +14,16 @@ import Conexion.ConexionesDataBase;
  */
 public class ControlLogin  extends ConexionesDataBase{
     
+    private Connection conn; 
+    
+    public ControlLogin(){
+        
+    }
+    
+    public void connectar(){
+        ConexionesDataBase.conect();
+        conn = super.getConn();    
+    }
     
     
 }

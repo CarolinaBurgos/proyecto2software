@@ -19,6 +19,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import Conexion.*;
+import Modelo.Empleado;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * FXML Controller class
@@ -38,11 +42,14 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
     @FXML
     private Button BtnClick;
     
+    private Empleado emp;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL  url, ResourceBundle rb) {
+        super.connectar();
         
     }     
     
@@ -50,6 +57,8 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
         //ConexionesDataBase.conect();
         String usr = lblUser.getText();
         String pass = lblUser.getText();
+        
+        String requestedUser = this.requestUser(super.getConn(),usr,pass);
         
         boolean state = false;
         
@@ -61,7 +70,7 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
         if(state){
             try{
                 Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLInicioAdmin.fxml")));
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLInicio"+requestedUser+".fxml")));
             }catch(Exception e){
                 System.out.println(e);
             }
@@ -77,12 +86,25 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
+                this.emp = this.setEmpleado(rs);
                 return rs.getNString(7);
             }
         } catch (Exception e) {
             System.out.println("ha sucecido un problema");
         }
         return null;
+    }
+    
+    public Empleado setEmpleado(ResultSet rs){
+        Empleado user = null;
+        try {
+            user = new Empleado(rs.getNString(1),rs.getNString(2),
+                    rs.getNString(3),rs.getNString(4),rs.getNString(5),rs.getNString(6),rs.getNString(7)
+                    ,rs.getNString(8),rs.getNString(9));
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
     }
     
     
