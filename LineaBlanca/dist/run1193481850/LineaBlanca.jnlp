@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="LineaBlanca.jnlp">
+  <information>
+    <title>LineaBlanca</title>
+    <vendor>user</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="LineaBlanca.jar" size="165687" download="eager" />
+    <jar href="lib\jfoenix-8.0.7.jar" size="2631271" download="eager" />
+    <jar href="lib\jooq-3.11.4.jar" size="2352586" download="eager" />
+    <jar href="lib\jooq-codegen-3.11.4.jar" size="148647" download="eager" />
+    <jar href="lib\jooq-meta-3.11.4.jar" size="484651" download="eager" />
+    <jar href="lib\postgresql-42.2.4.jar" size="814992" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="LineaBlanca" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="lineablanca.LineaBlanca"  name="LineaBlanca" />
+  <update check="always"/>
+</jnlp>

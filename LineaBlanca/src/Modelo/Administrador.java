@@ -5,19 +5,19 @@
  */
 package Modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author Angel Moya
  */
 public class Administrador extends Empleado{
-    
-    public Administrador(String id_entidad, String nombre, String correo, String telefono, String direccion) {
-        super(id_entidad, nombre, correo, telefono, direccion);
-    }
 
-    public Administrador(String userName, String permiso, String psswd, String apellido, String id_entidad, String nombre, String correo, String telefono, String direccion) {
-        super(userName, permiso, psswd, apellido, id_entidad, nombre, correo, telefono, direccion);
+    public Administrador(String id_entidad, String nombre, String apellido, String userName, String correo, String psswd, String permiso, Date fecha_contratacion, Date fecha_actualizacion, boolean isActivo) {
+        super(id_entidad, nombre, apellido, userName, correo, psswd, permiso, fecha_contratacion, fecha_actualizacion, isActivo);
     }
+    
+    
     
     public Empleado agregarUsuario(){
         //INSERT CODE HERE

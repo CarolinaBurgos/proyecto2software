@@ -12,15 +12,18 @@ package Modelo;
 public class Ciudadano extends Entidad {
     protected String apellido;
 
-    public Ciudadano(String id_entidad, String nombre, String correo, String telefono, String direccion) {
-        super(id_entidad, nombre, correo, telefono, direccion);
-    }
-
-    public Ciudadano(String apellido, String id_entidad, String nombre, String correo, String telefono, String direccion) {
+    public Ciudadano(String id_entidad, String nombre,String apellido, String correo, String telefono, String direccion) {
         super(id_entidad, nombre, correo, telefono, direccion);
         this.apellido = apellido;
     }
 
+    public Ciudadano(String id_entidad, String nombre,String apellido, String correo) {
+        super(id_entidad, nombre, correo);
+        this.apellido = apellido;
+    }
+   
+
+    
     public String getApellido() {
         return apellido;
     }

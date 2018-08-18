@@ -5,18 +5,16 @@
  */
 package Modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author Angel Moya
  */
 public class Vendedor extends Empleado{
-    
-    public Vendedor(String id_entidad, String nombre, String correo, String telefono, String direccion) {
-        super(id_entidad, nombre, correo, telefono, direccion);
-    }
 
-    public Vendedor(String userName, String permiso, String psswd, String apellido, String id_entidad, String nombre, String correo, String telefono, String direccion) {
-        super(userName, permiso, psswd, apellido, id_entidad, nombre, correo, telefono, direccion);
+    public Vendedor(String id_entidad, String nombre, String apellido, String userName, String correo, String psswd, String permiso, Date fecha_contratacion, Date fecha_actualizacion, boolean isActivo) {
+        super(id_entidad, nombre, apellido, userName, correo, psswd, permiso, fecha_contratacion, fecha_actualizacion, isActivo);
     }
     
     public boolean realizarVenta(Cliente cliente, Compra compra){

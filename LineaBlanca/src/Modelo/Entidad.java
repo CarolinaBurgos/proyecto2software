@@ -24,6 +24,13 @@ public class Entidad {
         this.direccion = direccion;
     }
 
+    public Entidad(String id_entidad, String nombre, String correo) {
+        this.id_entidad = id_entidad;
+        this.nombre = nombre;
+        this.correo = correo;
+    }
+    
+
     public String getId_entidad() {
         return id_entidad;
     }

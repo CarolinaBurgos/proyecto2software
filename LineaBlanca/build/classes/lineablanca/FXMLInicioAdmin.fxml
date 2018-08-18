@@ -9,13 +9,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="748.0" style="-fx-background-color: #F5F5F5;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Controladores.FXMLInicioAdministradorController">
+<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="748.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLInicioAdministradorController">
    <children>
       <AnchorPane layoutX="153.0" prefHeight="43.0" prefWidth="595.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <ChoiceBox layoutX="431.0" layoutY="9.0" prefWidth="150.0" style="-fx-background-color: yellow;" />
-            <Label layoutX="431.0" layoutY="13.0" prefHeight="17.0" prefWidth="115.0" text="Super Admin Login" textFill="#f8f8f8">
+            <ChoiceBox layoutX="431.0" layoutY="9.0" prefHeight="17.0" prefWidth="150.0" style="-fx-background-color: #CAFAF0;" />
+            <Label layoutX="449.0" layoutY="13.0" prefHeight="17.0" prefWidth="115.0" text="Super Admin Login" textAlignment="CENTER" textFill="#655757">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -61,7 +60,7 @@
                <children>
                   <ImageView fitHeight="92.0" fitWidth="86.0" layoutX="-12.0" layoutY="-7.0" opacity="0.91" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../java/imagenes/usuario.png" />
+                        <Image url="@../imagenes/usuario.png" />
                      </image>
                   </ImageView>
                </children>
@@ -83,7 +82,7 @@
                <children>
                   <ImageView fitHeight="100.0" fitWidth="86.0" layoutX="-15.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../java/imagenes/carroCompras.jpg" />
+                        <Image url="@../imagenes/carroCompras.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -105,7 +104,7 @@
                <children>
                   <ImageView fitHeight="89.0" fitWidth="71.0" layoutX="-4.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../java/imagenes/cliente.jpg" />
+                        <Image url="@../imagenes/cliente.jpg" />
                      </image>
                   </ImageView>
                </children>

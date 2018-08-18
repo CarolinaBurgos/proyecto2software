@@ -17,8 +17,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -32,13 +34,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class FXMLInicioVendedorController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    
     @FXML
     private TextField nombre;
     
@@ -46,9 +42,31 @@ public class FXMLInicioVendedorController implements Initializable {
     private TableView tablaProductos;
     //String pass = lblUser.getText();
     
+    @FXML
+    private ComboBox btnCategorias;
+    
+    
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+    
+    
+    @FXML
+    private void inicializar(ActionEvent event) {
+        btnCategorias.getItems().removeAll(btnCategorias.getItems());
+        btnCategorias.getItems().addAll("codigo", "descripcion", "marca");
+       // categorias.getSelectionModel().select("Option B");
+    }
+
+    
+    
     
     //El
-    public void BusquedaTodosProductos( Object clase, int tipo) {
+    /*public void BusquedaTodosProductos( Object clase, int tipo) {
         //Vaciar tabla antes de llenarla
         for (int i = 0; i < tablaProductos.getHeight(); i++) {            
         }
@@ -74,8 +92,7 @@ public class FXMLInicioVendedorController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
+    }*/
     
-    
+  
 }
