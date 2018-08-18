@@ -36,7 +36,7 @@ COMMENT ON TABLE "LBSASQL"."Almacen"
 CREATE TABLE "LBSASQL"."telefono_almacen" (
   "id_telefono" SERIAL UNIQUE NOT NULL,
   "id_almacen" INT,
-  "num_telefono" CHAR(9),
+  "num_telefono" CHAR(10),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_telefono"),
   CONSTRAINT id_almacen FOREIGN KEY (id_almacen)
@@ -84,7 +84,7 @@ COMMENT ON TABLE "LBSASQL"."Empleado"
 CREATE TABLE "LBSASQL"."telefono_empleado" (
   "id_telefono" SERIAL UNIQUE NOT NULL,
   "num_cedula" CHAR(13),
-  "num_telefono" CHAR(9),
+  "num_telefono" CHAR(10),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_telefono"),
   CONSTRAINT num_cedula FOREIGN KEY (num_cedula)
@@ -212,7 +212,6 @@ COMMENT ON TABLE "LBSASQL"."telefono_c_contribuyente_registrado"
 CREATE TABLE "LBSASQL"."Cliente_ciudadano" (
   "num_cedula" CHAR(10) UNIQUE NOT NULL,
   "id_cliente" INT,
-  "apellidos" VARCHAR(50),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("num_cedula"),
   CONSTRAINT id_cliente FOREIGN KEY (id_cliente)
@@ -228,10 +227,10 @@ COMMENT ON TABLE "LBSASQL"."Cliente_ciudadano"
 -- -----------------------------------------------------
 --Telefonos de los Clientes que no son contribuyentes registrados
 -- -----------------------------------------------------	
-	CREATE TABLE "LBSASQL"."telefono_c_ciudadano" (
+CREATE TABLE "LBSASQL"."telefono_c_ciudadano" (
   "id_telefono" SERIAL UNIQUE NOT NULL,
   "num_cedula" CHAR(10),
-  "num_telefono" CHAR(9),
+  "num_telefono" CHAR(10),
   "reg_eliminado" BOOLEAN,
   PRIMARY KEY ("id_telefono"),
   CONSTRAINT num_cedula FOREIGN KEY (num_cedula)
@@ -299,7 +298,7 @@ CREATE TABLE "LBSASQL"."Forma_de_pago" (
 CREATE TABLE "LBSASQL"."Compra" (
   "id_compra" SERIAL UNIQUE NOT NULL,
   "tipo_comprobante_venta" VARCHAR(3),
-  "fecha_compra" INT,
+  "fecha_compra" TIMESTAMP,
   "monto" FLOAT(4),
   "id_cliente" INT,
   "id_empleado" CHAR(10)  REFERENCES "LBSASQL"."Empleado" ("num_cedula"),
@@ -445,7 +444,7 @@ CREATE TABLE "LBSASQL"."Articulos_cotizados" (
   "id_cotizacion" INT,
   "id_articulo" INT,
   "cantidad_articulo" INT,
-  PRIMARY KEY ("id_cart_cotizado"),  
+  PRIMARY KEY ("id_art_cotizado"),  
   CONSTRAINT id_articulo FOREIGN KEY (id_articulo)
   REFERENCES "LBSASQL"."Articulo" (id_articulo) MATCH SIMPLE
   ON UPDATE NO ACTION
