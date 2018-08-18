@@ -107,5 +107,8 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
         return user;
     }
     
+    public Empleado getEmpleado(){
+        return this.emp;
+    }
     
 }

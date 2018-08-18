@@ -26,4 +26,8 @@ public class FXMLBusquedaGenericaController implements Initializable {
         
     }    
     
+    
+    
+    
+    
 }

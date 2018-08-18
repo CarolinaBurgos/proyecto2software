@@ -7,6 +7,7 @@ package Controladores;
 
 import Modelo.*;
 import Conexion.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,8 +18,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -30,20 +36,31 @@ import javafx.scene.input.MouseEvent;
  *
  * @author user
  */
-public class FXMLInicioVendedorController implements Initializable {
+public class FXMLInicioVendedorController extends ControlLogin implements Initializable {
+    
+    @FXML
+    private TextField nombre;
 
+    @FXML
+    private TableView tablaProductos;
+    @FXML
+    private Button BtnBuscar, BtnAddClient, BtnGenerarVenta, BtnLogOut;
+    @FXML
+    private ChoiceBox listLogin;
+    
+    private Connection conn;
+    
+    private ObservableList<ObservableList> data;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        super.connectar();
+        conn = this.getConn();
     }    
-    @FXML
-    private TextField nombre;
+   
     
-    @FXML
-    private TableView tablaProductos;
     //String pass = lblUser.getText();
     
     
@@ -54,13 +71,13 @@ public class FXMLInicioVendedorController implements Initializable {
         }
         
         //DataBase es mi clase conexion de la base de datos
-        ConexionesDataBase haciendoConexion = new ConexionesDataBase();
-        Connection instanciaConexion = haciendoConexion.getConn();
+        //ConexionesDataBase haciendoConexion = new ConexionesDataBase();
+        //Connection instanciaConexion = haciendoConexion.getConn();
         Statement stmt;
             Label label = new Label();
             label.setText("nombre");
         try {
-            stmt = instanciaConexion.createStatement();
+            stmt = conn.createStatement();
             Articulo articulo = (Articulo) clase;
             //query para obtener todos los objetos articulos
            // String sq4 = "select art.codigoArticulo,art.descripcion,factExt.noFactura, dist.idDistribuidora,cart.precioUnitario,cart.cantidad from articulo art join compraarticulo cart on art.codigoArticulo=cart.codigoArticulo join facturaExterna factExt on cart.noRegistro=factExt.noRegistro join distribuidora dist on factExt.idDistribuidora=dist.idDistribuidora where descripcion like'" + "%" + articulo.getTxtDescripcion().getText() + "%';";
@@ -76,6 +93,59 @@ public class FXMLInicioVendedorController implements Initializable {
         }
     }
 
+    
+    private void FillTables(){
+        data = FXCollections.observableArrayList();
+        String code_Search = this.nombre.getText();
+        try {
+            Statement state = conn.createStatement();
+            String query_llamada_procedure = "";
+            ResultSet rs = state.executeQuery(query_llamada_procedure);
+            while(rs.next()){
+                //Iterate Row
+                ObservableList<String> row = FXCollections.observableArrayList();
+                //for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
+                    //Iterate Column
+                    row.add(rs.getString("id_articulo"));
+                    row.add(rs.getString("categoria"));
+                    row.add(rs.getString("marca"));
+                    row.add(rs.getString("color"));
+                    row.add(rs.getString("consumo_electrico"));
+                    row.add(rs.getString("precio_cliente)sin_iva"));
+                    row.add(rs.getString("costo_proveedor"));
+                //}
+                data.add(row);
+
+            }
+            this.tablaProductos.setItems(data);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+    }
+    
+            
+    public void addClientes(MouseEvent event){
+        
+        try{
+                Node n = (Node) event.getSource();
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLRegistrarClientes.fxml")));
+            }catch(IOException e){
+                System.out.println(e);
+            }
+    }
+    
+    public void logOut(MouseEvent event){
+        try{
+                Node n = (Node) event.getSource();
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLLogin.fxml")));
+            }catch(IOException e){
+                System.out.println(e);
+            }
+    }
     
     
 }
