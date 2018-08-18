@@ -29,7 +29,7 @@ INSERT INTO "LBSASQL".telefono_almacen(
 		   (4,'0912457567', false),
 		   (5,'0912456322', false);
 
-select * from "LBSASQL"."telefono_almacen";
+--select * from "LBSASQL"."telefono_almacen";
 
 
 INSERT INTO "LBSASQL"."Articulo_almacenado"(
@@ -71,10 +71,10 @@ INSERT INTO "LBSASQL"."Empleado"(
 		   ('234234235', 'Irene', 'Alvarez', 'irealv', 'alvazquez@hotmail.com', 'Acacias', '1234', 'vendedor', '2019-08-12', CURRENT_TIMESTAMP, true,3),
 		   ('324234235', 'Sebastian', 'Medina', 'sebamed', 'alvazquez@hotmail.com', 'Neptuno', '1234', 'superadministrador', '2019-08-12', CURRENT_TIMESTAMP, true,3),
 		   ('546675882', 'Patricia', 'Sanz', 'patsan', 'alvazquez@hotmail.com', 'Omicron', '1234', 'gerente', '2019-08-12', CURRENT_TIMESTAMP, true,3),
-		   ('856836346', 'Diego', 'Flores', 'dieflo', 'alvazquez@hotmail.com', 'Duran', '1234', 'superadministrador', '2019-08-12', CURRENT_TIMESTAMP, true,5),
-		   ('012891243', 'Alexandra', 'Ramos', 'alexram', 'alvazquez@hotmail.com', 'Milagro', '1234', 'vendedor', '2019-08-12', CURRENT_TIMESTAMP,true,5),
-		   ('121231212', 'Manuel', 'Garcia', 'mangar', 'alvazquez@hotmail.com', 'Peñas', '1234', 'vendedor', '2019-08-12', CURRENT_TIMESTAMP, true,5),
-		   ('346486342', 'Sara', 'Mendez', 'sarmend', 'alvazquez@hotmail.com', 'Suburbio', '1234', 'gerente', '2019-08-12', CURRENT_TIMESTAMP, true,5);
+		   ('856836346', 'Diego', 'Flores', 'dieflo', 'alvazquez@hotmail.com', 'Duran', '1234', 'superadministrador', '2019-08-12', CURRENT_TIMESTAMP, true,4),
+		   ('012891243', 'Alexandra', 'Ramos', 'alexram', 'alvazquez@hotmail.com', 'Milagro', '1234', 'vendedor', '2019-08-12', CURRENT_TIMESTAMP,true,4),
+		   ('121231212', 'Manuel', 'Garcia', 'mangar', 'alvazquez@hotmail.com', 'Peñas', '1234', 'vendedor', '2019-08-12', CURRENT_TIMESTAMP, true,4),
+		   ('346486342', 'Sara', 'Mendez', 'sarmend', 'alvazquez@hotmail.com', 'Suburbio', '1234', 'gerente', '2019-08-12', CURRENT_TIMESTAMP, true,4);
 
 --select * from "LBSASQL"."Empleado" where rol_actual like 'vendedor'
 
@@ -171,20 +171,40 @@ INSERT INTO "LBSASQL"."Registro_eventos_proveedor"(
 		   
 INSERT INTO "LBSASQL"."Compra"(
 	 tipo_comprobante_venta, fecha_compra, monto, id_cliente, id_empleado, reg_eliminado)
-	VALUES ('fac',CURRENT_TIMESTAMP, 300, 3, 234757689, false),
-		   ('fac',CURRENT_TIMESTAMP, 180, 2, 474334522, false),
-		   ('fac',CURRENT_TIMESTAMP, 60, 7, 121231212, false);
+	VALUES ('fac',CURRENT_TIMESTAMP, 380, 3, 234757689, false),
+		   ('fac',CURRENT_TIMESTAMP, 1320, 2, 474334522, false),
+		   ('fac',CURRENT_TIMESTAMP, 1100, 7, 121231212, false);
 
-select * from "LBSASQL"."Compra"
+INSERT INTO "LBSASQL"."Articulos_vendidos"(
+	id_compra, id_articulo, cantidad_articulo)
+	VALUES (1, 1, 1),
+		   (2, 4, 1),
+		   (2, 5, 1),
+		   (3, 2, 1),
+		   (3, 5, 1);
 
+--select * from "LBSASQL"."Articulos_vendidos"
+
+
+
+INSERT INTO "LBSASQL"."Cotizacion"(
+	fecha_cotizacion, monto_estimado, id_cliente, id_empleado, reg_eliminado)
+	VALUES (CURRENT_TIMESTAMP, 388, 3, 474334522,false),--centro
+		   (CURRENT_TIMESTAMP, 380, 3, 234757689,false),--sur
+		   (CURRENT_TIMESTAMP, 380, 3, 121231212,false),
+		   (CURRENT_TIMESTAMP, 1320, 2, 474334522,false); --norte
 	
-	
-	
-	
-	
-	
-	
-	
+
+--select * from "LBSASQL"."Cotizacion"
+
+INSERT INTO "LBSASQL"."Articulos_cotizados"(
+	id_cotizacion, id_articulo, cantidad_articulo)
+	VALUES (1, 1, 1),
+		   (2, 1, 1),
+		   (3, 1, 1),
+		   (4, 4, 1),
+		   (4, 5, 1);
+--select * from "LBSASQL"."Articulos_cotizados"
 	
 	
 	

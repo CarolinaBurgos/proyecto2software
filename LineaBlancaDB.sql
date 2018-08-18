@@ -394,7 +394,7 @@ COMMENT ON TABLE "LBSASQL"."Comprobante_retencion_cliente"
 
 CREATE TABLE "LBSASQL"."Cotizacion" (
   "id_cotizacion" SERIAL UNIQUE NOT NULL,
-  "fecha_cotizacion" INT,
+  "fecha_cotizacion" TIMESTAMP,
   "monto_estimado" FLOAT(4),
   "id_cliente" INT,
   "id_empleado" CHAR(10) REFERENCES "LBSASQL"."Empleado" ("num_cedula"),
