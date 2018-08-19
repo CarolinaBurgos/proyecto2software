@@ -7,7 +7,9 @@ package Controladores;
 
 import java.net.URL;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -66,7 +68,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
         
         String id_cliente;
         
-        //fecha local ( VIOLA la S de SOLID :( )
+        //fecha local 
         LocalDateTime localDateTime = LocalDateTime.now();
         ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneOffset.systemDefault());
         Instant instant = zonedDateTime.toInstant();
@@ -90,11 +92,9 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
             st.executeUpdate();
             
             System.out.println("Cliente registrado con éxito");
-//TODO: OBTENER LA CLAVE DEL CLIENTE
-            
-    /*        
+        
             Statement smnt= super.conexion.createStatement();
-            ResultSet rs = smnt.executeQuery("select currval('\"LBSASQL\".\"Cliente_id_cliente_seq\"');");
+            ResultSet rs = smnt.executeQuery("SELECT id_cliente FROM \"LBSASQL\".\"Cliente\" ORDER BY id_cliente DESC LIMIT 1;");
             int key;
             
             if (rs != null && rs.next()) {
@@ -103,9 +103,11 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
                 if (numero_identidad.length()==13)  insertarClienteContribuyenteReg(numero_identidad, key, nombre, false);
                 else if (numero_identidad.length()==10) insertarClienteCiudadano(numero_identidad,key);
                 else alert("Numero invalido de caracteres");
+                
+
             }
             
-*/
+
         } 
         catch (SQLException ex) {
             Logger.getLogger(FXMLRegistrarClientesController.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,7 +122,8 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
     private void insertarClienteCiudadano(String num_cedula, int id_cliente){
     
         try {
-            PreparedStatement st = super.conexion.prepareStatement("INSERT INTO \"LBSASQL\".\"Cliente_ciudadano\"(num_cedula, id_cliente, reg_eliminado));VALUES (?, ?, ?);");
+            PreparedStatement st = super.conexion.prepareStatement("INSERT INTO \"LBSASQL\"."
+                    + "\"Cliente_ciudadano\" (num_cedula, id_cliente, reg_eliminado) VALUES (?, ?, ?);");
             st.setString(1, num_cedula);
             st.setInt(2, id_cliente);
             st.setBoolean(3, false);

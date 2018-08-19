@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Controladores.FXMLRegistrarClientesController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLRegistrarClientesController">
     <children>
       <Pane layoutY="-2.0" prefHeight="54.0" prefWidth="692.0" style="-fx-background-color: #4B7DEB;">
          <children>
@@ -29,7 +29,7 @@
       <Label layoutX="238.0" layoutY="172.0" opacity="0.57" text="NOMBRE" />
       <Label layoutX="239.0" layoutY="262.0" opacity="0.5" text="CORREO" />
       <Label layoutX="239.0" layoutY="346.0" opacity="0.52" text="DIRECCIÓN" />
-      <Button fx:id="BtnRegistro" layoutX="386.0" layoutY="465.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Registrarse" />
+      <Button fx:id="BtnRegistro" layoutX="386.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#agregarCliente" prefHeight="45.0" prefWidth="107.0" text="Registrarse" />
       <Pane fx:id="PaneSlide" layoutX="-148.0" layoutY="52.0" prefHeight="551.0" prefWidth="148.0" style="-fx-background-color: #AEB2EA;" visible="false">
          <children>
             <Button fx:id="BtnHome" mnemonicParsing="false" prefHeight="32.0" prefWidth="148.0" style="-fx-background-color: #AEB2EA;" text="Home" />
