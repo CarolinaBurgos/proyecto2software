@@ -6,7 +6,14 @@
 package Controladores;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,7 +21,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
@@ -23,7 +34,7 @@ import javafx.util.Duration;
  *
  * @author user
  */
-public class FXMLCreacionUserController implements Initializable {
+public class FXMLCreacionUserController extends FXMLLoginController implements Initializable {
 
     @FXML
     private Button menu;
@@ -32,17 +43,23 @@ public class FXMLCreacionUserController implements Initializable {
     @FXML
     private AnchorPane navList;
     @FXML
-    private TextField TxtFName;
+    private TextField TxtFName,TxtUser,TxtPwd,TxtDirection,TxtLocalId;
     @FXML
     private TextField TxtLName;
     @FXML
     private TextField TxtMail;
     @FXML
     private TextField TxtCI;
+    @FXML
+    private CheckBox SelectActive;
+    @FXML
+    private ComboBox TxtRole;
+    @FXML
+    private DatePicker selectDate;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        navList.setItems(FXCollections.observableArrayList("Red","Yellow","Blue"));
+        super.initialize(url, rb);
         prepareSlideMenuAnimation();
     }    
 
@@ -68,6 +85,46 @@ public class FXMLCreacionUserController implements Initializable {
                 }
             });
         
+    }
+    
+    public boolean verificarDatos(MouseEvent event){
+        if(this.TxtCI.getText().equals("")||this.TxtFName.getText().equals("")||
+                this.TxtLName.getText().equals("")||this.TxtMail.getText().equals("")||
+                this.TxtUser.getText().equals("")||this.TxtUser.getText().equals("")||
+                this.TxtPwd.getText().equals("")||this.TxtLocalId.getText().equals(""))
+            return false;
+        return true;
+    }
+    
+    public void registrar(MouseEvent event){
+        if(this.verificarDatos(event)){
+            String query_stmt = this.prepararQuery();
+            Statement stmt;
+            try {
+                stmt = super.getConn().createStatement();
+                ResultSet rs = stmt.executeQuery(query_stmt);
+                this.acceptDialogue();
+            } catch (SQLException ex) {
+                this.errorDialogue();
+                Logger.getLogger(FXMLRegistrarProductosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }
+    
+    public String prepararQuery(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        return "INSERT INTO \"LBSASQL\".\"Empleado\"("
+                + "num_cedula, nombres, apellidos, usuario, correo, direccion, "
+                + "contraseña, rol_actual, fecha_contratacion, fecha_actualizacion,"
+                + "empleado activo, id_almacen)	VALUES ('"
+                + this.TxtCI.getText()+","+this.TxtFName.getText()+","+
+                this.TxtLName.getText()+","+this.TxtMail.getText()+","+
+                this.TxtDirection.getText()+","+this.TxtPwd.getText()+","+
+                this.TxtRole.getSelectionModel().getSelectedItem().toString()+","+
+                this.selectDate.getValue().format(formatter)+","+LocalDate.now().format(formatter)
+                +","+true+","+TxtLocalId.getText()+")";
+
     }
     
 }

@@ -28,7 +28,7 @@ public class FXMLInicioAdminController extends ConexionesDataBase implements Ini
     Connection conn;
     
     @FXML
-    private Button BtnLogOut, BtnPermisos, BtnArticulos, BtnVentas;
+    private Button BtnLogOut, BtnArticulos, BtnVentas;
     @FXML
     private SplitPane SplitUsers, SplitInventario, SplitClientes;
     
@@ -61,5 +61,13 @@ public class FXMLInicioAdminController extends ConexionesDataBase implements Ini
             }
     }
     
-    
+    public void goToUsers(MouseEvent event){
+        try{
+                Node n = (Node) event.getSource();
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLBusquedaGenerica.fxml")));
+            }catch(IOException e){
+                System.out.println(e);
+            }
+        
+    }
 }

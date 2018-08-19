@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="748.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLInicioAdministradorController">
+<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="748.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLInicioAdminController">
    <children>
       <AnchorPane layoutX="153.0" prefHeight="43.0" prefWidth="595.0" style="-fx-background-color: #FFFFFF;">
          <children>
@@ -20,22 +20,14 @@
             <Button fx:id="BtnLogOut" layoutX="507.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#logOut" text="Log Out" />
          </children>
       </AnchorPane>
-      <Label prefHeight="43.0" prefWidth="151.0" style="-fx-background-color: #48923A;" text="  SUPERADM" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+      <Label prefHeight="43.0" prefWidth="151.0" style="-fx-background-color: #48923A;" text="  ADMIN" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
       <AnchorPane layoutX="-1.0" layoutY="43.0" prefHeight="480.0" prefWidth="151.0" style="-fx-background-color: #1B1E1A;">
          <children>
-            <Button fx:id="BtnPermisos" layoutY="2.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="151.0" style="-fx-background-color: #1B1E1A;" text="Permisos" textFill="#fffdfd">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" />
-               </graphic>
-            </Button>
-            <Button fx:id="BtnArticulos" layoutX="1.0" layoutY="55.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="151.0" style="-fx-background-color: #1B1E1A;" text="Productos+" textAlignment="CENTER" textFill="#fffefe">
+            <Button fx:id="BtnArticulos" layoutX="1.0" layoutY="14.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="151.0" style="-fx-background-color: #1B1E1A;" text="Productos+" textAlignment="CENTER" textFill="#fffefe">
                <font>
                   <Font size="18.0" />
                </font>
@@ -43,17 +35,15 @@
                   <ImageView fitHeight="39.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
-            <Button fx:id="BtnVentas" layoutY="115.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="152.0" style="-fx-background-color: #1B1E1A;" text="Ventas" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="BtnVentas" layoutX="1.0" layoutY="66.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="152.0" style="-fx-background-color: #1B1E1A;" text="   Ventas" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
-               </graphic>
             </Button>
+            <ImageView fitHeight="32.0" fitWidth="31.0" layoutX="19.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
-      <SplitPane fx:id="SplitUsers" dividerPositions="0.29797979797979796" layoutX="169.0" layoutY="103.0" prefHeight="73.0" prefWidth="221.0">
+      <SplitPane fx:id="SplitUsers" dividerPositions="0.29797979797979796" layoutX="169.0" layoutY="103.0" onMouseClicked="#goToUsers" prefHeight="73.0" prefWidth="221.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="84.0" prefWidth="103.0" style="-fx-background-color: red;">
                <children>
@@ -75,7 +65,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <SplitPane fx:id="SplitInventario" dividerPositions="0.29797979797979796" layoutX="419.0" layoutY="103.0" prefHeight="73.0" prefWidth="200.0">
+      <SplitPane fx:id="SplitInventario" dividerPositions="0.29797979797979796" layoutX="419.0" layoutY="103.0" onMouseClicked="#goToUsers" prefHeight="73.0" prefWidth="200.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: green;">
                <children>
@@ -97,7 +87,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <SplitPane fx:id="SplitClientes" dividerPositions="0.29797979797979796" layoutX="169.0" layoutY="223.0" prefHeight="73.0" prefWidth="221.0">
+      <SplitPane fx:id="SplitClientes" dividerPositions="0.29797979797979796" layoutX="169.0" layoutY="223.0" onMouseClicked="#goToUsers" prefHeight="73.0" prefWidth="221.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: blue;">
                <children>

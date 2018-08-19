@@ -23,7 +23,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author user
  */
-public class FXMLInicioAdministradorController extends ConexionesDataBase implements Initializable {
+public class FXMLInicioSuperAdminController extends ConexionesDataBase implements Initializable {
 
     Connection conn;
     
@@ -58,6 +58,16 @@ public class FXMLInicioAdministradorController extends ConexionesDataBase implem
             }catch(IOException e){
                 System.out.println(e);
             }
+    }
+    
+    public void goToUsers(MouseEvent event){
+        try{
+                Node n = (Node) event.getSource();
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLBusquedaGenerica.fxml")));
+            }catch(IOException e){
+                System.out.println(e);
+            }
+        
     }
     
 }

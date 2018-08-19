@@ -128,4 +128,11 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
         return "";
     }
     
+     public void acceptDialogue(){
+        JOptionPane.showMessageDialog(null, "Se han guardado los datos exitosamente", "Ingreso Correcto", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void errorDialogue(){
+        JOptionPane.showMessageDialog(null, "Problema con conexion", "Error de ingreso", JOptionPane.ERROR_MESSAGE);
+    }
 }
