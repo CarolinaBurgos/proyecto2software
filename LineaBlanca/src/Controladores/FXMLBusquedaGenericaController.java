@@ -73,17 +73,17 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
     public void BuscarClientes(MouseEvent event){
         
         Statement state;
+        String query_llamada_procedure = "SELECT BuscarEmpleadoUsuario('"+this.ClientesCI.getText()+"')";
         try {
             state = super.getConnection().createStatement();
-            String query_llamada_procedure =  " SELECT * FROM \"LBSASQL\".\"Cliente\" where "
-                    + "id_cliente='" + this.ClientesCI.getText()+ "'";
             ResultSet rs = state.executeQuery(query_llamada_procedure);
+            this.FillTables(rs);
             if(rs.next())
                 setearDatos(rs);
             
         } catch (SQLException ex) {
             Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }   
     }
     
     public void setearDatos(ResultSet rs) throws SQLException{
@@ -93,19 +93,19 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
         
     }
     
-    public void BuscarUsers(MouseEvent event){
+    public void BuscarUsers(MouseEvent event){        
         Statement state;
-        String query_llamada_procedure =  " SELECT * FROM \"LBSASQL\".\"Empleado\" where "
-                    + "num_cedula='" + this.UserCI.getText()+ "'";
+        String query_llamada_procedure = "SELECT BuscarEmpleadoUsuario('"+this.UserCI.getText()+"')";
         try {
             state = super.getConnection().createStatement();
             ResultSet rs = state.executeQuery(query_llamada_procedure);
+            this.FillTables(rs);
             if(rs.next())
                 setearDatos(rs);
             
         } catch (SQLException ex) {
             Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }        
     }
     
     public void setearDatosUser(ResultSet sr) throws SQLException{
@@ -130,8 +130,7 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
             
         } catch (SQLException ex) {
             Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }       
         
     }
     
