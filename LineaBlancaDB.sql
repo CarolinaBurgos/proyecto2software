@@ -104,6 +104,7 @@ COMMENT ON TABLE "LBSASQL"."telefono_empleado"
 -- -----------------------------------------------------
 CREATE TABLE "LBSASQL"."Articulo" (
   "id_articulo" SERIAL UNIQUE NOT NULL,
+  "nombre" VARCHAR(50),
   "descripcion" VARCHAR(50),
   "categoria" VARCHAR(50),
   "marca" VARCHAR(50),
@@ -662,54 +663,68 @@ CREATE OR REPLACE FUNCTION BuscarEmpleadoUsuario(IN cedula CHAR(10), OUT nameEM 
 		END																											 
 	$BODY$ 	LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE FUNCTION BuscarArticuloCategoria(IN cat VARCHAR(50), OUT cod int, OUT des VARCHAR(50),OUT cat2 VARCHAR(50), OUT mar VARCHAR(50), OUT col VARCHAR(16), OUT consumo int, OUT precio FLOAT, OUT stck int)
+CREATE OR REPLACE FUNCTION BuscarArticuloCategoria(IN cat VARCHAR(50), OUT cod int, OUT nom VARCHAR(50), OUT des VARCHAR(50),OUT cat2 VARCHAR(50), OUT mar VARCHAR(50), OUT col VARCHAR(16), OUT consumo int, OUT precio FLOAT, OUT stck int)
 	RETURNS SETOF RECORD AS $BODY$
 		DECLARE
 			regCat RECORD;
-			regID RECORD;
 		BEGIN																														 
-			FOR regCAT IN SELECT id_articulo, descripcion, categoria, marca, color, consumo_electrico, precio_cliente_sin_iva FROM "LBSASQL"."Articulo" WHERE categoria = cat LOOP
+			FOR regCAT IN SELECT art.id_articulo, art.nombre, art.descripcion, art.categoria, art.marca, art.color, art.consumo_electrico, art.precio_cliente_sin_iva, artA.cantidad_articulo_disponible FROM "LBSASQL"."Articulo" art JOIN "LBSASQL"."Articulo_almacenado" artA ON art.id_articulo = artA.id_articulo WHERE art.categoria = cat LOOP
 				cod := regCAT.id_articulo;
+				nom := regCAT.nombre;
 				des := regCAT.descripcion;
 				cat2 := regCAT.categoria;
 				mar := regCAT.marca;
 				col := regCAT.color;
 				consumo := regCAT.consumo_electrico;
 				precio := regCAT.precio_cliente_sin_iva;
-				FOR regID IN SELECT cantidad_articulo_disponible FROM "LBSASQL"."Articulo_almacenado" WHERE cod = "LBSASQL"."Articulo_almacenado".id_articulo LOOP
-					stck := regID.cantidad_articulo_disponible;
-					END LOOP;
+				stck := regCAT.cantidad_articulo_disponible;
 				RETURN NEXT;	
 				END LOOP;
 				RETURN ;																																	
 		END																											 
 $BODY$ LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE FUNCTION BuscarArticuloDescripcion(IN d VARCHAR(50), OUT cod int, OUT des VARCHAR(50),OUT cat2 VARCHAR(50), OUT mar VARCHAR(50), OUT col VARCHAR(16), OUT consumo int, OUT precio FLOAT, OUT stck int)
+CREATE OR REPLACE FUNCTION BuscarArticuloDescripcion(IN d VARCHAR(50), OUT cod int, OUT nom VARCHAR(50), OUT des VARCHAR(50),OUT cat2 VARCHAR(50), OUT mar VARCHAR(50), OUT col VARCHAR(16), OUT consumo int, OUT precio FLOAT, OUT stck int)
 	RETURNS SETOF RECORD AS $BODY$
 		DECLARE
 			regCat RECORD;
-			regID RECORD;
 		BEGIN																														 
-			FOR regCAT IN SELECT id_articulo, descripcion, categoria, marca, color, consumo_electrico, precio_cliente_sin_iva FROM "LBSASQL"."Articulo" WHERE descripcion = d LOOP
+			FOR regCAT IN SELECT art.id_articulo, art.nombre, art.descripcion, art.categoria, art.marca, art.color, art.consumo_electrico, art.precio_cliente_sin_iva, artA.cantidad_articulo_disponible FROM "LBSASQL"."Articulo" art JOIN "LBSASQL"."Articulo_almacenado" artA ON art.id_articulo = artA.id_articulo WHERE art.descripcion = d LOOP
 				cod := regCAT.id_articulo;
+				nom := regCAT.nombre;
 				des := regCAT.descripcion;
 				cat2 := regCAT.categoria;
 				mar := regCAT.marca;
 				col := regCAT.color;
 				consumo := regCAT.consumo_electrico;
 				precio := regCAT.precio_cliente_sin_iva;
-				FOR regID IN SELECT cantidad_articulo_disponible FROM "LBSASQL"."Articulo_almacenado" WHERE cod = "LBSASQL"."Articulo_almacenado".id_articulo LOOP
-					stck := regID.cantidad_articulo_disponible;
-					END LOOP;
+				stck := regCAT.cantidad_articulo_disponible;
 				RETURN NEXT;	
 				END LOOP;
 				RETURN ;																																	
 		END																											 
 $BODY$ LANGUAGE 'plpgsql';
 
---SELECT BuscarArticuloDescripcion('Cocina Induccion 3 hornillas');
-
+CREATE OR REPLACE FUNCTION BuscarArticuloNombre(IN n VARCHAR(50), OUT cod int, OUT nom VARCHAR(50), OUT des VARCHAR(50),OUT cat2 VARCHAR(50), OUT mar VARCHAR(50), OUT col VARCHAR(16), OUT consumo int, OUT precio FLOAT, OUT stck int)
+	RETURNS SETOF RECORD AS $BODY$
+		DECLARE
+			regCat RECORD;
+		BEGIN																														 
+			FOR regCAT IN SELECT art.id_articulo, art.nombre, art.descripcion, art.categoria, art.marca, art.color, art.consumo_electrico, art.precio_cliente_sin_iva, artA.cantidad_articulo_disponible FROM "LBSASQL"."Articulo" art JOIN "LBSASQL"."Articulo_almacenado" artA ON art.id_articulo = artA.id_articulo WHERE art.nombre = n LOOP
+				cod := regCAT.id_articulo;
+				nom := regCAT.nombre;
+				des := regCAT.descripcion;
+				cat2 := regCAT.categoria;
+				mar := regCAT.marca;
+				col := regCAT.color;
+				consumo := regCAT.consumo_electrico;
+				precio := regCAT.precio_cliente_sin_iva;
+				stck := regCAT.cantidad_articulo_disponible;
+				RETURN NEXT;	
+				END LOOP;
+				RETURN ;																																	
+		END																											 
+$BODY$ LANGUAGE 'plpgsql';
 
 CREATE OR REPLACE FUNCTION BuscarCompra(IN idCompra int, OUT idArticulo int, OUT descrip VARCHAR(50), OUT marc VARCHAR(50), OUT precio float, OUT cantidad float) 
 	RETURNS SETOF RECORD AS $BODY$
@@ -726,7 +741,7 @@ CREATE OR REPLACE FUNCTION BuscarCompra(IN idCompra int, OUT idArticulo int, OUT
 				END LOOP;
 				RETURN ;																																	
 		END																											 
-	$BODY$ 	LANGUAGE 'plpgsql'
+	$BODY$ 	LANGUAGE 'plpgsql';
 --select BuscarCompra(2) -- compra 2
 
 CREATE OR REPLACE FUNCTION  IngresarCompra(in tipoComprobante VARCHAR(3),in montocompra float,in cliente int,in empleado char(10),out identificador int) 

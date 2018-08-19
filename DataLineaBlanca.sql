@@ -1,13 +1,13 @@
 
 INSERT INTO "LBSASQL"."Articulo"(
-	id_articulo, descripcion, categoria, marca, color, consumo_electrico, precio_cliente_sin_iva, costo_proveedor, reg_eliminado)
-	VALUES (1, 'Cocina Induccion 1 hornilla','cocinas', 'INDURAMA', 'Blanca', 30, 350, 260, false),
-		   (2, 'Cocina Induccion 3 hornillas','cocinas', 'INDURAMA', 'Beige', 105, 500, 380, false),
-		   (3, 'Refrigeradora 1 puerta','refrigeradora', 'DUREX', 'Negra', 662 , 479, 400, false),
-		   (4, 'Refrigeradora 2 puerta','refrigeradora', 'DUREX', 'Blanca', 800 , 700, 600, false),
-		   (5, 'Lavadora Carga Superior','lavadora', 'Mabe', 'Blanca', 400 , 380, 280, false),
-		   (6, 'Lavadora Carga Frontal','lavadora', 'Mabe', 'Blanca', 400 , 380, 280, false),
-		   (7, 'Lavadora Secadora','lavadora', 'Mabe', 'Gris', 510 , 650, 550, false);
+	id_articulo, nombre, descripcion, categoria, marca, color, consumo_electrico, precio_cliente_sin_iva, costo_proveedor, reg_eliminado)
+	VALUES (1, 'Cocina','Cocina Induccion 1 hornilla','cocina', 'INDURAMA', 'Blanca', 30, 350, 260, false),
+		   (2, 'Cocina','Cocina Induccion 3 hornillas','cocina', 'INDURAMA', 'Beige', 105, 500, 380, false),
+		   (3, 'Regrigeradora','Refrigeradora 1 puerta','refrigeradora', 'DUREX', 'Negra', 662 , 479, 400, false),
+		   (4, 'Regrigeradora','Refrigeradora 2 puerta','refrigeradora', 'DUREX', 'Blanca', 800 , 700, 600, false),
+		   (5, 'Lavadora','Lavadora Carga Superior','lavadora', 'Mabe', 'Blanca', 400 , 380, 280, false),
+		   (6, 'Lavadora','Lavadora Carga Frontal','lavadora', 'Mabe', 'Blanca', 400 , 380, 280, false),
+		   (7, 'Lavadora','Lavadora Secadora','lavadora', 'Mabe', 'Gris', 510 , 650, 550, false);
 	
 --select * from "LBSASQL"."Articulo" WHERE categoria like '%lavadora%' 
 
