@@ -15,7 +15,7 @@
    <children>
       <TabPane layoutX="-8.0" layoutY="89.0" prefHeight="505.0" prefWidth="786.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="CLIENTES">
+          <Tab fx:id="TabClientes" text="CLIENTES">
                <content>
                   <AnchorPane fx:id="AnchorCliente" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #883A47;">
                      <children>
@@ -24,14 +24,14 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="143.0" layoutY="94.0" />
-                        <TextField layoutX="143.0" layoutY="163.0" prefHeight="31.0" prefWidth="597.0" />
+                        <TextField fx:id="ClientesCI" layoutX="143.0" layoutY="94.0" />
+                        <TextField fx:id="ClientesNombre" layoutX="143.0" layoutY="163.0" prefHeight="31.0" prefWidth="597.0" />
                         <Label layoutX="34.0" layoutY="167.0" text="Nombre" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Button layoutX="432.0" layoutY="94.0" mnemonicParsing="false" text="BUSCAR">
+                        <Button fx:id="ClientesBuscar" layoutX="432.0" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#BuscarClientes" text="BUSCAR">
                            <font>
                               <Font name="System Bold Italic" size="15.0" />
                            </font>
@@ -41,8 +41,8 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="143.0" layoutY="234.0" prefHeight="31.0" prefWidth="596.0" />
-                        <TextField layoutX="143.0" layoutY="300.0" prefHeight="31.0" prefWidth="596.0" />
+                        <TextField fx:id="ClientesMail" layoutX="143.0" layoutY="234.0" prefHeight="31.0" prefWidth="596.0" />
+                        <TextField fx:id="ClientesDireccion" layoutX="143.0" layoutY="300.0" prefHeight="31.0" prefWidth="596.0" />
                         <Label layoutX="32.0" layoutY="302.0" text="Dirección" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="18.0" />
@@ -51,17 +51,17 @@
                      </children></AnchorPane>
                </content>
             </Tab>
-            <Tab text="USUARIOS">
+            <Tab fx:id="TabUsers" text="USUARIOS">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="466.0" prefWidth="786.0" style="-fx-background-color: #883A47;">
                      <children>
-                        <TextField layoutX="158.0" layoutY="103.0" prefHeight="31.0" prefWidth="223.0" />
+                        <TextField fx:id="UserCI" layoutX="158.0" layoutY="103.0" prefHeight="31.0" prefWidth="223.0" />
                         <Label layoutX="43.0" layoutY="106.0" text="C.I." textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Button layoutX="434.0" layoutY="103.0" mnemonicParsing="false" text="Buscar">
+                        <Button fx:id="UserBuscar" layoutX="434.0" layoutY="103.0" mnemonicParsing="false" onMouseClicked="#BuscarUsers" text="Buscar">
                            <font>
                               <Font name="System Bold Italic" size="15.0" />
                            </font>
@@ -71,7 +71,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="524.0" layoutY="166.0" prefHeight="31.0" prefWidth="219.0" />
+                        <TextField fx:id="UserApellido" layoutX="524.0" layoutY="166.0" prefHeight="31.0" prefWidth="219.0" />
                         <Label layoutX="43.0" layoutY="168.0" text="Nombres" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="18.0" />
@@ -82,9 +82,9 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="157.0" layoutY="279.0" prefHeight="31.0" prefWidth="585.0" />
-                        <TextField layoutX="158.0" layoutY="166.0" prefHeight="31.0" prefWidth="222.0" />
-                        <TextField layoutX="158.0" layoutY="336.0" prefHeight="31.0" prefWidth="584.0" />
+                        <TextField fx:id="UserMail" layoutX="157.0" layoutY="279.0" prefHeight="31.0" prefWidth="585.0" />
+                        <TextField fx:id="UserNombre" layoutX="158.0" layoutY="166.0" prefHeight="31.0" prefWidth="222.0" />
+                        <TextField fx:id="UserDireccion" layoutX="158.0" layoutY="336.0" prefHeight="31.0" prefWidth="584.0" />
                         <Label layoutX="44.0" layoutY="338.0" text="Dirección" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="18.0" />
@@ -95,8 +95,8 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="158.0" layoutY="222.0" prefHeight="31.0" prefWidth="222.0" />
-                        <TextField layoutX="524.0" layoutY="222.0" prefHeight="31.0" prefWidth="218.0" />
+                        <TextField fx:id="UserCargo" layoutX="158.0" layoutY="222.0" prefHeight="31.0" prefWidth="222.0" />
+                        <TextField fx:id="TxtUser" layoutX="524.0" layoutY="222.0" prefHeight="31.0" prefWidth="218.0" />
                         <Label layoutX="428.0" layoutY="224.0" text="Usuario" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="18.0" />
@@ -105,7 +105,7 @@
                      </children></AnchorPane>
               </content>
             </Tab>
-          <Tab text="ARTICULOS">
+          <Tab fx:id="TabArticulos" text="ARTICULOS">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #883A47;">
                      <children>
@@ -124,21 +124,21 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="465.0" layoutY="81.0" />
+                        <TextField fx:id="TxtNombre" layoutX="465.0" layoutY="81.0" />
                         <Label layoutX="358.0" layoutY="83.0" text="Nombre" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="206.0" layoutY="28.0" prefHeight="31.0" prefWidth="446.0" promptText="Elegir tipo de búsqueda..." />
-                        <ComboBox layoutX="158.0" layoutY="81.0" prefHeight="31.0" prefWidth="186.0" promptText="Elegir categoría..." />
-                        <Button layoutX="683.0" layoutY="95.0" mnemonicParsing="false" text="Buscar">
+                        <ComboBox fx:id="ComboElectBus" layoutX="206.0" layoutY="28.0" prefHeight="31.0" prefWidth="446.0" promptText="Elegir tipo de búsqueda..." />
+                        <ComboBox fx:id="ComboElectCat" layoutX="158.0" layoutY="81.0" prefHeight="31.0" prefWidth="186.0" promptText="Elegir categoría..." />
+                        <Button fx:id="BtnBuscar" layoutX="683.0" layoutY="95.0" mnemonicParsing="false" onMouseClicked="#BuscarArticulos" text="Buscar">
                            <font>
                               <Font name="System Bold Italic" size="15.0" />
                            </font>
                         </Button>
-                        <TextField layoutX="158.0" layoutY="126.0" prefHeight="31.0" prefWidth="497.0" />
-                        <TableView layoutX="29.0" layoutY="186.0" prefHeight="262.0" prefWidth="734.0">
+                        <TextField fx:id="TxtDescripcion" layoutX="158.0" layoutY="126.0" prefHeight="31.0" prefWidth="497.0" />
+                        <TableView fx:id="TableContent" layoutX="29.0" layoutY="186.0" prefHeight="262.0" prefWidth="734.0">
                           <columns>
                             <TableColumn prefWidth="74.0" text="Código" />
                             <TableColumn prefWidth="106.0" text="Descripción" />
@@ -165,7 +165,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button layoutX="669.0" layoutY="35.0" mnemonicParsing="false" text="SALIR">
+      <Button fx:id="BtnSalir" layoutX="669.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#logOut" text="SALIR">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>

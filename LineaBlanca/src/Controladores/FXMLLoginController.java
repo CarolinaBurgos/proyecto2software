@@ -54,7 +54,11 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
     public void initialize(URL  url, ResourceBundle rb) {
         super.connectar();
         
-    }     
+    }  
+    
+    public Connection getConnection(){
+        return super.getConn();
+    }
     
     public void Conectarse(MouseEvent event) throws IOException {
         String usr = lblUser.getText();
@@ -88,7 +92,6 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
-//               System.out.println(rs.getNString(1)+ rs.getNString(2)+ rs.getNString(3)+ rs.getNString(4)+ rs.getNString(5)+rs.getNString(7)+ rs.getNString(8)+ Date.valueOf(rs.getNString(9)));
                 this.emp = this.setEmpleado(rs);
                 return rs.getString(8); //cargo
             }else{

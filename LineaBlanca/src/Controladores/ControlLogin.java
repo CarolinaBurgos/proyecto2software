@@ -24,6 +24,16 @@ public class ControlLogin  extends ConexionesDataBase{
         ConexionesDataBase.conect();
         conn = super.getConn();    
     }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
+    }
+    
+    
     
     
 }
