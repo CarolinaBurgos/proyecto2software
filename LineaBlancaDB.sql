@@ -711,7 +711,7 @@ $BODY$ LANGUAGE 'plpgsql';
 --SELECT BuscarArticuloDescripcion('Cocina Induccion 3 hornillas');
 
 
-CREATE OR REPLACE FUNCTION BuscarFactura(IN idCompra int, OUT idArticulo int, OUT descrip VARCHAR(50), OUT marc VARCHAR(50), OUT precio float, OUT cantidad float) 
+CREATE OR REPLACE FUNCTION BuscarCompra(IN idCompra int, OUT idArticulo int, OUT descrip VARCHAR(50), OUT marc VARCHAR(50), OUT precio float, OUT cantidad float) 
 	RETURNS SETOF RECORD AS $BODY$
 		DECLARE
 			reg RECORD;																														
@@ -727,4 +727,37 @@ CREATE OR REPLACE FUNCTION BuscarFactura(IN idCompra int, OUT idArticulo int, OU
 				RETURN ;																																	
 		END																											 
 	$BODY$ 	LANGUAGE 'plpgsql'
---select BuscarFactura(2) -- compra 2
+--select BuscarCompra(2) -- compra 2
+
+CREATE OR REPLACE FUNCTION  IngresarCompra(in tipoComprobante VARCHAR(3),in montocompra float,in cliente int,in empleado char(10),out identificador int) 
+	RETURNS SETOF INT AS $BODY$
+		DECLARE
+			reg RECORD;																														
+		BEGIN	
+			INSERT INTO "LBSASQL"."Compra"(tipo_comprobante_venta, fecha_compra, monto, id_cliente, id_empleado, reg_eliminado)
+			VALUES (tipoComprobante, CURRENT_TIMESTAMP,montocompra,cliente,empleado, false);
+			
+			FOR reg IN SELECT id_compra  FROM "LBSASQL"."Compra" order BY id_compra DESC LIMIT 1 LOOP
+				identificador := reg.id_compra;
+				RETURN NEXT;	
+				END LOOP;
+				RETURN ;																																	
+		END																											 
+	$BODY$ 	LANGUAGE 'plpgsql';
+		
+--select IngresarCompra('fac',1111,6,'234757689')
+																															 
+--para obtener el ultimo id de compra
+SELECT id_compra FROM  "LBSASQL"."Compra" order BY id_compra DESC LIMIT 1;
+
+																															 
+CREATE OR REPLACE FUNCTION IngresarArticulosVendidos(in idCompra int,in idArticulo int,in cantidadArticulo int)  
+		RETURNS VOID AS	$BODY$																															 
+		BEGIN	
+			INSERT INTO "LBSASQL"."Articulos_vendidos"(
+				 id_compra, id_articulo, cantidad_articulo)
+			VALUES (idCompra, idArticulo, cantidadArticulo);
+
+		END;
+$BODY$  LANGUAGE 'plpgsql' VOLATILE;
+																							 
