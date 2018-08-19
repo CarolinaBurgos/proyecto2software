@@ -5,10 +5,24 @@
  */
 package Controladores;
 
+import Conexion.ConexionesDataBase;
+import java.sql.Connection;
+
 /**
  *
  * @author Carolina
  */
-public class ControlVendedor {
+public class ControlVendedor extends ConexionesDataBase{
+    
+        protected Connection conexion; 
+    
+    public ControlVendedor(){
+        
+    }
+    
+    public void connectar(){
+        ConexionesDataBase.conect();
+        conexion = super.getConn();    
+    }
     
 }
