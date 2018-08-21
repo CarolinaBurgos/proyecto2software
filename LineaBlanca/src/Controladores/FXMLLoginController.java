@@ -34,7 +34,8 @@ import javax.swing.JOptionPane;
  */
 public class FXMLLoginController extends ControlLogin implements Initializable {
     
-    
+    static Empleado user = null;
+
     
     @FXML
     private TextField lblUser;
@@ -89,6 +90,7 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
     public String requestUser(Connection conn,String user, String psswd){
         try {
             String sql = " SELECT * FROM \"LBSASQL\".\"Empleado\" where usuario='" + user + "' and contraseña='" + psswd + "'";
+            
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
@@ -104,7 +106,7 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
     }
     
     public Empleado setEmpleado(ResultSet rs){
-        Empleado user = null;
+       // Empleado user = null;
         try {
         user = new Empleado(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(7), rs.getString(8), new Date(rs.getTimestamp(9).getTime()), new Date(rs.getTimestamp(10).getTime()), Boolean.getBoolean(rs.getString(11)));
             user.toString();

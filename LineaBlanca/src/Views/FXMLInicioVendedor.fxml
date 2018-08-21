@@ -13,23 +13,23 @@
 <AnchorPane id="AnchorPane" prefHeight="607.0" prefWidth="918.0" style="-fx-background-color: #C0C1C7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLInicioVendedorController">
    <children>
 
-      <Button fx:id="BtnGenerarVenta" layoutX="190.0" layoutY="539.0" mnemonicParsing="false" style="-fx-background-color: #31F911;" text="Generar Venta" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button fx:id="BtnGenerarVenta" layoutX="741.0" layoutY="539.0" mnemonicParsing="false" style="-fx-background-color: #31F911;" text="Generar Venta" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
-      <TextField fx:id="TxtNombre" layoutX="765.0" layoutY="74.0" prefHeight="29.0" prefWidth="139.0" promptText="Nombre/Código" text="Numero de factura" />
-      <Button fx:id="BtnBuscar" layoutX="689.0" layoutY="129.0" mnemonicParsing="false" onMouseClicked="#FillTables" onTouchPressed="#FillTables" prefHeight="29.0" prefWidth="139.0" style="-fx-background-color: Green;" text="Ingresar Articulo" textFill="#ffe9e9">
+      <TextField fx:id="TxtNumFactura" layoutX="765.0" layoutY="74.0" prefHeight="29.0" prefWidth="139.0" promptText="Numero de factura" />
+      <Button fx:id="BtnBuscar" layoutX="749.0" layoutY="129.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="139.0" style="-fx-background-color: Green;" text="Ingresar Articulo" textFill="#ffe9e9">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
-      <TableView fx:id="tablaProductos" layoutX="174.0" layoutY="222.0" onMouseClicked="#FillTables" prefHeight="215.0" prefWidth="737.0">
+      <TableView fx:id="tablaProductos" editable="true" layoutX="174.0" layoutY="222.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="215.0" prefWidth="737.0">
         <columns>
-          <TableColumn prefWidth="83.0" text="ID-Producto" />
-          <TableColumn prefWidth="106.99996948242188" text="Descripcion" />
-            <TableColumn prefWidth="88.0" text="Marca" />
-            <TableColumn prefWidth="81.00009155273438" text="Precio" />
-            <TableColumn prefWidth="92.0" text="Cantidad" />
-            <TableColumn prefWidth="95.0" text="Precio Total Producto" />
+          <TableColumn fx:id="tablaIdProducto" prefWidth="83.0" text="ID-Producto" />
+          <TableColumn fx:id="tablaDescripcion" prefWidth="106.99996948242188" text="Descripcion" />
+            <TableColumn fx:id="tablaMarca" prefWidth="93.0" text="Marca" />
+            <TableColumn fx:id="tablaPrecio" prefWidth="152.0" text="Precio" />
+            <TableColumn fx:id="tablaCantidad" prefWidth="74.0" text="Cantidad" />
+            <TableColumn fx:id="tablaPrecioTotal" prefWidth="171.0" text="Precio Total" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -61,17 +61,21 @@
          </children>
       </AnchorPane>
       <AnchorPane layoutX="593.0" layoutY="-1.0" prefHeight="49.0" prefWidth="295.0" />
-      <ComboBox fx:id="btnCategorias" layoutX="181.0" layoutY="129.0" onAction="#inicializar" opacity="0.93" prefHeight="28.0" prefWidth="462.0" promptText="Articulos" />
+      <ComboBox fx:id="btnCategorias" layoutX="181.0" layoutY="129.0" opacity="0.93" prefHeight="28.0" prefWidth="462.0" promptText="Articulos" />
       <TextField fx:id="TxtCIclient" layoutX="181.0" layoutY="90.0" prefHeight="26.0" prefWidth="207.0" promptText="CI cliente" />
-      <Label layoutX="515.0" layoutY="458.0" text="Valor total" />
-      <Label fx:id="TxtValornoIva" layoutX="725.0" layoutY="458.0" text="_________" />
-      <Label layoutX="515.0" layoutY="491.0" text="valor total con IVA" />
-      <Label fx:id="TxtValorIva" layoutX="725.0" layoutY="491.0" text="_________" />
-      <AnchorPane layoutX="166.0" layoutY="-2.0" prefHeight="65.0" prefWidth="752.0" style="-fx-background-color: #9DAAFA;">
+      <Label fx:id="TxtValor" layoutX="515.0" layoutY="458.0" text="Valor total" />
+      <Label fx:id="TxtValorNumerico" layoutX="725.0" layoutY="458.0" text="_________" />
+      <Label fx:id="TxtValorIva" layoutX="515.0" layoutY="491.0" text="valor total con IVA" />
+      <Label fx:id="TxtValorIvaNumerico" layoutX="725.0" layoutY="491.0" text="_________" />
+      <AnchorPane layoutX="167.0" prefHeight="65.0" prefWidth="752.0" style="-fx-background-color: #9DAAFA;">
          <children>
             <Button fx:id="BtnLogOut" layoutX="670.0" layoutY="16.0" mnemonicParsing="false" onMouseClicked="#logOut" text="Log out" />
          </children>
       </AnchorPane>
-      <Button fx:id="btnBuscarFactura" layoutX="643.0" layoutY="75.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="106.0" text="Buscar Factura" />
+      <Button fx:id="btnBuscarFactura" layoutX="642.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#BuscarCompra" prefHeight="28.0" prefWidth="106.0" text="Buscar Factura" />
+      <Label fx:id="TxtNombreVendedor" layoutX="197.0" layoutY="514.0" prefHeight="25.0" prefWidth="106.0" textFill="#121957" />
+      <Label fx:id="TxtVendedor" layoutX="201.0" layoutY="485.0" prefHeight="29.0" prefWidth="98.0" text="Vendedor" />
+      <Label fx:id="TxtCedulaVendedor" layoutX="198.0" layoutY="545.0" prefHeight="25.0" prefWidth="106.0" />
+      <TextField fx:id="TxtCantidad" layoutX="658.0" layoutY="131.0" prefHeight="25.0" prefWidth="74.0" promptText="Cantidad" />
    </children>
 </AnchorPane>

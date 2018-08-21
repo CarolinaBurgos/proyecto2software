@@ -14,7 +14,7 @@ public class Articulo {
     private String descripcion;
     private double precio_sin_iva;
     private double costo_proveedor;
-    private String marca;
+    private String marca;    
 
     public Articulo(int id, String descripcion, double precio_sin_iva, double costo_proveedor, String marca) {
         this.id = id;
@@ -68,6 +68,11 @@ public class Articulo {
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    @Override
+    public String toString() {
+        return "Articulo{" + "id=" + id + ", descripcion=" + descripcion + ", precio_sin_iva=" + precio_sin_iva + ", costo_proveedor=" + costo_proveedor + ", marca=" + marca + '}';
     }
     
     
