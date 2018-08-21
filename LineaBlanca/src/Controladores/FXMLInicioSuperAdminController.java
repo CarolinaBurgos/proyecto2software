@@ -45,7 +45,7 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
      public void logOut(MouseEvent event){
         try{
                 Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLLogin.fxml")));
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
             }catch(IOException e){
                 System.out.println(e);
             }
@@ -54,7 +54,7 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
     public void crearProducto(MouseEvent event){
         try{
                 Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLRegistrarProductos.fxml")));
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLRegistrarProductos.fxml")));
             }catch(IOException e){
                 System.out.println(e);
             }
@@ -63,7 +63,7 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
     public void goToUsers(MouseEvent event){
         try{
                 Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLBusquedaGenerica.fxml")));
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLBusquedaGenerica.fxml")));
             }catch(IOException e){
                 System.out.println(e);
             }

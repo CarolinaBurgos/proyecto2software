@@ -159,7 +159,7 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
         String view =returnView(this.getEmpleado().getPermiso());
         try{
                 Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLInicio"+view+".fxml")));
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLInicio"+view+".fxml")));
             }catch(IOException e){
                 System.out.println(e);
             }

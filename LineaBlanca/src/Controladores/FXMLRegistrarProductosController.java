@@ -108,7 +108,7 @@ public class FXMLRegistrarProductosController extends FXMLLoginController implem
         
         try{
                 Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLOInicio"+permiso+".fxml")));
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLOInicio"+permiso+".fxml")));
             }catch(IOException e){
                 System.out.println(e);
             }

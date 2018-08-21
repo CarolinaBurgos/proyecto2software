@@ -159,7 +159,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
         
         try{
                 Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLRegistrarClientes.fxml")));
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLRegistrarClientes.fxml")));
             }catch(IOException e){
                 System.out.println(e);
             }
@@ -168,7 +168,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     public void logOut(MouseEvent event){
         try{
                 Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/lineablanca/FXMLLogin.fxml")));
+                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
             }catch(IOException e){
                 System.out.println(e);
             }
