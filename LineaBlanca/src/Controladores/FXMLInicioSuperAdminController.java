@@ -49,7 +49,7 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
             }catch(IOException e){
                 System.out.println(e);
             }
-    }
+    }   
      
     public void crearProducto(MouseEvent event){
         try{

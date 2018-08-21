@@ -69,12 +69,30 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     
     @FXML
     private Label TxtValor,TxtValorIva,TxtValorNumerico,TxtValorIvaNumerico,TxtVendedor,TxtNombreVendedor,TxtCedulaVendedor;
-
-    
-            
+ 
     private Connection conn;
     
     private ObservableList<ObservableList> data;
+    
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        super.connectar();
+        conn = this.getConn();
+        this.TxtNombreVendedor.setText(FXMLLoginController.user.getNombre()+" "+FXMLLoginController.user.getApellido());
+        this.TxtCedulaVendedor.setText(FXMLLoginController.user.getId_entidad());
+        llenarComboBoxArticulo();
+        tablaIdProducto.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tablaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        tablaMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
+        tablaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio_sin_iva"));
+        tablaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+        tablaPrecioTotal.setCellValueFactory(new PropertyValueFactory<>("totalArticulo"));
+        //precio_sin_iva
+    }   
+    
     
     @FXML
     public void llenarComboBoxArticulo(){
@@ -112,24 +130,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     
     
     
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        super.connectar();
-        conn = this.getConn();
-        this.TxtNombreVendedor.setText(FXMLLoginController.user.getNombre()+" "+FXMLLoginController.user.getApellido());
-        this.TxtCedulaVendedor.setText(FXMLLoginController.user.getId_entidad());
-        llenarComboBoxArticulo();
-        tablaIdProducto.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tablaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        tablaMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
-        tablaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio_sin_iva"));
-        tablaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-        tablaPrecioTotal.setCellValueFactory(new PropertyValueFactory<>("totalArticulo"));
-        //precio_sin_iva
-    }   
+    
 
      
     
@@ -169,6 +170,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
         try{
                 Node n = (Node) event.getSource();
                 n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
+                
             }catch(IOException e){
                 System.out.println(e);
             }
