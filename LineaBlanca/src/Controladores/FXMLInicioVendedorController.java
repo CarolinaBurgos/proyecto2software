@@ -81,7 +81,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     public void initialize(URL url, ResourceBundle rb) {
         super.connectar();
         conn = this.getConn();
-        this.TxtNombreVendedor.setText(FXMLLoginController.user.getNombre()+" "+FXMLLoginController.user.getApellido());
+        this.TxtNombreVendedor.setText(FXMLLoginController.user.getNombre());
         this.TxtCedulaVendedor.setText(FXMLLoginController.user.getId_entidad());
         llenarComboBoxArticulo();
         tablaIdProducto.setCellValueFactory(new PropertyValueFactory<>("id"));

@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package Exceptions.Entity;
 
 /**
  *
- * @author Angel Moya
+ * @author Toshiba
  */
-public interface Cliente{
-    
-    public boolean validarID();
+public class InvalidEntityIDException extends Exception{
+    public InvalidEntityIDException(String message) {
+        super(message);
+    }
     
 }

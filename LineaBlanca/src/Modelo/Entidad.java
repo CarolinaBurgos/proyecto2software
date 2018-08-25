@@ -10,12 +10,17 @@ package Modelo;
  * @author Angel Moya
  */
 public class Entidad {
+    
+    
+    //atributos
     protected String id_entidad;
     protected String nombre;
     protected String correo;
     protected String telefono;
     protected String direccion;
 
+    
+    //constructores
     public Entidad(String id_entidad, String nombre, String correo, String telefono, String direccion) {
         this.id_entidad = id_entidad;
         this.nombre = nombre;
@@ -24,10 +29,19 @@ public class Entidad {
         this.direccion = direccion;
     }
 
+   
     public Entidad(String id_entidad, String nombre, String correo) {
         this.id_entidad = id_entidad;
         this.nombre = nombre;
         this.correo = correo;
+    }
+
+    public Entidad() {
+        id_entidad="";
+        nombre="";
+        correo="";
+        telefono="";
+        direccion="";
     }
     
 
@@ -69,6 +83,12 @@ public class Entidad {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    //Para insercion directa en querys
+    @Override
+    public String toString() {
+        return id_entidad + ", " + nombre + ", " + correo + ", " + telefono + "," + direccion;
     }
     
     

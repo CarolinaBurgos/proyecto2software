@@ -19,7 +19,9 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -54,6 +56,12 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
     
     @FXML
     private void volverAlMenuAnterior(MouseEvent e){
+        try{
+            Node n = (Node) e.getSource();
+            n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLInicioVendedor.fxml")));
+        }catch(Exception ex){
+            failure(ex.toString());
+        }
     
     }
     
@@ -68,6 +76,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
         
         String id_cliente;
         
+        
         //fecha local 
         LocalDateTime localDateTime = LocalDateTime.now();
         ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneOffset.systemDefault());
@@ -76,7 +85,11 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
         java.sql.Date sDate = convertUtilToSql(date);
 
      //query para agregar cliente
-        String query= "INSERT INTO \"LBSASQL\".\"Cliente\"(\n" + 
+        String query;
+        
+        
+        
+        query= "INSERT INTO \"LBSASQL\".\"Cliente\"(\n" + 
                 "nombre, correo, direccion, fecha_creacion, fecha_ultima_actualizacion, reg_eliminado)\n" +
                 "VALUES (?,? ,?,?, ?, ?);";
         
@@ -102,7 +115,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
                 key = rs.getInt(1);
                 if (numero_identidad.length()==13)  insertarClienteContribuyenteReg(numero_identidad, key, nombre, false);
                 else if (numero_identidad.length()==10) insertarClienteCiudadano(numero_identidad,key);
-                else alert("Numero invalido de caracteres");
+                else failure("Numero invalido de caracteres");
                 
 
             }
@@ -111,7 +124,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
         } 
         catch (SQLException ex) {
             Logger.getLogger(FXMLRegistrarClientesController.class.getName()).log(Level.SEVERE, null, ex);
-            alert(ex.toString());
+            failure(ex.toString());
         }
         
         
@@ -132,7 +145,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
             System.out.println("Cliente ciudadano agregado");
         } catch (SQLException ex) {
             Logger.getLogger(FXMLRegistrarClientesController.class.getName()).log(Level.SEVERE, null, ex);
-            alert(ex.toString());
+            failure(ex.toString());
         }
        
     
@@ -156,7 +169,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
             System.out.println("Cliente contribuyente registrado agregado");
         } catch (SQLException ex) {
             Logger.getLogger(FXMLRegistrarClientesController.class.getName()).log(Level.SEVERE, null, ex);
-            alert(ex.toString());
+            failure(ex.toString());
         }
        
     
@@ -165,7 +178,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
     
     
     
-    private void alert(String error){
+    private void failure(String error){
             Alert failure;
             failure = new Alert (Alert.AlertType.ERROR);
             failure.setTitle("Error al realizar la acción.");
@@ -173,6 +186,15 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
             failure.showAndWait();
     
     }
+    private void success(String data){
+            Alert success;
+            success = new Alert (Alert.AlertType.INFORMATION);
+            success.setTitle("Accion realizada con éxito.");
+            success.setContentText("Cliente agregado: \n>>"+data);
+            success.showAndWait();
+    
+    }
+    
 
     private java.sql.Date convertUtilToSql(Date date) {
         java.sql.Date sDate = new java.sql.Date(date.getTime());
