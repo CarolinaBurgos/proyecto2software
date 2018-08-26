@@ -28,3 +28,7 @@ ALTER TABLE "LBSASQL"."Peticion_modif_venta"
     OWNER to postgres;
 COMMENT ON TABLE "LBSASQL"."Peticion_modif_venta"
     IS 'Aqui se almacenan las peticiones de modificacion de venta';
+	
+--valor de prueba	
+	INSERT INTO "LBSASQL"."Peticion_modif_venta"(id_empleado, id_venta, aprobacion_pendiente, peticion_aceptada, fecha_actualizacion, fecha_envio_peticion)
+	VALUES ('234757689' , 1, true, false, current_timestamp, current_timestamp);
