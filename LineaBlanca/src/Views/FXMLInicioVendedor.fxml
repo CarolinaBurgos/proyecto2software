@@ -10,19 +10,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="607.0" prefWidth="918.0" style="-fx-background-color: #C0C1C7;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLInicioVendedorController">
+<AnchorPane id="AnchorPane" prefHeight="607.0" prefWidth="918.0" style="-fx-background-color: #C0C1C7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLInicioVendedorController">
    <children>
 
-      <Button fx:id="BtnGenerarVenta" layoutX="741.0" layoutY="539.0" mnemonicParsing="false" style="-fx-background-color: #31F911;" text="Generar Venta" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button fx:id="BtnGenerarVenta" layoutX="741.0" layoutY="539.0" mnemonicParsing="false" onMouseClicked="#generarVenta" style="-fx-background-color: #31F911;" text="Generar Venta" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
       <TextField fx:id="TxtNumFactura" layoutX="765.0" layoutY="74.0" prefHeight="29.0" prefWidth="139.0" promptText="Numero de factura" />
-      <Button fx:id="BtnBuscar" layoutX="749.0" layoutY="129.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="139.0" style="-fx-background-color: Green;" text="Ingresar Articulo" textFill="#ffe9e9">
+      <Button fx:id="BtnIngresar" layoutX="749.0" layoutY="129.0" mnemonicParsing="false" onMouseClicked="#IngresarArticulo" prefHeight="29.0" prefWidth="139.0" style="-fx-background-color: Green;" text="Ingresar Articulo" textFill="#ffe9e9">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
-      <TableView fx:id="tablaProductos" editable="true" layoutX="174.0" layoutY="222.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="215.0" prefWidth="737.0">
+      <TableView fx:id="tablaProductos" editable="true" layoutX="174.0" layoutY="222.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="215.0" prefWidth="737.0">
         <columns>
           <TableColumn fx:id="tablaIdProducto" prefWidth="83.0" text="ID-Producto" />
           <TableColumn fx:id="tablaDescripcion" prefWidth="106.99996948242188" text="Descripcion" />
@@ -42,7 +42,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="BtnAddClient" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#addClientes" prefHeight="37.0" prefWidth="167.0" style="-fx-border-radius: 0;" stylesheets="@../CascadeStyleSheets/Views.css" text="Cliente +">
+            <Button fx:id="BtnAddClient" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#addClientes" prefHeight="37.0" prefWidth="167.0" style="-fx-background-color: black;" text="Cliente +" textFill="#f5f5f5">
                <font>
                   <Font size="13.0" />
                </font>
@@ -50,7 +50,7 @@
                   <ImageView fitHeight="35.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
-            <Button layoutY="103.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="167.0" style="-fx-border-radius: 0;" stylesheets="@../CascadeStyleSheets/Views.css" text="Solicitar Permiso">
+            <Button layoutX="-2.0" layoutY="103.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="167.0" style="-fx-background-color: black;" text="Solicitar Permiso" textFill="#f8f7f7">
                <font>
                   <Font size="13.0" />
                </font>
@@ -61,7 +61,7 @@
          </children>
       </AnchorPane>
       <AnchorPane layoutX="593.0" layoutY="-1.0" prefHeight="49.0" prefWidth="295.0" />
-      <ComboBox fx:id="btnCategorias" layoutX="181.0" layoutY="129.0" opacity="0.93" prefHeight="28.0" prefWidth="462.0" promptText="Articulos" />
+      <ComboBox fx:id="btnCategorias" layoutX="181.0" layoutY="129.0" opacity="0.93" prefHeight="28.0" prefWidth="462.0" promptText="Codigo,Descripcion,Marca,Precio,cantidadDisponible" />
       <TextField fx:id="TxtCIclient" layoutX="181.0" layoutY="90.0" prefHeight="26.0" prefWidth="207.0" promptText="CI cliente" />
       <Label fx:id="TxtValor" layoutX="515.0" layoutY="458.0" text="Valor total" />
       <Label fx:id="TxtValorNumerico" layoutX="725.0" layoutY="458.0" text="_________" />

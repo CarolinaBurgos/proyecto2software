@@ -14,7 +14,8 @@ import Exceptions.Entity.InvalidEntityIDException;
  * @author Angel Moya
  */
 public class Ciudadano extends Entidad implements Cliente{
-
+    private String apellido;
+    
     public Ciudadano() {
         super();
     }
@@ -27,7 +28,7 @@ public class Ciudadano extends Entidad implements Cliente{
 
     public Ciudadano(String id_entidad, String nombre,String apellido, String correo) {
         super(id_entidad, nombre, correo);
-        
+        this.apellido=apellido;
     }
      
 
@@ -55,6 +56,14 @@ public class Ciudadano extends Entidad implements Cliente{
     @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     @Override

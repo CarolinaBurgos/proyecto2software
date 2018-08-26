@@ -28,5 +28,29 @@ select IngresarCompra('fac',1000,6,'234757689')
 --select * from "LBSASQL"."Compra"
 
 																													
-																															  
+									
+select * from "LBSASQL"."Compra"
+select * from "LBSASQL"."Compra" com join "LBSASQL"."Articulos_vendidos" art on com.id_compra=art.id_compra;
+select * from "LBSASQL"."Articulos_vendidos";
+
+--conocer la relacion entre articulo y su almacen. para probar el trigger... si se  ingresa 
+--un articulo vendido entonce se restan la cantidad de articulos
+select art.id_articulo, art.nombre, art.precio_cliente_sin_iva,artal.id_almacen,artal.cantidad_articulo_disponible from "LBSASQL"."Articulo" art join "LBSASQL"."Articulo_almacenado" artal on art.id_articulo=artal.id_articulo where artal.id_almacen=1;
+	
+--conocer la relacion entre articulo y su almacen. para probar el trigger... si se  ingresa 
+--un articulo vendido entonce se restan la cantidad de articulos
+select art.id_articulo, art.nombre, art.precio_cliente_sin_iva,artal.id_almacen,artal.cantidad_articulo_disponible from "LBSASQL"."Articulo" art join "LBSASQL"."Articulo_almacenado" artal on art.id_articulo=artal.id_articulo where artal.id_almacen=1;
+																															
+ create trigger ReducirCantidadArticulo after insert on "LBSASQL"."Articulos_vendidos" 
+ for each row 
+ begin
+	update "LBSASQL"."Articulos_almacenado"  set cantidad_articulo_disponible=cantidad_articulo_disponible-new.cantidad_articulo where "LBSASQL"."Articulos_almacenado".id_articulo=new.id_articulo;
+ end
+ 
+
+
+
+		
+																															 
+																															 
 																															 
