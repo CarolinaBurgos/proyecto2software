@@ -13,8 +13,9 @@ public class ContribuyenteRegistrado extends Entidad implements Cliente{
     
     protected boolean esContibEspecial;
 
-    public ContribuyenteRegistrado(String id_entidad, String nombre, String correo, String telefono, String direccion) {
+    public ContribuyenteRegistrado(String id_entidad, String nombre, String correo, String telefono, String direccion, boolean ce) {
         super(id_entidad, nombre, correo, telefono, direccion);
+        this.esContibEspecial=ce;
     }
 
 

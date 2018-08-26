@@ -11,8 +11,14 @@ CREATE TABLE "LBSASQL"."Peticion_modif_venta"
     peticion_aceptada boolean NOT NULL,
     fecha_actualizacion timestamp without time zone NOT NULL,
     fecha_envio_peticion timestamp without time zone NOT NULL,
-    PRIMARY KEY (id_peticion)
+    PRIMARY KEY (id_peticion),
+	CONSTRAINT id_venta FOREIGN KEY (id_venta)
+        REFERENCES "LBSASQL"."Compra" (id_compra) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
+
+
 
 ALTER TABLE "LBSASQL"."Peticion_modif_venta"
     OWNER to postgres;
