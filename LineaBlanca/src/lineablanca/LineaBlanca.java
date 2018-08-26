@@ -25,7 +25,7 @@ public class LineaBlanca extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml"));
         //stage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root);
-        
+        scene.getStylesheets().add("CascadeStyleSheets/Views.css");
         stage.setScene(scene);
         stage.show();
     }

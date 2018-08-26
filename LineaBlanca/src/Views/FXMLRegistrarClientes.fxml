@@ -12,23 +12,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="500.0" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLRegistrarClientesController">
+<AnchorPane id="AnchorPane" maxHeight="500.0" maxWidth="700.0" minHeight="500.0" minWidth="500.0" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLRegistrarClientesController">
     <children>
-      <Pane layoutY="-2.0" prefHeight="54.0" prefWidth="498.0" style="-fx-background-color: #4B7DEB;">
+      <Pane layoutY="-2.0" prefHeight="54.0" prefWidth="700.0" style="-fx-background-color: #4B7DEB;">
          <children>
-            <Label layoutX="46.0" layoutY="9.0" text="Registro de Clientes" textFill="#fcfcfc">
+            <Label layoutX="130.0" layoutY="9.0" text="Registro de Clientes" textFill="#fcfcfc">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <ImageView fitHeight="45.0" fitWidth="42.0" layoutX="292.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="45.0" fitWidth="42.0" layoutX="53.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagenes/cliente.jpg" />
                </image>
             </ImageView>
          </children>
       </Pane>
-      <VBox layoutX="35.0" layoutY="52.0" prefHeight="428.0" prefWidth="435.0" spacing="20.0">
+      <VBox layoutX="133.0" layoutY="52.0" prefHeight="428.0" prefWidth="435.0" spacing="20.0">
          <children>
             <Label opacity="0.6" text="ID" />
             <TextField fx:id="TxtId" prefHeight="20.0" prefWidth="220.0" promptText="Escriba aqui el número de cédula o RUC del cliente" />
@@ -40,7 +40,7 @@
             <TextField fx:id="TxtDireccion" prefHeight="26.0" prefWidth="220.0" promptText="Escriba aqui la dirección del cliente" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Button fx:id="BtnVolver" mnemonicParsing="false" onMouseClicked="#agregarCliente" prefHeight="45.0" prefWidth="158.0" text="Regresar al menu">
+                  <Button fx:id="BtnVolver" mnemonicParsing="false" onMouseClicked="#volverAlMenuAnterior" prefHeight="45.0" prefWidth="158.0" text="Regresar al menu">
                      <graphic>
                         <ImageView fitHeight="37.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                            <image>

@@ -8,23 +8,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="748.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLInicioSuperAdminController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="525.0" prefWidth="748.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.FXMLInicioSuperAdminController">
    <children>
       <AnchorPane layoutX="153.0" prefHeight="43.0" prefWidth="595.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <Button fx:id="BtnLogOut" layoutX="489.0" layoutY="1.0" minHeight="20.0" mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="37.0" prefWidth="86.0" text="Log Out" />
+            <Button id="myButton" fx:id="BtnLogOut" layoutX="456.0" layoutY="1.0" minHeight="20.0" mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="37.0" prefWidth="119.0" stylesheets="@../CascadeStyleSheets/Views.css" text="Cerrar Sesión">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
          </children>
       </AnchorPane>
-      <Label prefHeight="43.0" prefWidth="151.0" style="-fx-background-color: #48923A;" text="  SUPERADM" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+      <Label prefHeight="43.0" prefWidth="152.0" style="-fx-background-color: #48923A;" text="  SUPERADMIN" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
       <AnchorPane layoutX="-1.0" layoutY="43.0" prefHeight="480.0" prefWidth="151.0" style="-fx-background-color: #1B1E1A;">
          <children>
-            <Button layoutY="2.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="151.0" style="-fx-background-color: #1B1E1A;" text="Permisos" textFill="#fffdfd">
+            <Button layoutY="2.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="151.0" stylesheets="@../CascadeStyleSheets/Views.css" text="Permisos">
                <font>
-                  <Font size="18.0" />
+                  <Font size="15.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
@@ -33,17 +36,17 @@
                      </image></ImageView>
                </graphic>
             </Button>
-            <Button layoutX="1.0" layoutY="55.0" mnemonicParsing="false" onMouseClicked="#crearProducto" prefHeight="45.0" prefWidth="151.0" style="-fx-background-color: #1B1E1A;" text="Productos+" textAlignment="CENTER" textFill="#fffefe">
+            <Button layoutX="1.0" layoutY="55.0" mnemonicParsing="false" onMouseClicked="#crearProducto" prefHeight="45.0" prefWidth="151.0" stylesheets="@../CascadeStyleSheets/Views.css" text="Productos+" textAlignment="CENTER" textFill="#fffefe">
                <font>
-                  <Font size="18.0" />
+                  <Font size="15.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
-            <Button layoutY="115.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="152.0" style="-fx-background-color: #1B1E1A;" text="Ventas" textAlignment="CENTER" textFill="WHITE">
+            <Button layoutY="115.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="152.0" stylesheets="@../CascadeStyleSheets/Views.css" text="Ventas" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="19.0" />
+                  <Font size="15.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
@@ -106,7 +109,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="86.0" prefWidth="151.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#goToUsers" prefHeight="86.0" prefWidth="151.0">
                <children>
                   <Label layoutX="38.0" layoutY="21.0" text="Clientes">
                      <font>
