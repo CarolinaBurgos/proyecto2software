@@ -1,7 +1,7 @@
 -------------------------------------------
 --Manejo de peticiones de Linea Blanca SA
 -------------------------------------------
-
+drop table "LBSASQL"."Peticion_modif_venta";
 CREATE TABLE "LBSASQL"."Peticion_modif_venta"
 (
     id_peticion serial NOT NULL,
@@ -14,6 +14,10 @@ CREATE TABLE "LBSASQL"."Peticion_modif_venta"
     PRIMARY KEY (id_peticion),
 	CONSTRAINT id_venta FOREIGN KEY (id_venta)
         REFERENCES "LBSASQL"."Compra" (id_compra) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT id_empleado FOREIGN KEY (id_empleado)
+        REFERENCES "LBSASQL"."Empleado" (num_cedula) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
