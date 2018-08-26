@@ -136,7 +136,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     
    
     public void BuscarCompra(MouseEvent eevent) {
-        String query = "SELECT com.id_cliente,art.id_articulo,art.descripcion,art.marca,art.precio_cliente_sin_iva,artven.cantidad_articulo from \"LBSASQL\".\"Compra\" com join \"LBSASQL\".\"Articulos_vendidos\" artven on com.id_compra=artven.id_compra join \"LBSASQL\".\"Articulo\" art on artven.id_articulo=art.id_articulo join \"LBSASQL\".\"Cliente\" cli on com.id_cliente=cli.id_cliente join  \"LBSASQL\".\"Cliente\" clie on clie.id_cliente=com.id_cliente WHERE com.id_compra="+ this.TxtNumFactura.getText()+"";
+        String query = "SELECT com.id_cliente,art.id_articulo,art.descripcion,art.marca,art.precio_cliente_sin_iva,artven.cantidad_articulo from \"LBSASQL\".\"Compra\" com join \"LBSASQL\".\"Articulos_vendidos\" artven on com.id_compra=artven.id_compra join \"LBSASQL\".\"Articulo\" art on artven.id_articulo=art.id_articulo join \"LBSASQL\".\"Cliente\" cli on com.id_cliente=cli.id_cliente join  \"LBSASQL\".\"Cliente\" clie on clie.id_cliente=com.id_cliente WHERE com.id_compra='"+ this.TxtNumFactura.getText()+"'";
         Statement stmt;
         try {
             ObservableList<ArticuloVenta> row = FXCollections.observableArrayList();
@@ -161,6 +161,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
         try{
                 Node n = (Node) event.getSource();
                 n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLRegistrarClientes.fxml")));
+               
             }catch(IOException e){
                 System.out.println(e);
             }

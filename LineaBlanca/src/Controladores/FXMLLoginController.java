@@ -78,6 +78,7 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
             try{
                 Node n = (Node) event.getSource();
                 n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLInicio"+requestedUser+".fxml")));
+                
             }catch(Exception e){
                 System.out.println(e);
             }
