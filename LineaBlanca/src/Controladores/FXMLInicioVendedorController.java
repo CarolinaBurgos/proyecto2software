@@ -171,8 +171,6 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
             
             System.out.println(articuloVenta.size());
             for(int i=0;i<articuloVenta.size();i++){
-                //obtengo cada articulo
-                //String query1 = "INSERT INTO \"LBSASQL\".\"Articulos_vendidos\" (id_compra, id_articulo, cantidad_articulo) VALUES("+Integer.valueOf(TxtNumFactura.getText())+ ","+articuloVenta.get(i).getId()+ "," + articuloVenta.get(i).getCantidad()+")";                                            
                 String sq1 = "INSERT INTO \"LBSASQL\".\"Articulos_vendidos\" (id_compra, id_articulo, cantidad_articulo) VALUES(?,?,?)";
                 PreparedStatement stmt1 = conn.prepareStatement(sq1);
                 //ingreso articulos vendidos

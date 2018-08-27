@@ -5,19 +5,17 @@
  */
 package Controladores;
 
+import Modelo.Reporte;
+import Modelo.ReporteArticulo;
+import Modelo.ReporteCliente;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,16 +54,16 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
     @FXML
     private ComboBox btnCategorias;
      
-    @FXML private TableView TableArticulos, TableClientes;
-    @FXML private TableColumn<String, String> ColIDCI;
-    @FXML private TableColumn<String,String> ColNombreCl;
-    @FXML private TableColumn<String,String> ColDireccionCl;
-    @FXML private TableColumn<String,String> ColTlfnCliente;
-    @FXML private TableColumn<String,String> ColMontoCl;
-    @FXML private TableColumn<String, String> ColID;
-    @FXML private TableColumn<String,String> ColAr;
-    @FXML private TableColumn<String,String> ColCant;
-    @FXML private TableColumn<String,String> ColVent;
+    @FXML private TableView<Reporte> TableArticulos, TableClientes;
+    @FXML private TableColumn<Reporte, String> ColIDCl;
+    @FXML private TableColumn<Reporte,String> ColNombreCl;
+    @FXML private TableColumn<Reporte,String> ColDireccionCl;
+    @FXML private TableColumn<Reporte,String> ColTlfnCliente;
+    @FXML private TableColumn<Reporte,String> ColMontoCl;
+    @FXML private TableColumn<Reporte, String> ColID;
+    @FXML private TableColumn<Reporte,String> ColAr;
+    @FXML private TableColumn<Reporte,String> ColCant;
+    @FXML private TableColumn<Reporte,String> ColVent;
     
     private Connection conn;
     
@@ -78,8 +76,8 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
         // TODO
         super.connectar();
         conn = this.getConn();
-        //this.startColumns();
-        //this.startLabels();
+        this.startColumns();
+        this.startLabels();
     }    
     
     
@@ -105,20 +103,22 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
             }
     }
     
-      public void startColumns(){
-          this.ColAr.setCellValueFactory(new PropertyValueFactory<>("Articulos"));
-          this.ColID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-          this.ColVent.setCellValueFactory(new PropertyValueFactory<>("Ventas"));
-          this.ColCant.setCellValueFactory(new PropertyValueFactory<>("Cantidad"));
+      private void startColumns(){
+          this.ColID.setCellValueFactory(new PropertyValueFactory<>("id"));
+          this.ColAr.setCellValueFactory(new PropertyValueFactory<>("articulo"));
+          this.ColCant.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+          this.ColVent.setCellValueFactory(new PropertyValueFactory<>("ventas"));   
           
-          this.ColDireccionCl.setCellValueFactory(new PropertyValueFactory<>("Direccion"));
-          this.ColIDCI.setCellValueFactory(new PropertyValueFactory<>("ID"));
-          this.ColMontoCl.setCellValueFactory(new PropertyValueFactory<>("Monto Promedio"));
+          this.ColIDCl.setCellValueFactory(new PropertyValueFactory<>("id"));
           this.ColNombreCl.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+          this.ColDireccionCl.setCellValueFactory(new PropertyValueFactory<>("Direccion"));
           this.ColTlfnCliente.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
+          this.ColMontoCl.setCellValueFactory(new PropertyValueFactory<>("monot"));
+          
+         
       }
       
-      public void startLabels(){
+      private void startLabels(){
           this.LabelDate.setText(LocalDate.now().format(DateTimeFormatter.ISO_DATE));
       }
       
@@ -127,14 +127,10 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
           if(!this.TxtIDVendedor.getText().equals("")) {
               
               try {
-                  PreparedStatement proc = conn.prepareStatement("select * from public.ReporteVendedor(?)");
+                  PreparedStatement proc = conn.prepareStatement("select * from ReporteVendedor(?)");
                     proc.setString(1,this.TxtIDVendedor.getText());
                     ResultSet rs = (ResultSet) proc.executeQuery();
-                  /*String query_resultSet = "SELECT * FROM ReporteVendedor('"+this.TxtIDVendedor.getText()+"')";
-                  Statement stmt = conn.createStatement(); 
-                  ResultSet rs = stmt.executeQuery(query_resultSet);*/
                   while (rs.next()) {
-                      System.out.println("Entra aqui");
                     this.LblNameVendedor.setText(rs.getString(1));
                     this.LblCantVentas.setText(rs.getString(2));
                     this.LblMonto.setText(rs.getString(3));
@@ -149,16 +145,13 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
       public void fillArticulosReporte(MouseEvent event){
           
          try {
-             PreparedStatement proc = conn.prepareStatement("select * from public.ReporteArticulo()");
+             PreparedStatement proc = conn.prepareStatement("select * from ReporteArticulo()");
             ResultSet rs = (ResultSet) proc.executeQuery();
-             /*String query = "SELECT * FROM ReporteArticulo()";
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query);*/
-             ObservableList<String> items = FXCollections.observableArrayList();
+             ObservableList<Reporte> items = FXCollections.observableArrayList();
              while(rs.next()){
-                 ArrayList<String> results = new ArrayList<>(Arrays.asList(rs.getString(1),
-                         rs.getString(2), rs.getString(3),rs.getString(4)));
-                 items.addAll(results);
+                 ReporteArticulo art = new ReporteArticulo((String)rs.getString(1),(String)rs.getString(2),
+                 Float.parseFloat(rs.getString(3)),Float.parseFloat(rs.getString(4)));
+                 items.add(art);
                  this.TableArticulos.setItems(items);
              }
          } catch (SQLException ex) {
@@ -169,18 +162,13 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
       
       public void fillClientesReportes(MouseEvent event){
           try {
-              PreparedStatement proc = conn.prepareStatement("select * from public.ReporteCliente");
+              PreparedStatement proc = conn.prepareStatement("select * from ReporteCliente()");
             ResultSet rs = (ResultSet) proc.executeQuery();
-             /*String query = "SELECT * FROM ReporteCliente()";
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query);*/
-             ObservableList<String> items = FXCollections.observableArrayList();
+             ObservableList<Reporte> items = FXCollections.observableArrayList();
              while(rs.next()){
-                 System.out.println("Entra aqui");
-                 ArrayList<String> results = new ArrayList<>(Arrays.asList(rs.getString(1),
-                         rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5)));
-                 System.out.println(results);
-                 items.addAll(results);
+                 ReporteCliente client = new ReporteCliente((String)rs.getString(1),
+                         rs.getString(2), rs.getString(3),rs.getString(4),(Float)Float.parseFloat(rs.getString(5)));
+                 items.add(client);
                  this.TableClientes.setItems(items);
              }
          } catch (SQLException ex) {

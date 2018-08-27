@@ -16,7 +16,7 @@
    <children>
       <AnchorPane layoutX="153.0" prefHeight="43.0" prefWidth="595.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <Button fx:id="BtnLogOut" layoutX="482.0" layoutY="3.0" mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="37.0" prefWidth="99.0" text="Log Out" />
+            <Button fx:id="BtnLogOut" layoutX="482.0" layoutY="3.0" mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="37.0" prefWidth="99.0" style="-fx-background-color: #D2F5F1;" text="Log Out" textFill="#171717" />
             <Label fx:id="LabelDate" layoutX="14.0" layoutY="13.0" prefHeight="18.0" prefWidth="151.0" />
          </children>
       </AnchorPane>
@@ -49,29 +49,31 @@
                      </image></ImageView>
                </graphic>
             </Button>
-            <Button fx:id="BtnVentas" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#doSearch" prefHeight="37.0" prefWidth="152.0" style="-fx-background-color: #1B1E1A;" text="      Ventas" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="BtnVentas" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#doSearch" prefHeight="37.0" prefWidth="152.0" style="-fx-background-color: #1B1E1A;" text="  Ventas" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/carroCompras.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
-            <ImageView fitHeight="32.0" fitWidth="31.0" layoutX="31.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/carroCompras.jpg" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
       <TabPane layoutX="153.0" layoutY="77.0" prefHeight="444.0" prefWidth="595.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="TagVendedor" text="Reporte de Vendedor">
                <content>
-                  <AnchorPane prefHeight="378.0" prefWidth="595.0">
+                  <AnchorPane>
                      <children>
                         <TextField fx:id="TxtIDVendedor" layoutX="142.0" layoutY="29.0" prefHeight="26.0" prefWidth="241.0" />
                         <Label layoutX="28.0" layoutY="42.0" text="ID de Vendedor" />
                         <Label layoutX="28.0" layoutY="205.0" text="Monto total de ventas $: " />
                         <Label fx:id="LblMonto" layoutX="196.0" layoutY="205.0" prefHeight="18.0" prefWidth="186.0" />
-                        <Button fx:id="BtnRptVendedor" layoutX="219.0" layoutY="289.0" mnemonicParsing="false" onMouseClicked="#fillClienteReporte" prefHeight="32.0" prefWidth="140.0" text="Generar Reporte" />
+                        <Button fx:id="BtnRptVendedor" layoutX="219.0" layoutY="289.0" mnemonicParsing="false" onMouseClicked="#fillClienteReporte" prefHeight="32.0" prefWidth="140.0" style="-fx-background-color: #D2F5F1;" text="Generar Reporte" />
                         <Label layoutX="28.0" layoutY="98.0" text="Nombre de Vendedor" />
                         <Label fx:id="LblNameVendedor" layoutX="182.0" layoutY="99.0" prefHeight="18.0" prefWidth="229.0" textAlignment="CENTER" underline="true" />
                         <Label layoutX="28.0" layoutY="150.0" text="Cantidad de Ventas" />
@@ -85,13 +87,13 @@
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <Label layoutX="218.0" layoutY="14.0" opacity="0.6" prefHeight="18.0" prefWidth="272.0" text="Reporte Semanal de Artículos" textAlignment="CENTER" />
-                        <Button fx:id="BtnReporteArticulos" layoutX="241.0" layoutY="325.0" mnemonicParsing="false" onMouseClicked="#fillArticulosReporte" text="Generar Reporte" />
-                        <TableView fx:id="TableArticulos" layoutX="64.0" layoutY="83.0" prefHeight="200.0" prefWidth="467.0" style="-fx-background-color: #D2F5F1;">
+                        <Button fx:id="BtnReporteArticulos" layoutX="241.0" layoutY="325.0" mnemonicParsing="false" onMouseClicked="#fillArticulosReporte" style="-fx-background-color: #D2F5F1;" text="Generar Reporte" />
+                        <TableView fx:id="TableArticulos" layoutX="15.0" layoutY="83.0" prefHeight="200.0" prefWidth="569.0" style="-fx-background-color: #D2F5F1;">
                           <columns>
-                            <TableColumn fx:id="ColID" prefWidth="143.99996948242188" text="ID" />
-                            <TableColumn fx:id="ColAr" prefWidth="117.0" text="Artículo" />
-                              <TableColumn fx:id="ColCant" prefWidth="106.00003051757812" text="Cantidad" />
-                              <TableColumn fx:id="ColVent" prefWidth="132.00006103515625" text="Ventas Totales" />
+                            <TableColumn fx:id="ColID" prefWidth="130.99996948242188" text="ID" />
+                            <TableColumn fx:id="ColAr" prefWidth="186.0" text="Artículo" />
+                              <TableColumn fx:id="ColCant" prefWidth="109.0" text="Cantidad" />
+                              <TableColumn fx:id="ColVent" prefWidth="142.0" text="Ventas Totales" />
                           </columns>
                         </TableView>
                      </children>
@@ -102,7 +104,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="TableClientes" layoutX="39.0" layoutY="75.0" prefHeight="200.0" prefWidth="520.0" style="-fx-background-color: #D2F5F1;">
+                        <TableView fx:id="TableClientes" layoutX="25.0" layoutY="75.0" prefHeight="200.0" prefWidth="523.0" style="-fx-background-color: #D2F5F1;">
                           <columns>
                             <TableColumn fx:id="ColIDCl" prefWidth="102.99996948242188" text="ID" />
                             <TableColumn fx:id="ColNombreCl" prefWidth="90.0" text="Nombre" />
@@ -111,8 +113,8 @@
                               <TableColumn fx:id="ColMontoCl" prefWidth="118.0" text="Monto Promedio" />
                           </columns>
                         </TableView>
-                        <Label layoutX="168.0" layoutY="14.0" opacity="0.59" text="Clientes que generan mayores ingresos" />
-                        <Button fx:id="BtnReporteClientes" layoutX="241.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#fillClientesReportes" text="Generar Reporte" />
+                        <Label layoutX="181.0" layoutY="14.0" opacity="0.59" text="Clientes que generan mayores ingresos" />
+                        <Button fx:id="BtnReporteClientes" layoutX="241.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#fillClientesReportes" style="-fx-background-color: #D2F5F1;" text="Generar Reporte" />
                      </children>
                   </AnchorPane>
               </content>
