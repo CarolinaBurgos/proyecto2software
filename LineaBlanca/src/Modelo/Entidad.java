@@ -40,7 +40,7 @@ public class Entidad {
         id_entidad="";
         nombre="";
         correo="";
-        telefono.getTelefono();
+       this.telefono=new Telefono(); 
         direccion="";
     }
 
