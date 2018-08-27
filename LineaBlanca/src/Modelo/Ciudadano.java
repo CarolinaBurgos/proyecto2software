@@ -21,7 +21,7 @@ public class Ciudadano extends Entidad implements Cliente{
     }
     
     
-    public Ciudadano(String id_entidad, String nombre, String correo, String telefono, String direccion) {
+    public Ciudadano(String id_entidad, String nombre, String correo, Telefono telefono, String direccion) {
         super(id_entidad, nombre, correo, telefono, direccion);
         
     }
@@ -77,12 +77,11 @@ public class Ciudadano extends Entidad implements Cliente{
     }
 
     @Override
-    public String getTelefono() {
+    public Telefono getTelefono() {
         return telefono;
     }
 
-    @Override
-    public void setTelefono(String telefono) {
+    public void setTelefono(Telefono telefono) {
         this.telefono = telefono;
     }
 
