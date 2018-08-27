@@ -16,12 +16,12 @@ public class Entidad {
     protected String id_entidad;
     protected String nombre;
     protected String correo;
-    protected String telefono;
+    protected Telefono telefono;
     protected String direccion;
 
     
     //constructores
-    public Entidad(String id_entidad, String nombre, String correo, String telefono, String direccion) {
+    public Entidad(String id_entidad, String nombre, String correo, Telefono telefono, String direccion) {
         this.id_entidad = id_entidad;
         this.nombre = nombre;
         this.correo = correo;
@@ -40,7 +40,7 @@ public class Entidad {
         id_entidad="";
         nombre="";
         correo="";
-        telefono="";
+        telefono.getTelefono();
         direccion="";
     }
 
@@ -77,11 +77,11 @@ public class Entidad {
         this.correo = correo;
     }
 
-    public String getTelefono() {
+    public Telefono getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(String Telefono) {
         this.telefono = telefono;
     }
 

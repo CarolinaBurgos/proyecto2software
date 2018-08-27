@@ -207,4 +207,22 @@ INSERT INTO "LBSASQL"."Articulos_cotizados"(
 --select * from "LBSASQL"."Articulos_cotizados"
 	
 	
+
+--NO MOVER
+--Reducir en 1 a la cantidad de cada articulo luego de guardar un registro de Articulo_vendido
+CREATE OR REPLACE FUNCTION ReducirCantidadArticulo() RETURNS TRIGGER AS $ReducirCantidadArticulo$
+  DECLARE
+  BEGIN
+        update "LBSASQL"."Articulo_almacenado"  set cantidad_articulo_disponible=cantidad_articulo_disponible-new.cantidad_articulo where "LBSASQL"."Articulo_almacenado".id_articulo=new.id_articulo;
+    RETURN NULL;
+  END;
+$ReducirCantidadArticulo$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER ReducirCantidadArticulo after insert on "LBSASQL"."Articulos_vendidos" 
+for each row
+    EXECUTE PROCEDURE ReducirCantidadArticulo()
+	
+	
+	
 	

@@ -14,20 +14,23 @@ import Exceptions.Entity.InvalidEntityIDException;
  * @author Angel Moya
  */
 public class Ciudadano extends Entidad implements Cliente{
-
+    private String apellido;
+    
     public Ciudadano() {
         super();
     }
     
     
-    public Ciudadano(String id_entidad, String nombre, String correo, String telefono, String direccion) {
+    public Ciudadano(String id_entidad, String nombre, String correo, Telefono telefono, String direccion) {
         super(id_entidad, nombre, correo, telefono, direccion);
         
     }
 
     public Ciudadano(String id_entidad, String nombre,String apellido, String correo) {
+
         super(id_entidad, nombre+", "+apellido, correo);
         
+
     }
 
     public Ciudadano(String id_entidad, String nombre) {
@@ -46,6 +49,14 @@ public class Ciudadano extends Entidad implements Cliente{
         this.nombre = nombre;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
     @Override
     public String getCorreo() {
         return correo;
@@ -57,12 +68,11 @@ public class Ciudadano extends Entidad implements Cliente{
     }
 
     @Override
-    public String getTelefono() {
+    public Telefono getTelefono() {
         return telefono;
     }
 
-    @Override
-    public void setTelefono(String telefono) {
+    public void setTelefono(Telefono telefono) {
         this.telefono = telefono;
     }
 

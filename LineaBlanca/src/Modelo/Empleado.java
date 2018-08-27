@@ -69,6 +69,7 @@ public class Empleado extends Ciudadano{
     public void setPsswd(String psswd) {
         this.psswd = psswd;
     }
+    
 
     @Override
     public String toString() {

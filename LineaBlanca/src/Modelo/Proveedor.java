@@ -11,7 +11,7 @@ package Modelo;
  */
 public class Proveedor extends Entidad {
 
-    public Proveedor(String id_entidad, String nombre, String correo, String telefono, String direccion) {
+    public Proveedor(String id_entidad, String nombre, String correo, Telefono telefono, String direccion) {
         super(id_entidad, nombre, correo, telefono, direccion);
     }
     
@@ -44,11 +44,11 @@ public class Proveedor extends Entidad {
         this.correo = correo;
     }
 
-    public String getTelefono() {
+    public Telefono getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(Telefono telefono) {
         this.telefono = telefono;
     }
 
