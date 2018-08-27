@@ -9,8 +9,10 @@ CREATE TABLE "LBSASQL"."Peticion_modif_venta"
     id_venta int NOT NULL,
     aprobacion_pendiente boolean NOT NULL,
     peticion_aceptada boolean NOT NULL,
+	razon_modificacion varchar(250) NOT NULL,
     fecha_actualizacion timestamp without time zone DEFAULT current_timestamp NOT NULL,
     fecha_envio_peticion timestamp without time zone DEFAULT current_timestamp NOT NULL,
+
     PRIMARY KEY (id_peticion),
 	CONSTRAINT id_venta FOREIGN KEY (id_venta)
         REFERENCES "LBSASQL"."Compra" (id_compra) MATCH SIMPLE
