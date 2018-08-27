@@ -43,6 +43,14 @@ public class Entidad {
         telefono="";
         direccion="";
     }
+
+    public Entidad(String id_entidad, String nombre) {
+        this.id_entidad = id_entidad;
+        this.nombre = nombre;
+        this.correo="";
+        this.telefono="";
+        this.direccion="";
+    }
     
 
     public String getId_entidad() {

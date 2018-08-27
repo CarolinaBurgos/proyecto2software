@@ -34,7 +34,7 @@ import javax.swing.JOptionPane;
  */
 public class FXMLLoginController extends ControlLogin implements Initializable {
     
-    static Empleado user = null;
+    public static Empleado user = null;
 
     
     @FXML

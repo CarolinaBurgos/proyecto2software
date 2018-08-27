@@ -26,26 +26,15 @@ public class Ciudadano extends Entidad implements Cliente{
     }
 
     public Ciudadano(String id_entidad, String nombre,String apellido, String correo) {
-        super(id_entidad, nombre, correo);
+        super(id_entidad, nombre+", "+apellido, correo);
         
+    }
+
+    public Ciudadano(String id_entidad, String nombre) {
+        super(id_entidad, nombre);
     }
      
 
-    @Override
-    public String getId_entidad() {
-        return id_entidad;
-    }
-
-    @Override
-    public void setId_entidad(String id_entidad) {
-        
-        if (id_entidad.length()==10)this.id_entidad = id_entidad;
-        else try {
-            throw new InvalidEntityIDException("Número de ID no válido");
-        } catch (InvalidEntityIDException ex) {
-            Logger.getLogger(Ciudadano.class.getName()).log(Level.WARNING, null, ex);
-        }
-    }
 
     @Override
     public String getNombre() {

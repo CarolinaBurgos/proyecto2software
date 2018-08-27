@@ -7,6 +7,7 @@ package Controladores;
 
 import Conexion.ConexionesDataBase;
 import Modelo.Peticion;
+import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -30,9 +31,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.layout.HBox;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -47,19 +50,15 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
     @FXML
     
     AnchorPane rootPane;
-    
-    @FXML 
-    
-    HBox hbBottom;
+
     
     @FXML
-    private Button BtnLogOut, BtnPermisos, BtnArticulos, BtnVentas;
-    @FXML
-    private SplitPane SplitUsers, SplitInventario, SplitClientes;
+    private Button BtnLogOut, permisos, productos, ventas, usuarios, inventario, clientes;
+
     
+    Stage perm_stage, prod_stage, users_stage,inven_stage, ventas_stage;
     
-    
-    
+    int numpet;
     /**
      * Initializes the controller class.
      */
@@ -69,31 +68,33 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
          ConexionesDataBase.conect();
          this.conn = super.getConn();
          //inicializando las peticiones pendientes
-          List <Peticion> peticiones= buscarPeticionesPendientes();
-         int numpet = peticiones.size();
+         numpet=0;
+          List <Peticion> peticiones = buscarPeticionesPendientes();
+         numpet=peticiones.size();
          
-         
-         
-         //configurando notificaciones
-         JFXSnackbar sb= new JFXSnackbar(rootPane);
-         sb.setLayoutX(530);
-         sb.setLayoutY(410);
-        if (numpet>0) sb.show("Bienvenido, tiene "+
-                 numpet
-                 +" peticion(es) de permiso pendiente(s)", 
-                 "Abrir peticiones pendientes", 5000,
-                 abrirPeticiones(sb));
+         perm_stage=new Stage();
+         prod_stage=new Stage();
+         users_stage=new Stage();
+         inven_stage=new Stage();
+        ventas_stage = new Stage();
+
     }    
     
     
     
     
     
-            @FXML
+    @FXML
      public void logOut(MouseEvent event){
         try{
+                
                 Node n = (Node) event.getSource();
                 n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
+                perm_stage.close();
+                prod_stage.close();
+                users_stage.close();
+                inven_stage.close();
+                ventas_stage.close();
             }catch(IOException e){
                 System.out.println(e);
             }
@@ -101,14 +102,11 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
           @FXML   
     public void crearProducto(MouseEvent event){
         try{
-            
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLRegistrarProductos.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Registrar producto nuevo");
-            stage.setScene(new Scene(root1)); 
-            stage.show();
-                      
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLRegistrarProductos.fxml"));
+                    Parent root1 = (Parent) fxmlLoader.load();
+                    prod_stage.setTitle("Administración de Productos");
+                    prod_stage.setScene(new Scene(root1)); 
+                    prod_stage.show();
             
         } catch (IOException ex) {
             Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
@@ -117,14 +115,11 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
          @FXML   
     public void goToUsers(MouseEvent event){
                 try{
-            
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLBusquedaGenerica.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            
-            Stage stage = new Stage();
-            stage.setTitle("Búsqueda");
-            stage.setScene(new Scene(root1)); 
-            stage.show();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLCreacionUser.fxml"));
+                    Parent root1 = (Parent) fxmlLoader.load();
+                    users_stage.setTitle("Administración de usuarios");
+                    users_stage.setScene(new Scene(root1)); 
+                    users_stage.show();
                       
             
         } catch (IOException ex) {
@@ -139,11 +134,9 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
             
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLBusquedaGenerica.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
-            
-            Stage stage = new Stage();
-            stage.setTitle("Búsqueda");
-            stage.setScene(new Scene(root1)); 
-            stage.show();
+            inven_stage.setTitle("Búsqueda");
+            inven_stage.setScene(new Scene(root1)); 
+            inven_stage.show();
                       
             
         } catch (IOException ex) {
@@ -159,10 +152,10 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
         try {
             
             
-            String query = "SELECT id_peticion, id_empleado, id_venta, aprobacion_pendiente, peticion_aceptada\n" +
+            String query = "SELECT id_peticion, id_empleado, id_venta, aprobacion_pendiente, peticion_aceptada, razon_modificacion\n" +
                     "	FROM \"LBSASQL\".\"Peticion_modif_venta\"   WHERE aprobacion_pendiente = 'true';";
             
-            Statement smnt= conn.createStatement();
+            Statement smnt= this.conn.createStatement();
             ResultSet rs = smnt.executeQuery(query);
             
             
@@ -172,7 +165,8 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
                                             rs.getString("id_empleado"),
                                             rs.getInt("id_venta"),
                                             rs.getBoolean("aprobacion_pendiente"),
-                                            rs.getBoolean("peticion_aceptada")
+                                            rs.getBoolean("peticion_aceptada"),
+                                            rs.getString("razon_modificacion")
                 ));
             }
             
@@ -191,28 +185,66 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
             
             @Override
             public void handle(Event event) {
+                bar.unregisterSnackbarContainer(rootPane);
+                
                 try{
-                    bar.unregisterSnackbarContainer(rootPane);
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLPermisos.fxml"));
-                    Parent root1 = (Parent) fxmlLoader.load();
-                    Stage stage = new Stage();
-                    stage.setTitle("Peticiones pendientes");
-                    stage.setScene(new Scene(root1)); 
-                    stage.show();
 
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLPermisos.fxml"));
+                    Parent root = (Parent) fxmlLoader.load();
+                    perm_stage.setTitle("Peticiones");
+                    perm_stage.setScene(new Scene(root)); 
+                    perm_stage.show();
 
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                
-            }
+                    }
         };
         
         
         return handler;
     
     } 
+    
+    @FXML 
+    public void mostrarPeticiones(){
+        
+                 //configurando notificaciones
+         JFXSnackbar sb= new JFXSnackbar(rootPane);
+         sb.setLayoutX(530);
+         sb.setLayoutY(410);
+         if (numpet>0)sb.show("Bienvenido, tiene "+
+                 numpet
+                 +" peticion(es) de permiso pendiente(s)", 
+                 "Abrir peticiones pendientes",
+                 abrirPeticiones(sb));
+         
+         else sb.show("No hay peticiones pendientes",5000);
+    
+    
+    
+    }
+    
+   @FXML
+    public void abrirVentas(MouseEvent event){
+        
+        try{
+            
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLInicioVendedor.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            ventas_stage.setTitle("Ventas");
+            ventas_stage.setScene(new Scene(root1)); 
+            ventas_stage.show();
+                      
+            
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+    
+    
+    
     
     
     

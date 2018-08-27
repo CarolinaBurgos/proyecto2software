@@ -29,6 +29,17 @@ public class Empleado extends Ciudadano{
         this.isActvo=isActivo;
     }
 
+    public Empleado(String id_entidad, String nombre, String apellido, String userName) {
+        super(id_entidad, nombre+ ", "+apellido);
+        this.userName=userName;
+    }
+
+    public Empleado() {
+        super();
+        this.userName="";
+        this.psswd = "";
+    }
+
     
     public String identificarCargo(){
         //INSERT CODE
@@ -61,7 +72,12 @@ public class Empleado extends Ciudadano{
 
     @Override
     public String toString() {
-        return "Empleado{" + "userName=" + userName + ", permiso=" + permiso + ", psswd=" + psswd + ", fecha_contratacion=" + fecha_contratacion + ", fecha_actualizacion=" + fecha_actualizacion + ", isActvo=" + isActvo + '}';
+        return  super.toString()+ ", " +
+                userName + ", " + 
+                psswd + ", " + 
+                fecha_contratacion + ", " +
+                fecha_actualizacion + ", " +
+                isActvo;
     }
     
     
