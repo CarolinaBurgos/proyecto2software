@@ -48,7 +48,7 @@ public class Entidad {
         this.id_entidad = id_entidad;
         this.nombre = nombre;
         this.correo="";
-        this.telefono="";
+        this.telefono=new Telefono();
         this.direccion="";
     }
     
