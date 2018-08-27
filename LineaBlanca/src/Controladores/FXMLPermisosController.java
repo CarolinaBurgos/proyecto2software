@@ -6,11 +6,10 @@
 package Controladores;
 
 import Conexion.ConexionesDataBase;
-import Modelo.CompraCliente;
 import Modelo.Empleado;
 import Modelo.Peticion;
-import Modelo.Venta;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,20 +18,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -45,12 +43,11 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
     //treeview
     @FXML
     Accordion acPeticiones;
-    @FXML
-    Button aprobar, rechazar;
+
 
     
     List <Peticion> pets;
-    //Map <Peticion,>
+    Map <Integer, TitledPane> localControl;
     /**
      * Initializes the controller class.
      */
@@ -62,7 +59,7 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
         //sacando las peticiones pendientes
         this.pets = this.buscarPeticionesPendientes();
         //mostrando las peticiones en un cuadro
-        
+        localControl= new HashMap<>();
         acPeticiones.getPanes().addAll(verPeticiones(pets));
         
     }    
@@ -73,12 +70,9 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
         
         List <TitledPane> p = new ArrayList<>();
         
-        
-        
-        petcs.forEach((Peticion peticion) -> {
+        for (Peticion peticion: petcs){
             TitledPane tp = new TitledPane();
             tp.setText("Peticion Nº "+ peticion.getId());
-            
             GridPane grid = new GridPane();
                     grid.setVgap(4);
                     grid.setPadding(new Insets(5, 5, 5, 5));
@@ -87,14 +81,23 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
                     grid.add(new Label("ID de la compra a modificar: "), 0, 1);
                     grid.add(new Label(Integer.toString(peticion.getId_venta())), 1, 1);
                     grid.add(new Label("Razón del cambio: "), 0, 2);
-                    grid.add(new Label(peticion.getRazon_cambio()), 1, 2);
+                    TextArea ta= new TextArea(peticion.getRazon_cambio()) ;
+                    ta.setMinHeight(20);
+                    ta.setMaxHeight(60);
+                    ta.setEditable(false);
+                    grid.add(ta, 1, 2);
                     grid.add(new Label(), 0, 3);
                     grid.add(new Label(), 1, 3);
+                    Button aprobar= new Button("Aprobar Peticion Nº "+Integer.toString(peticion.getId()));
+                    aprobar.setOnMouseClicked(e->aprobarPeticion(e));
+                    Button rechazar= new Button("Rechazar Peticion Nº "+Integer.toString(peticion.getId()));
+                    rechazar.setOnMouseClicked(e->rechazarPeticion(e));
                     grid.add(aprobar, 0, 4);
                     grid.add(rechazar, 1, 4);
             tp.setContent(grid);
+            localControl.put(peticion.getId(), tp);
             p.add(tp);
-        });
+        }
         
         return p;
     }
@@ -109,7 +112,6 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
                 Statement st = this.conn.createStatement();
                 ResultSet rs = st.executeQuery(empleado_query);
 
-                
                 
                 while (rs.next()){
                     
@@ -137,7 +139,83 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
     
     }
     
+    @FXML
+    
+    public void rechazarPeticion(MouseEvent event){
+    
+        Button btn = (Button)event.getSource();
+        int rem=removerPeticion(btn.getText());
+        Alert alerta=modificarPeticion(rem,false);
+        alerta.showAndWait();
+    }
+    
+    @FXML
+    
+    public void aprobarPeticion(MouseEvent event){
+        
+        Button btn = (Button)event.getSource();
+        int rem=removerPeticion(btn.getText());
+        Alert alerta= modificarPeticion(rem,true);
+        alerta.showAndWait();
+    
+    }
     
     
+    private int removerPeticion(String buttonText){
+        
+       int petition=-1;
+       
+       String[] splitText = buttonText.split(" ");
+       
+       try{
+           System.out.println(splitText[3]);
+           petition=Integer.valueOf(splitText[3]);
+           acPeticiones.getPanes().remove(localControl.get(petition));
+           
+           if (acPeticiones.getPanes().isEmpty()) {
+               TitledPane npt = new TitledPane();
+               npt.setContent(new Label("Todas las peticiones han sido contestadas."));
+               acPeticiones.getPanes().add(npt);
+           }
+       
+       }catch(NumberFormatException e){
+       
+           System.out.println(e.toString());
+       
+       }
+       
+       return petition;
+    }
+    
+    public Alert modificarPeticion(int id, boolean fue_aceptado){
+    
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        String header="";
+        
+        if (fue_aceptado==true) header="aceptada";
+        else header="rechazada";
+        
+        try {
+            String peticion_query="UPDATE \"LBSASQL\".\"Peticion_modif_venta\"\n" +
+                    "	SET aprobacion_pendiente=?, peticion_aceptada=?,"
+                    + "fecha_actualizacion=current_timestamp\n" +
+                    "	WHERE id_peticion="+id+";";
+            PreparedStatement st=this.conn.prepareStatement(peticion_query);
+            st.setBoolean(1, false);
+            st.setBoolean(2, fue_aceptado);
+            st.executeUpdate();
+            
+            alert.setTitle("Estado de la peticion");
+            alert.setContentText("Los cambios han ido guardados con éxito.");
+            alert.setHeaderText("La peticion ha sido "+header);
+            
+            return alert;
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLPermisosController.class.getName()).log(Level.SEVERE, null, ex);
+            alert.setTitle("SQL Exception");
+            alert.setContentText(ex.toString());
+        }
+        return alert;
+    }
     
 }
