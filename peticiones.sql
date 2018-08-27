@@ -32,5 +32,5 @@ COMMENT ON TABLE "LBSASQL"."Peticion_modif_venta"
     IS 'Aqui se almacenan las peticiones de modificacion de venta';
 	
 --valor de prueba	
-	INSERT INTO "LBSASQL"."Peticion_modif_venta"(id_empleado, id_venta, aprobacion_pendiente, peticion_aceptada, fecha_actualizacion, fecha_envio_peticion)
-	VALUES ('234757689' , 1, true, false, current_timestamp, current_timestamp);
+	INSERT INTO "LBSASQL"."Peticion_modif_venta"(id_empleado, id_venta, aprobacion_pendiente, peticion_aceptada, razon_modificacion, fecha_actualizacion, fecha_envio_peticion)
+	VALUES ('234757689' , 1, true, false,'Se facturo un producto erroneo y se cobro $100 extra al cliente', current_timestamp, current_timestamp);
