@@ -33,7 +33,7 @@ import javafx.scene.layout.Pane;
  *
  * @author user
  */
-public class FXMLRegistrarClientesController extends ControlVendedor implements Initializable {
+public class FXMLRegistrarClientesController extends FXMLLoginController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -95,7 +95,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
         
         try {
             //INSERTAR EN CLIENTE
-            PreparedStatement st= super.conexion.prepareStatement(query);
+            PreparedStatement st= super.getConnection().prepareStatement(query);
             st.setString(1, nombre);
             st.setString(2, mail);
             st.setString(3, direccion);
@@ -106,7 +106,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
             
             System.out.println("Cliente registrado con éxito");
         
-            Statement smnt= super.conexion.createStatement();
+            Statement smnt= super.getConnection().createStatement();
             ResultSet rs = smnt.executeQuery("SELECT id_cliente FROM \"LBSASQL\".\"Cliente\" ORDER BY id_cliente DESC LIMIT 1;");
             int key;
             
@@ -135,7 +135,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
     private void insertarClienteCiudadano(String num_cedula, int id_cliente){
     
         try {
-            PreparedStatement st = super.conexion.prepareStatement("INSERT INTO \"LBSASQL\"."
+            PreparedStatement st = super.getConnection().prepareStatement("INSERT INTO \"LBSASQL\"."
                     + "\"Cliente_ciudadano\" (num_cedula, id_cliente, reg_eliminado) VALUES (?, ?, ?);");
             st.setString(1, num_cedula);
             st.setInt(2, id_cliente);
@@ -158,7 +158,7 @@ public class FXMLRegistrarClientesController extends ControlVendedor implements 
             
             String query = "INSERT INTO \"LBSASQL\".\"Cliente_contribuyente_registrado\"(\"RUC\", id_cliente, razon_social, es_contrib_especial, reg_eliminado)"+
 	"VALUES (?, ?, ?, ?, ?);";
-            PreparedStatement st = super.conexion.prepareStatement(query);
+            PreparedStatement st = super.getConnection().prepareStatement(query);
             st.setString(1, ruc);
             st.setInt(2, id_cliente);
             st.setString(3, rs);

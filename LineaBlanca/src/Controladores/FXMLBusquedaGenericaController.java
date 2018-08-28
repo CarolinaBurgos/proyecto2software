@@ -40,10 +40,10 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
     private TextField TxtNombre, TxtDescripcion;
     private TableView TableContent;
     private Tab TabArticulos, TabUsers, TabClientes;
-    private TextField UserCI, UserNombre,UserCargo,TxtUser,UserMail,UserDireccion;
+    private TextField UserCI, UserNombre, UserCargo, TxtUser, UserMail, UserDireccion;
     private Button ClientesBuscar;
-    private TextField ClientesCI, ClientesNombre, ClientesDireccion,ClientesMail;
-    
+    private TextField ClientesCI, ClientesNombre, ClientesDireccion, ClientesMail;
+
     /**
      * Initializes the controller class.
      */
@@ -51,141 +51,143 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb);
         this.setAccordingToPermissions();
-    }    
-    
-    private void setAccordingToPermissions(){
-        if(super.getEmpleado().getPermiso().equalsIgnoreCase("Vendedor")||
-                super.getEmpleado().getPermiso().equalsIgnoreCase("Gerente")){
+    }
+
+    private void setAccordingToPermissions() {
+        if (super.getEmpleado().getPermiso().equalsIgnoreCase("Vendedor")
+                || super.getEmpleado().getPermiso().equalsIgnoreCase("Gerente")) {
             this.TabUsers.setDisable(true);
         }
     }
-    
-    public void initializacomboBox(){
+
+    public void initializacomboBox() {
         this.ComboElectBus.getItems().removeAll(this.ComboElectBus.getItems());
         this.ComboElectBus.getItems().addAll("categoria", "descripcion", "nombre");
         this.ComboElectCat.getItems().removeAll(this.ComboElectCat.getItems());
-        this.ComboElectCat.getItems().addAll("lavadora", "refrigeradora","cocina");
+        this.ComboElectCat.getItems().addAll("lavadora", "refrigeradora", "cocina");
         this.ComboElectCat.setDisable(true);
         this.TxtNombre.setDisable(true);
         this.TxtDescripcion.setDisable(true);
     }
-    
-    public void BuscarClientes(MouseEvent event){
-        
-        Statement state;
-        String query_llamada_procedure = "SELECT * From BuscarEmpleadoUsuario('"+this.ClientesCI.getText()+"')";
-        try {
-            state = super.getConnection().createStatement();
-            ResultSet rs = state.executeQuery(query_llamada_procedure);
-            this.FillTables(rs);
-            if(rs.next())
-                setearDatos(rs);
-            
+
+    public void BuscarClientes(MouseEvent event) {
+
+        String query_llamada_procedure = "SELECT * From BuscarEmpleadoUsuario('" + this.ClientesCI.getText() + "')";
+        try (Statement state = super.getConnection().createStatement()) {
+            try (ResultSet rs = state.executeQuery(query_llamada_procedure);) {
+                this.FillTables(rs);
+                if (rs.next()) {
+                    setearDatos(rs);
+                }
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+        }
     }
-    
-    public void setearDatos(ResultSet rs) throws SQLException{
+
+    public void setearDatos(ResultSet rs) throws SQLException {
         this.ClientesDireccion.setText(rs.getString(4));
         this.ClientesMail.setText(rs.getString(3));
         this.ClientesNombre.setText(rs.getString(2));
-        
+
     }
-    
-    public void BuscarUsers(MouseEvent event){        
+
+    public void BuscarUsers(MouseEvent event) {
         Statement state;
-        String query_llamada_procedure = "SELECT * FROM BuscarEmpleadoUsuario('"+this.UserCI.getText()+"')";
+        String query_llamada_procedure = "SELECT * FROM BuscarEmpleadoUsuario('" + this.UserCI.getText() + "')";
         try {
             state = super.getConnection().createStatement();
             ResultSet rs = state.executeQuery(query_llamada_procedure);
             this.FillTables(rs);
-            if(rs.next())
+            if (rs.next()) {
                 setearDatos(rs);
-            
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
     }
-    
-    public void setearDatosUser(ResultSet sr) throws SQLException{
+
+    public void setearDatosUser(ResultSet sr) throws SQLException {
         this.TxtUser.setText(sr.getString(4));
         this.UserCargo.setText(sr.getString(8));
         this.UserDireccion.setText(sr.getString(6));
         this.UserMail.setText(sr.getString(5));
         this.UserNombre.setText(sr.getString(2));
-                                       
+
     }
-    
-    
-    public void BuscarArticulos(MouseEvent event){
-        Statement state;
+
+    public void BuscarArticulos(MouseEvent event) {
+
         String query_llamada_procedure = this.definirBusqueda(event);
-        try {
-            state = super.getConnection().createStatement();
-            ResultSet rs = state.executeQuery(query_llamada_procedure);
-            this.FillTables(rs);
-            if(rs.next())
-                setearDatos(rs);
-            
+        try (Statement state = super.getConnection().createStatement()) {
+            try (ResultSet rs = state.executeQuery(query_llamada_procedure);) {
+                this.FillTables(rs);
+                if (rs.next()) {
+                    setearDatos(rs);
+                }
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
-        }       
-        
+        }
+
     }
-    
-    public String definirBusqueda(MouseEvent event){
-        String query_resultSet ="";
+
+    public String definirBusqueda(MouseEvent event) {
+        String query_resultSet = "";
         String selection = (String) this.ComboElectBus.getSelectionModel().getSelectedItem();
-        if(selection.startsWith("categoria")){
+        if (selection.startsWith("categoria")) {
             this.ComboElectCat.setDisable(false);
-            query_resultSet = "SELECT BuscarArticuloCategoria('"+this.ComboElectCat.getSelectionModel().getSelectedItem()+"')";
+            query_resultSet = "SELECT BuscarArticuloCategoria('" + this.ComboElectCat.getSelectionModel().getSelectedItem() + "')";
         }
-        if(selection.startsWith("descripcion")){
+        if (selection.startsWith("descripcion")) {
             this.TxtDescripcion.setDisable(false);
-            query_resultSet ="SELECT BuscarArticuloDescripcion('"+this.TxtDescripcion.getText()+"')";
+            query_resultSet = "SELECT BuscarArticuloDescripcion('" + this.TxtDescripcion.getText() + "')";
         }
-        if(selection.startsWith("nombre")){
+        if (selection.startsWith("nombre")) {
             this.TxtNombre.setDisable(false);
-            query_resultSet = "SELECT BusquedaArticuloNombre('"+this.TxtNombre.getText()+"')";
+            query_resultSet = "SELECT BusquedaArticuloNombre('" + this.TxtNombre.getText() + "')";
         }
-            
+
         return query_resultSet;
     }
-    
 
-    
-    public void salir(MouseEvent event){
-        String view =returnView(this.getEmpleado().getPermiso());
-        try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLInicio"+view+".fxml")));
-            }catch(IOException e){
-                System.out.println(e);
-            }
+    public void salir(MouseEvent event) {
+        try {
+            String view = returnView(this.getEmpleado().getPermiso());
+
+            Node n = (Node) event.getSource();
+            n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLInicio" + view + ".fxml")));
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
-    public String returnView(String permiso){
-        if(permiso==null)
+
+    public String returnView(String permiso) {
+        if (permiso == null) {
             return "";
-        String[] views = {"Vendedor", "Admin","Gerente", "SuperAdmin"};
-        for(String perm: views){
-            String perm1=perm.toLowerCase();
-            if(permiso.startsWith(perm1.substring(0, 3))){
-                return perm;}
+        }
+        String[] views = {"Vendedor", "Admin", "Gerente", "SuperAdmin"};
+        for (String perm : views) {
+            String perm1 = perm.toLowerCase();
+            if (permiso.startsWith(perm1.substring(0, 3))) {
+                return perm;
+            }
         }
         return "";
     }
-    
-    
-    public void FillTables(ResultSet rs){
+
+    public void FillTables(ResultSet rs) {
         ObservableList<ObservableList> data = FXCollections.observableArrayList();
-        
+
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 //Iterate Row
                 ObservableList<String> row = FXCollections.observableArrayList();
-                for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
                     //Iterate Column
                     row.add(rs.getString(i));
                 }
@@ -193,13 +195,11 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
 
             }
             this.TableContent.setItems(data);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
+
     }
-    
+
 }

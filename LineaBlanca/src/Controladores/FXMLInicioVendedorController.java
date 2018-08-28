@@ -6,11 +6,8 @@
 package Controladores;
 
 import Modelo.*;
-import Conexion.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -19,24 +16,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import javafx.event.ActionEvent;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-
 import javafx.scene.control.ComboBox;
-
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -103,24 +91,23 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     
     @FXML
     public void llenarComboBoxArticulo(){
-        //select alm.id_almacen from "LBSASQL"."Empleado" emp join "LBSASQL"."Almacen"	alm on emp.id_almacen=alm.id_almacen where emp.num_cedula='234757689';
-        try {
+        try(Statement stmt = conn.createStatement()) {
             int numeroAlmacen=0;
             String q1 = "select alm.id_almacen from \"LBSASQL\".\"Empleado\" emp join \"LBSASQL\".\"Almacen\" alm on emp.id_almacen=alm.id_almacen where emp.num_cedula='" + FXMLLoginController.user.getId_entidad()+"'";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(q1);              
-            while (rs.next()) {
-                numeroAlmacen=Integer.valueOf(rs.getString(1));
+            try(ResultSet rs = stmt.executeQuery(q1)){
+                while (rs.next()) {
+                    numeroAlmacen=Integer.valueOf(rs.getString(1));
+                }
             }
-            //select art.id_articulo,art.descripcion, art.marca,art.precio_cliente_sin_iva,artAlm.cantidad_articulo_disponible from "LBSASQL"."Articulo" art join "LBSASQL"."Articulo_almacenado" artAlm on art.id_articulo=artAlm.id_articulo join"LBSASQL"."Almacen" alma on artAlm.id_almacen=alma.id_almacen where alma.id_almacen=1; ;	
+                          
             String q2 = "select art.id_articulo,art.descripcion, art.marca,art.precio_cliente_sin_iva,artAlm.cantidad_articulo_disponible from \"LBSASQL\".\"Articulo\" art join \"LBSASQL\".\"Articulo_almacenado\" artAlm on art.id_articulo=artAlm.id_articulo join\"LBSASQL\".\"Almacen\" alma on artAlm.id_almacen=alma.id_almacen where alma.id_almacen='"+ numeroAlmacen +"'";
-            ResultSet rs2 = stmt.executeQuery(q2); 
-            ObservableList<String> items = FXCollections.observableArrayList();
-            while (rs2.next()) {
-                items.add(rs2.getString(1)+","+rs2.getString(2)+","+rs2.getString(3)+","+rs2.getString(4)+","+rs2.getString(5));
+            try(ResultSet rs2 = stmt.executeQuery(q2)){
+                ObservableList<String> items = FXCollections.observableArrayList();
+                while (rs2.next()) {
+                    items.add(rs2.getString(1)+","+rs2.getString(2)+","+rs2.getString(3)+","+rs2.getString(4)+","+rs2.getString(5));
+                }
+                btnCategorias.setItems(items);
             }
-             btnCategorias.setItems(items);
-
         } catch (SQLException ex) {
             Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -150,42 +137,35 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
         try {
             if(TxtCIclient.getText().isEmpty()){
                     MensajeError("Ingrese a un cliente");
-                    //System.exit(0);
             }
             if(tablaProductos.getItems().isEmpty()){
                     MensajeError("Ingrese articulos");
-                   // System.exit(0);
             }
             ObservableList<ArticuloVenta> articuloVenta =  tablaProductos.getItems();
 
             String sq = "INSERT INTO \"LBSASQL\".\"Compra\" (tipo_comprobante_venta, fecha_compra, monto, id_cliente, id_empleado, reg_eliminado) VALUES(?,?,?,?,?,?)";
-            PreparedStatement stmt = conn.prepareStatement(sq);
-            //VALUES("++ ","+  FXMLLoginController.user.getId_entidad()+ ","+ false+")";                                
-            stmt.setString(1,"fac");
-            stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-            stmt.setDouble(3, Double.valueOf(TxtValorIvaNumerico.getText()));
-            stmt.setInt(4, Integer.valueOf(TxtCIclient.getText()));
-            stmt.setString(5, FXMLLoginController.user.getId_entidad());
-            stmt.setBoolean(6, false);
-            stmt.executeUpdate();
-            
-            System.out.println(articuloVenta.size());
+            try(PreparedStatement stmt = conn.prepareStatement(sq)){
+                stmt.setString(1,"fac");
+                stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+                stmt.setDouble(3, Double.valueOf(TxtValorIvaNumerico.getText()));
+                stmt.setInt(4, Integer.valueOf(TxtCIclient.getText()));
+                stmt.setString(5, FXMLLoginController.user.getId_entidad());
+                stmt.setBoolean(6, false);
+                stmt.executeUpdate();
+            }                               
             for(int i=0;i<articuloVenta.size();i++){
                 String sq1 = "INSERT INTO \"LBSASQL\".\"Articulos_vendidos\" (id_compra, id_articulo, cantidad_articulo) VALUES(?,?,?)";
-                PreparedStatement stmt1 = conn.prepareStatement(sq1);
-                //ingreso articulos vendidos
-                stmt1.setInt(1,Integer.valueOf(TxtNumFactura.getText()));
-                stmt1.setInt(2,articuloVenta.get(i).getId());
-                stmt1.setInt(3, articuloVenta.get(i).getCantidad());
-                stmt1.executeUpdate();
+                try(PreparedStatement stmt1 = conn.prepareStatement(sq1)){
+                    stmt1.setInt(1,Integer.valueOf(TxtNumFactura.getText()));
+                    stmt1.setInt(2,articuloVenta.get(i).getId());
+                    stmt1.setInt(3, articuloVenta.get(i).getCantidad());
+                    stmt1.executeUpdate();
+                }
                  
             }
             JOptionPane.showMessageDialog(null, "Compra ingresada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
-           // java.lang.RuntimeException
-            } catch (SQLException ex) {
+            } catch (SQLException | RuntimeException ex) {
             Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RuntimeException w){
-                System.out.println("Ingrese los campos necesarios");
             }   
 
     }
@@ -197,14 +177,14 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     @FXML
     public void obtenerNumeroFactura(){
         
-        try {
+        try(Statement stmt = conn.createStatement()) {
             String query = "SELECT id_compra FROM \"LBSASQL\".\"Compra\" order BY id_compra DESC LIMIT 1;";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);              
-            while (rs.next()) {
-                int numfac=Integer.valueOf(rs.getString(1))+1;
-                TxtNumFactura.setText(String.valueOf(numfac));
-            }
+            try(ResultSet rs = stmt.executeQuery(query)){
+                while (rs.next()) {
+                    int numfac=Integer.valueOf(rs.getString(1))+1;
+                    TxtNumFactura.setText(String.valueOf(numfac));
+                }
+            }             
         } catch (SQLException ex) {
             Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -216,18 +196,16 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
    
     public void BuscarCompra(MouseEvent eevent) {
         String query = "SELECT com.id_cliente,art.id_articulo,art.descripcion,art.marca,art.precio_cliente_sin_iva,artven.cantidad_articulo from \"LBSASQL\".\"Compra\" com join \"LBSASQL\".\"Articulos_vendidos\" artven on com.id_compra=artven.id_compra join \"LBSASQL\".\"Articulo\" art on artven.id_articulo=art.id_articulo join \"LBSASQL\".\"Cliente\" cli on com.id_cliente=cli.id_cliente join  \"LBSASQL\".\"Cliente\" clie on clie.id_cliente=com.id_cliente WHERE com.id_compra="+ this.TxtNumFactura.getText()+"";
-        Statement stmt;
-        try {
+        try(Statement stmt = conn.createStatement()) {
             ObservableList<ArticuloVenta> row = FXCollections.observableArrayList();
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);           
-            while (rs.next()) {
-                TxtCIclient.setText(rs.getString(1));
-                ArticuloVenta art=new ArticuloVenta((int)Integer.valueOf(rs.getString(2)),rs.getString(3),Double.valueOf(rs.getString(5)),rs.getString(4),Integer.valueOf(rs.getShort(6)));
-                row.add(art);
-                tablaProductos.setItems(row);
-            }
-                    
+            try(ResultSet rs = stmt.executeQuery(query)){
+                while (rs.next()) {
+                    TxtCIclient.setText(rs.getString(1));
+                    ArticuloVenta art=new ArticuloVenta((int)Integer.valueOf(rs.getString(2)),rs.getString(3),Double.valueOf(rs.getString(5)),rs.getString(4),Integer.valueOf(rs.getShort(6)));
+                    row.add(art);
+                    tablaProductos.setItems(row);
+                }
+            }               
         } catch (SQLException ex) {
             Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -241,7 +219,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
                 Node n = (Node) event.getSource();
                 n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLRegistrarClientes.fxml")));
             }catch(IOException e){
-                System.out.println(e);
+                Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, e);
             }
     }
     
@@ -251,7 +229,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
                 n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
                 
             }catch(IOException e){
-                System.out.println(e);
+                Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, e);
             }
     }
 

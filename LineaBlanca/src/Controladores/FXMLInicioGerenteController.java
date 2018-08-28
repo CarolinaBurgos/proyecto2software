@@ -66,14 +66,12 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
     @FXML private TableColumn<Reporte,String> ColVent;
     
     private Connection conn;
-    
-    private ObservableList<ObservableList> data;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         super.connectar();
         conn = this.getConn();
         this.startColumns();
@@ -82,13 +80,12 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
     
     
      public void logOut(MouseEvent event){
-        try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
-                
-            }catch(IOException e){
-                System.out.println(e);
-            }
+         try {
+             Node n = (Node) event.getSource();
+             n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
+         } catch (IOException ex) {
+             Logger.getLogger(FXMLInicioGerenteController.class.getName()).log(Level.SEVERE, null, ex);
+         }            
     }
      
       public void doSearch(MouseEvent event){
@@ -99,7 +96,7 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
                 
                 
             }catch(IOException e){
-                System.out.println(e);
+                Logger.getLogger(FXMLInicioGerenteController.class.getName()).log(Level.SEVERE, null, e);
             }
     }
     
@@ -126,14 +123,14 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
       public void fillClienteReporte(MouseEvent event){
           if(!this.TxtIDVendedor.getText().equals("")) {
               
-              try {
-                  PreparedStatement proc = conn.prepareStatement("select * from ReporteVendedor(?)");
+              try(PreparedStatement proc = conn.prepareStatement("select * from ReporteVendedor(?)")) {
                     proc.setString(1,this.TxtIDVendedor.getText());
-                    ResultSet rs = (ResultSet) proc.executeQuery();
-                  while (rs.next()) {
-                    this.LblNameVendedor.setText(rs.getString(1));
-                    this.LblCantVentas.setText(rs.getString(2));
-                    this.LblMonto.setText(rs.getString(3));
+                    try(ResultSet rs = (ResultSet) proc.executeQuery();){
+                        while (rs.next()) {
+                            this.LblNameVendedor.setText(rs.getString(1));
+                            this.LblCantVentas.setText(rs.getString(2));
+                            this.LblMonto.setText(rs.getString(3));
+                    }                  
             }
               } catch (SQLException ex) {
                   Logger.getLogger(FXMLInicioGerenteController.class.getName()).log(Level.SEVERE, null, ex);
@@ -144,16 +141,17 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
       
       public void fillArticulosReporte(MouseEvent event){
           
-         try {
-             PreparedStatement proc = conn.prepareStatement("select * from ReporteArticulo()");
-            ResultSet rs = (ResultSet) proc.executeQuery();
-             ObservableList<Reporte> items = FXCollections.observableArrayList();
-             while(rs.next()){
-                 ReporteArticulo art = new ReporteArticulo((String)rs.getString(1),(String)rs.getString(2),
-                 Float.parseFloat(rs.getString(3)),Float.parseFloat(rs.getString(4)));
-                 items.add(art);
-                 this.TableArticulos.setItems(items);
+         try(PreparedStatement proc = conn.prepareStatement("select * from ReporteArticulo()")) {
+             try(ResultSet rs = (ResultSet) proc.executeQuery()){
+                 ObservableList<Reporte> items = FXCollections.observableArrayList();
+                 while(rs.next()){
+                    ReporteArticulo art = new ReporteArticulo((String)rs.getString(1),(String)rs.getString(2),
+                    Float.parseFloat(rs.getString(3)),Float.parseFloat(rs.getString(4)));
+                    items.add(art);
+                    this.TableArticulos.setItems(items);
+                }
              }
+             
          } catch (SQLException ex) {
              Logger.getLogger(FXMLInicioGerenteController.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -161,16 +159,16 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
       }
       
       public void fillClientesReportes(MouseEvent event){
-          try {
-              PreparedStatement proc = conn.prepareStatement("select * from ReporteCliente()");
-            ResultSet rs = (ResultSet) proc.executeQuery();
-             ObservableList<Reporte> items = FXCollections.observableArrayList();
-             while(rs.next()){
-                 ReporteCliente client = new ReporteCliente((String)rs.getString(1),
+          try(PreparedStatement proc = conn.prepareStatement("select * from ReporteCliente()")) {
+              try(ResultSet rs = (ResultSet) proc.executeQuery()){
+                    ObservableList<Reporte> items = FXCollections.observableArrayList();
+                    while(rs.next()){
+                        ReporteCliente client = new ReporteCliente((String)rs.getString(1),
                          rs.getString(2), rs.getString(3),rs.getString(4),(Float)Float.parseFloat(rs.getString(5)));
-                 items.add(client);
-                 this.TableClientes.setItems(items);
-             }
+                        items.add(client);
+                        this.TableClientes.setItems(items);
+                    }
+              }            
          } catch (SQLException ex) {
              Logger.getLogger(FXMLInicioGerenteController.class.getName()).log(Level.SEVERE, null, ex);
          }

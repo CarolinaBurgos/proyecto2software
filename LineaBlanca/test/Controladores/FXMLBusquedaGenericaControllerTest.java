@@ -5,11 +5,6 @@
  */
 package Controladores;
 
-import Modelo.Empleado;
-import java.net.URL;
-import java.sql.ResultSet;
-import java.util.ResourceBundle;
-import javafx.scene.input.MouseEvent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

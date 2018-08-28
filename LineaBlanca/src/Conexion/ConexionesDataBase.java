@@ -42,7 +42,7 @@ public class ConexionesDataBase {
     
     public static void closeConnection(){
         try {
-            if( conn==null||!conn.isClosed())
+            if( conn!=null||!conn.isClosed())
                 conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(ConexionesDataBase.class.getName()).log(Level.SEVERE, null, ex);
