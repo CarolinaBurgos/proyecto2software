@@ -13,12 +13,12 @@
    <children>
       <Pane layoutY="-2.0" prefHeight="54.0" prefWidth="815.0" style="-fx-background-color: #4B7DEB;">
          <children>
-            <Label layoutX="73.0" layoutY="14.0" text="Actualización de Inventario" textFill="#fcfcfc">
+            <Label layoutX="110.0" layoutY="14.0" text="Actualización de Inventario" textFill="#fcfcfc">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <Button fx:id="BtnDespliegue" layoutX="14.0" layoutY="16.0" minWidth="35.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="35.0" text="Back" />
+            <Button fx:id="BtnDespliegue" layoutX="14.0" layoutY="16.0" minWidth="35.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="75.0" text="Back" />
          </children>
       </Pane>
       <TextField fx:id="TxtId" layoutX="166.0" layoutY="110.0" prefHeight="20.0" prefWidth="220.0" />

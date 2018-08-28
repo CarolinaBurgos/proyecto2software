@@ -29,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 
@@ -215,7 +216,6 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
         
     }
     
-            
         public void addClientes(MouseEvent event){
 
             sc.cambioEscenaActual(event, Constantes.LOGIN_HEIGHT, Constantes.LOGIN_WIDTH, "/Views/FXMLRegistrarClientes.fxml");
@@ -227,5 +227,6 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
             sc.cambioEscenaActual(event, Constantes.LOGIN_HEIGHT, Constantes.LOGIN_WIDTH, "/Views/FXMLLogin.fxml"); 
 
         }
+
 
     }

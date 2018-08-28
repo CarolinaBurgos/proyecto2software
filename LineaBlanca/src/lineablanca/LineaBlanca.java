@@ -5,15 +5,12 @@
  */
 package lineablanca;
 
-import Conexion.ConexionesDataBase;
-import static java.lang.System.exit;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  *

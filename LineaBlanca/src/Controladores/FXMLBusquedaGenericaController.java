@@ -57,8 +57,10 @@ public class FXMLBusquedaGenericaController extends ControlBusqueda implements I
     }
 
     private void setAccordingToPermissions() {
+
         if (permiso.equalsIgnoreCase("Vendedor")
                 || permiso.equalsIgnoreCase("Gerente")) {
+
             this.TabUsers.setDisable(true);
         }
     }

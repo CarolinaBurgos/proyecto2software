@@ -41,42 +41,41 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
     @FXML
     private Button BtnDespliegue;
     @FXML
-    private TextField TxtNombre,TxtMail,TxtDireccion,TxtId;
+    private TextField TxtNombre, TxtMail, TxtDireccion, TxtId;
     @FXML
     private Button BtnRegistro;
     @FXML
     private Pane PaneSlide;
     @FXML
     private Button BtnHome;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.sc=new Escenario();
         super.connectar();
-    }    
-    
+    }
+
     @FXML
     private void volverAlMenuAnterior(MouseEvent e){
         try{
             sc.cambioEscenaActual(e, 610, 920, "/Views/FXMLInicioVendedor.fxml");
         }catch(Exception ex){
+
             failure(ex.toString());
         }
-    
+
     }
-    
-    
+
     @FXML
-    public void agregarCliente(MouseEvent e){
-    
-        String nombre=TxtNombre.getText();
-        String mail=TxtMail.getText();
-        String direccion=TxtDireccion.getText();
-        String numero_identidad=TxtId.getText();
-        
+    public void agregarCliente(MouseEvent e) {
+
+        String nombre = TxtNombre.getText();
+        String mail = TxtMail.getText();
+        String direccion = TxtDireccion.getText();
+        String numero_identidad = TxtId.getText();
+
         String id_cliente;
-        
-        
+
         //fecha local 
         LocalDateTime localDateTime = LocalDateTime.now();
         ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneOffset.systemDefault());
@@ -84,18 +83,16 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
         Date date = Date.from(instant);
         java.sql.Date sDate = convertUtilToSql(date);
 
-     //query para agregar cliente
+        //query para agregar cliente
         String query;
-        
-        
-        
-        query= "INSERT INTO \"LBSASQL\".\"Cliente\"(\n" + 
-                "nombre, correo, direccion, fecha_creacion, fecha_ultima_actualizacion, reg_eliminado)\n" +
-                "VALUES (?,? ,?,?, ?, ?);";
-        
+
+        query = "INSERT INTO \"LBSASQL\".\"Cliente\"(\n"
+                + "nombre, correo, direccion, fecha_creacion, fecha_ultima_actualizacion, reg_eliminado)\n"
+                + "VALUES (?,? ,?,?, ?, ?);";
+
         try {
             //INSERTAR EN CLIENTE
-            PreparedStatement st= super.getConnection().prepareStatement(query);
+            PreparedStatement st = super.getConnection().prepareStatement(query);
             st.setString(1, nombre);
             st.setString(2, mail);
             st.setString(3, direccion);
@@ -103,37 +100,35 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
             st.setDate(5, sDate);
             st.setBoolean(6, false);
             st.executeUpdate();
-            
+
             System.out.println("Cliente registrado con éxito");
-        
-            Statement smnt= super.getConnection().createStatement();
+
+            Statement smnt = super.getConnection().createStatement();
             ResultSet rs = smnt.executeQuery("SELECT id_cliente FROM \"LBSASQL\".\"Cliente\" ORDER BY id_cliente DESC LIMIT 1;");
             int key;
-            
+
             if (rs != null && rs.next()) {
                 System.out.println("key");
                 key = rs.getInt(1);
-                if (numero_identidad.length()==13)  insertarClienteContribuyenteReg(numero_identidad, key, nombre, false);
-                else if (numero_identidad.length()==10) insertarClienteCiudadano(numero_identidad,key);
-                else failure("Numero invalido de caracteres");
-                
+                if (numero_identidad.length() == 13) {
+                    insertarClienteContribuyenteReg(numero_identidad, key, nombre, false);
+                } else if (numero_identidad.length() == 10) {
+                    insertarClienteCiudadano(numero_identidad, key);
+                } else {
+                    failure("Numero invalido de caracteres");
+                }
 
             }
-            
 
-        } 
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(FXMLRegistrarClientesController.class.getName()).log(Level.SEVERE, null, ex);
             failure(ex.toString());
         }
-        
-        
-        
-    
+
     }
-    
-    private void insertarClienteCiudadano(String num_cedula, int id_cliente){
-    
+
+    private void insertarClienteCiudadano(String num_cedula, int id_cliente) {
+
         try {
             PreparedStatement st = super.getConnection().prepareStatement("INSERT INTO \"LBSASQL\"."
                     + "\"Cliente_ciudadano\" (num_cedula, id_cliente, reg_eliminado) VALUES (?, ?, ?);");
@@ -147,17 +142,15 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
             Logger.getLogger(FXMLRegistrarClientesController.class.getName()).log(Level.SEVERE, null, ex);
             failure(ex.toString());
         }
-       
-    
+
     }
-    
-    
-        private void insertarClienteContribuyenteReg(String ruc, int id_cliente, String rs, boolean ce){
-    
+
+    private void insertarClienteContribuyenteReg(String ruc, int id_cliente, String rs, boolean ce) {
+
         try {
-            
-            String query = "INSERT INTO \"LBSASQL\".\"Cliente_contribuyente_registrado\"(\"RUC\", id_cliente, razon_social, es_contrib_especial, reg_eliminado)"+
-	"VALUES (?, ?, ?, ?, ?);";
+
+            String query = "INSERT INTO \"LBSASQL\".\"Cliente_contribuyente_registrado\"(\"RUC\", id_cliente, razon_social, es_contrib_especial, reg_eliminado)"
+                    + "VALUES (?, ?, ?, ?, ?);";
             PreparedStatement st = super.getConnection().prepareStatement(query);
             st.setString(1, ruc);
             st.setInt(2, id_cliente);
@@ -171,11 +164,9 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
             Logger.getLogger(FXMLRegistrarClientesController.class.getName()).log(Level.SEVERE, null, ex);
             failure(ex.toString());
         }
-       
-    
+
     }
-    
-    
+  
     
     
     private void failure(String error){
@@ -188,13 +179,12 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
             Alert success = sc.alertaGenerica("Cliente agregado", "Cliente agregado: \n>>"+data, "Accion realizada con éxito.", Alert.AlertType.NONE);
             success.showAndWait();
     
+
     }
-    
 
     private java.sql.Date convertUtilToSql(Date date) {
         java.sql.Date sDate = new java.sql.Date(date.getTime());
         return sDate;
     }
-    
-    
+
 }
