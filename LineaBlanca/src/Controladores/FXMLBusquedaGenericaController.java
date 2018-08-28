@@ -53,7 +53,7 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
         this.setAccordingToPermissions();
     }    
     
-    public void setAccordingToPermissions(){
+    private void setAccordingToPermissions(){
         if(super.getEmpleado().getPermiso().equalsIgnoreCase("Vendedor")||
                 super.getEmpleado().getPermiso().equalsIgnoreCase("Gerente")){
             this.TabUsers.setDisable(true);
@@ -73,7 +73,7 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
     public void BuscarClientes(MouseEvent event){
         
         Statement state;
-        String query_llamada_procedure = "SELECT BuscarEmpleadoUsuario('"+this.ClientesCI.getText()+"')";
+        String query_llamada_procedure = "SELECT * From BuscarEmpleadoUsuario('"+this.ClientesCI.getText()+"')";
         try {
             state = super.getConnection().createStatement();
             ResultSet rs = state.executeQuery(query_llamada_procedure);
@@ -95,7 +95,7 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
     
     public void BuscarUsers(MouseEvent event){        
         Statement state;
-        String query_llamada_procedure = "SELECT BuscarEmpleadoUsuario('"+this.UserCI.getText()+"')";
+        String query_llamada_procedure = "SELECT * FROM BuscarEmpleadoUsuario('"+this.UserCI.getText()+"')";
         try {
             state = super.getConnection().createStatement();
             ResultSet rs = state.executeQuery(query_llamada_procedure);
