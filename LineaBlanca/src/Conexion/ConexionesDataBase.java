@@ -34,15 +34,15 @@ public class ConexionesDataBase {
             conn = DriverManager.getConnection(url, usuario, contrasenna); 
         } 
 
-       catch (Exception e) {
-           e.printStackTrace();
+       catch (SQLException e) {
+           Logger.getLogger(ConexionesDataBase.class.getName()).log(Level.SEVERE, null, e);
        }
 
     }
     
     public static void closeConnection(){
         try {
-            if( conn!=null||!conn.isClosed())
+            if(!conn.isClosed())
                 conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(ConexionesDataBase.class.getName()).log(Level.SEVERE, null, ex);

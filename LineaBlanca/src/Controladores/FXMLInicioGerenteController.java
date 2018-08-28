@@ -117,7 +117,7 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
               
               try(PreparedStatement proc = conn.prepareStatement("select * from ReporteVendedor(?)")) {
                     proc.setString(1,this.TxtIDVendedor.getText());
-                    try(ResultSet rs = (ResultSet) proc.executeQuery();){
+                    try(ResultSet rs = (ResultSet) proc.executeQuery()){
                         while (rs.next()) {
                             this.LblNameVendedor.setText(rs.getString(1));
                             this.LblCantVentas.setText(rs.getString(2));

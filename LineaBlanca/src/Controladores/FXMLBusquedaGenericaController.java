@@ -6,8 +6,11 @@
 package Controladores;
 
 import Constantes.Constantes;
+import Modelo.Articulo;
+import Modelo.ArticuloLineaBlanca;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,9 +26,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -41,9 +47,12 @@ public class FXMLBusquedaGenericaController extends ControlBusqueda implements I
     private TextField TxtNombre, TxtDescripcion;
     private TableView TableContent;
     private Tab TabArticulos, TabUsers, TabClientes;
-    private TextField UserCI, UserNombre, UserCargo, TxtUser, UserMail, UserDireccion;
+    private TextField UserCI, UserNombre, UserCargo, TxtUser, UserMail, UserDireccion, UserApellido;
     private Button ClientesBuscar;
     private TextField ClientesCI, ClientesNombre, ClientesDireccion, ClientesMail;
+    @FXML
+    private TableColumn<Articulo, String> colCo, colDe, colCa, colMarca, colConsumo,
+            colColor, colPrecio, colStock;
 
     /**
      * Initializes the controller class.
@@ -52,8 +61,11 @@ public class FXMLBusquedaGenericaController extends ControlBusqueda implements I
     public void initialize(URL url, ResourceBundle rb) {
         this.connectar();
         this.setAccordingToPermissions();
-        this.permiso=FXMLLoginController.user.getPermiso();
-        this.sc=new Escenario();
+        this.permiso = FXMLLoginController.user.getPermiso();
+        this.sc = new Escenario();
+        this.initializeTable();
+        this.initializacomboBox();
+        this.initializeTextField();
     }
 
     private void setAccordingToPermissions() {
@@ -65,79 +77,70 @@ public class FXMLBusquedaGenericaController extends ControlBusqueda implements I
         }
     }
 
-    public void initializacomboBox() {
+    private void initializeTable() {
+        this.colCa.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        this.colConsumo.setCellValueFactory(new PropertyValueFactory<>("consumoElectrico"));
+        this.colCo.setCellValueFactory(new PropertyValueFactory<>("id"));
+        this.colColor.setCellValueFactory(new PropertyValueFactory<>("monot"));
+        this.colMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
+        this.colDe.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        this.colStock.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+        this.colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio_sin_iva"));
+    }
+
+    private void initializacomboBox() {
+        this.ClientesCI = new TextField();
+        this.UserCI = new TextField();
+        this.ComboElectBus = new ComboBox();
+        this.ComboElectCat = new ComboBox();
         this.ComboElectBus.getItems().removeAll(this.ComboElectBus.getItems());
         this.ComboElectBus.getItems().addAll("categoria", "descripcion", "nombre");
         this.ComboElectCat.getItems().removeAll(this.ComboElectCat.getItems());
         this.ComboElectCat.getItems().addAll("lavadora", "refrigeradora", "cocina");
+        this.TxtNombre = new TextField();
+        this.TxtDescripcion = new TextField();
         this.ComboElectCat.setDisable(true);
         this.TxtNombre.setDisable(true);
         this.TxtDescripcion.setDisable(true);
     }
 
     public void BuscarClientes(MouseEvent event) {
-
-        String query_llamada_procedure = "SELECT * From BuscarEmpleadoUsuario('" + this.ClientesCI.getText() + "')";
-        try (Statement state = this.conn.createStatement()) {
-            try (ResultSet rs = state.executeQuery(query_llamada_procedure);) {
-                this.FillTables(rs);
+        if(!this.ClientesCI.getText().equals("")){
+        try (PreparedStatement proc = conn.prepareStatement("select * from BuscarCliente(?)")) {
+            proc.setString(1, this.ClientesCI.getText());
+            try (ResultSet rs = (ResultSet) proc.executeQuery()) {
                 if (rs.next()) {
-                    setearDatos(rs);
+                    this.ClientesNombre.setText(rs.getString(1));
+                    this.ClientesDireccion.setText(rs.getString(2));
+                    this.ClientesMail.setText(rs.getString(3));
                 }
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void setearDatos(ResultSet rs) throws SQLException {
-        this.ClientesDireccion.setText(rs.getString(4));
-        this.ClientesMail.setText(rs.getString(3));
-        this.ClientesNombre.setText(rs.getString(2));
-
+        }
     }
 
     public void BuscarUsers(MouseEvent event) {
-        Statement state;
-        String query_llamada_procedure = "SELECT * FROM BuscarEmpleadoUsuario('" + this.UserCI.getText() + "')";
-        try {
-            state = this.conn.createStatement();
-            ResultSet rs = state.executeQuery(query_llamada_procedure);
-            this.FillTables(rs);
-            if (rs.next()) {
-                setearDatos(rs);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setearDatosUser(ResultSet sr) throws SQLException {
-        this.TxtUser.setText(sr.getString(4));
-        this.UserCargo.setText(sr.getString(8));
-        this.UserDireccion.setText(sr.getString(6));
-        this.UserMail.setText(sr.getString(5));
-        this.UserNombre.setText(sr.getString(2));
-
-    }
-
-    public void BuscarArticulos(MouseEvent event) {
-
-        String query_llamada_procedure = this.definirBusqueda(event);
-        try (Statement state = this.conn.createStatement()) {
-            try (ResultSet rs = state.executeQuery(query_llamada_procedure);) {
-                this.FillTables(rs);
+        if(!UserCI.getText().equals("")){
+        try (PreparedStatement proc = conn.prepareStatement("select * from BuscarEmpleadoUsuario(?)")) {
+            proc.setString(1, this.UserCI.getText());
+            try (ResultSet rs = (ResultSet) proc.executeQuery()) {
                 if (rs.next()) {
-                    setearDatos(rs);
+                    this.UserCargo.setText(rs.getString(6));
+                    this.UserDireccion.setText(rs.getString(4));
+                    this.UserMail.setText(rs.getString(5));
+                    this.UserNombre.setText(rs.getString(1));
+                    this.TxtUser.setText(rs.getString(3));
+                    this.UserApellido.setText(rs.getString(2));
                 }
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        }
     }
 
     public String definirBusqueda(MouseEvent event) {
@@ -145,25 +148,24 @@ public class FXMLBusquedaGenericaController extends ControlBusqueda implements I
         String selection = (String) this.ComboElectBus.getSelectionModel().getSelectedItem();
         if (selection.startsWith("categoria")) {
             this.ComboElectCat.setDisable(false);
-            query_resultSet = "SELECT BuscarArticuloCategoria('" + this.ComboElectCat.getSelectionModel().getSelectedItem() + "')";
+            query_resultSet = "SELECT * from BuscarArticuloCategoria(?)";
         }
         if (selection.startsWith("descripcion")) {
             this.TxtDescripcion.setDisable(false);
-            query_resultSet = "SELECT BuscarArticuloDescripcion('" + this.TxtDescripcion.getText() + "')";
+            query_resultSet = "SELECT * from BuscarArticuloDescripcion(?)";
         }
         if (selection.startsWith("nombre")) {
             this.TxtNombre.setDisable(false);
-            query_resultSet = "SELECT BusquedaArticuloNombre('" + this.TxtNombre.getText() + "')";
+            query_resultSet = "SELECT * from BusquedaArticuloNombre(?)";
         }
 
         return query_resultSet;
     }
 
     public void salir(MouseEvent event) {
-        
-            String view = returnView(this.permiso);
-            sc.cambioEscenaActual(event, Constantes.AD_HEIGHT, Constantes.AD_WIDTH, "/Views/FXMLInicio" + view + ".fxml");
-  
+
+        String view = returnView(this.permiso);
+        sc.cambioEscenaActual(event, Constantes.AD_HEIGHT, Constantes.AD_WIDTH, "/Views/FXMLInicio" + view + ".fxml");
 
     }
 
@@ -181,26 +183,44 @@ public class FXMLBusquedaGenericaController extends ControlBusqueda implements I
         return "";
     }
 
-    public void FillTables(ResultSet rs) {
+    private void initializeTextField(){
+        this.TxtDescripcion = new TextField();
+        this.TxtNombre = new TextField();
+        this.TxtUser = new TextField();
+        this.ClientesCI = new TextField();
+        this.ClientesDireccion=new TextField();
+        this.ClientesMail=new TextField();
+        this.ClientesNombre=new TextField();
+        this.UserNombre=new TextField();
+        this.UserMail=new TextField();
+        this.UserDireccion=new TextField();
+        this.UserCargo=new TextField();
+        this.UserApellido=new TextField();
+        this.UserCI=new TextField();
+    }
+    
+    public void FillTablesArticulo(MouseEvent event) {
         ObservableList<ObservableList> data = FXCollections.observableArrayList();
+        String query = this.definirBusqueda(event);
+        if (!query.equals("")) {
+            try (PreparedStatement proc = conn.prepareStatement(query)) {
+                try (ResultSet rs = (ResultSet) proc.executeQuery()) {
+                    ObservableList<Articulo> row = FXCollections.observableArrayList();
+                    while (rs.next()) {
 
-        try {
-            while (rs.next()) {
-                //Iterate Row
-                ObservableList<String> row = FXCollections.observableArrayList();
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    //Iterate Column
-                    row.add(rs.getString(i));
+                        ArticuloLineaBlanca art = new ArticuloLineaBlanca(Integer.parseInt(rs.getString(0)),
+                                rs.getString(1), Double.parseDouble(rs.getString(8)),
+                                rs.getString(3), Color.valueOf(rs.getString(4)), Integer.parseInt(rs.getString(7)));
+                        row.add(art);
+                        this.TableContent.setItems(data);
+
+                    }
                 }
-                data.add(row);
 
+            } catch (SQLException ex) {
+                Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.TableContent.setItems(data);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
 }

@@ -33,122 +33,118 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class FXMLLoginController extends ControlLogin implements Initializable {
-    
+
     Escenario sc;
     public static Empleado user = null;
 
     public FXMLLoginController() {
     }
 
-    
-    @FXML 
+    @FXML
     AnchorPane root;
     @FXML
     private TextField lblUser;
-    
+
     @FXML
     private TextField lblPass;
-    
+
     @FXML
     private Button BtnClick;
-    
+
     private Empleado emp;
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL  url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {
         super.connectar();
-        sc=new Escenario();
-        
-    }  
-    
-    public Connection getConnection(){
+        sc = new Escenario();
+
+    }
+
+    public Connection getConnection() {
         return super.getConn();
     }
-    
+
     public void Conectarse(MouseEvent event) throws IOException {
         String usr = lblUser.getText();
         String pass = lblPass.getText();
-        
-        String requestedUser = this.requestUser(super.getConn(),usr,pass);
+
+        String requestedUser = this.requestUser(super.getConn(), usr, pass);
         requestedUser = this.returnView(requestedUser);
         boolean state = false;
-        
-        if(!usr.isEmpty() && !pass.isEmpty()&&requestedUser!=null){
+
+        if (!usr.isEmpty() && !pass.isEmpty() && requestedUser != null) {
             state = true;
         }
-        
-        System.out.println(state);
-        if(state){
-            try{
-                
-                sc.cambioEscenaActual(event, 720, 920, "/Views/FXMLInicio"+requestedUser+".fxml");
-             
-                
-            }catch(Exception e){
-                System.out.println(e);
+
+        if (state) {
+            try {
+
+                sc.cambioEscenaActual(event, 720, 920, "/Views/FXMLInicio" + requestedUser + ".fxml");
+
+            } catch (Exception e) {
+                Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, e);
             }
-        }else{
-            System.out.println("No registrado");
-        }           
+        } else {
+
+        }
 
     }
-    
-    public String requestUser(Connection conn,String user, String psswd){
-        try {
+
+    public String requestUser(Connection conn, String user, String psswd) {
+        try (Statement stmt = conn.createStatement()) {
             String sql = " SELECT * FROM \"LBSASQL\".\"Empleado\" where usuario='" + user + "' and contraseña='" + psswd + "'";
-            
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                this.emp = this.setEmpleado(rs);
-                return rs.getString(8); //cargo
-            }else{
-                JOptionPane.showMessageDialog(null, "Usuario no registrado", "Error de ingreso", JOptionPane.ERROR_MESSAGE);
+
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                if (rs.next()) {
+                    this.emp = this.setEmpleado(rs);
+                    return rs.getString(8); //cargo
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario no registrado", "Error de ingreso", JOptionPane.ERROR_MESSAGE);
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;
     }
-    
-    public Empleado setEmpleado(ResultSet rs){
+
+    public Empleado setEmpleado(ResultSet rs) {
         try {
-        user = new Empleado(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(7), rs.getString(8), new Date(rs.getTimestamp(9).getTime()), new Date(rs.getTimestamp(10).getTime()), Boolean.getBoolean(rs.getString(11)));
+            user = new Empleado(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(7), rs.getString(8), new Date(rs.getTimestamp(9).getTime()), new Date(rs.getTimestamp(10).getTime()), Boolean.getBoolean(rs.getString(11)));
             user.toString();
         } catch (SQLException ex) {
             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
     }
-    
-    public Empleado getEmpleado(){
+
+    public Empleado getEmpleado() {
         return this.emp;
     }
-    
-    
-    public String returnView(String permiso){
-        if(permiso==null)
+
+    public String returnView(String permiso) {
+        if (permiso == null) {
             return "";
-        String[] views = {"Vendedor", "Admin","Gerente", "SuperAdmin"};
-        for(String perm: views){
-            String perm1=perm.toLowerCase();
-            if(permiso.startsWith(perm1.substring(0, 3))){
-                return perm;}
+        }
+        String[] views = {"Vendedor", "Admin", "Gerente", "SuperAdmin"};
+        for (String perm : views) {
+            String perm1 = perm.toLowerCase();
+            if (permiso.startsWith(perm1.substring(0, 3))) {
+                return perm;
+            }
         }
         return "";
     }
-    
-     public void acceptDialogue(){
+
+    public void acceptDialogue() {
         JOptionPane.showMessageDialog(null, "Se han guardado los datos exitosamente", "Ingreso Correcto", JOptionPane.INFORMATION_MESSAGE);
     }
-    
-    public void errorDialogue(){
+
+    public void errorDialogue() {
         JOptionPane.showMessageDialog(null, "Problema con conexion", "Error de ingreso", JOptionPane.ERROR_MESSAGE);
     }
-    
-    
-    
+
 }

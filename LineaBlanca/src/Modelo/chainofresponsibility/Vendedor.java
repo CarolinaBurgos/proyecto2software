@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package Modelo.chainofresponsibility;
 
+import Modelo.Cliente;
+import Modelo.Compra;
+import Modelo.Empleado;
 import java.util.Date;
 
 /**

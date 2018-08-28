@@ -132,7 +132,7 @@
                         </Label>
                         <ComboBox fx:id="ComboElectBus" layoutX="206.0" layoutY="28.0" prefHeight="31.0" prefWidth="446.0" promptText="Elegir tipo de búsqueda..." />
                         <ComboBox fx:id="ComboElectCat" layoutX="158.0" layoutY="81.0" prefHeight="31.0" prefWidth="186.0" promptText="Elegir categoría..." />
-                        <Button fx:id="BtnBuscar" layoutX="683.0" layoutY="95.0" mnemonicParsing="false" onMouseClicked="#BuscarArticulos" text="Buscar">
+                        <Button fx:id="BtnBuscar" layoutX="683.0" layoutY="95.0" mnemonicParsing="false" onMouseClicked="#FillTablesArticulo" text="Buscar">
                            <font>
                               <Font name="System Bold Italic" size="15.0" />
                            </font>
@@ -140,14 +140,14 @@
                         <TextField fx:id="TxtDescripcion" layoutX="158.0" layoutY="126.0" prefHeight="31.0" prefWidth="497.0" />
                         <TableView fx:id="TableContent" layoutX="29.0" layoutY="186.0" prefHeight="262.0" prefWidth="734.0">
                           <columns>
-                            <TableColumn prefWidth="74.0" text="Código" />
-                            <TableColumn prefWidth="106.0" text="Descripción" />
-                              <TableColumn prefWidth="94.0" text="Categoría" />
-                              <TableColumn text="Marca" />
-                              <TableColumn prefWidth="75.0" text="Color" />
-                              <TableColumn prefWidth="154.0" text="Consumo eléctrico" />
-                              <TableColumn prefWidth="76.0" text="Precio" />
-                              <TableColumn prefWidth="74.0" text="Stock" />
+                            <TableColumn fx:id="colCo" prefWidth="74.0" text="Código" />
+                            <TableColumn fx:id="colDe" prefWidth="106.0" text="Descripción" />
+                              <TableColumn fx:id="colCa" prefWidth="94.0" text="Categoría" />
+                              <TableColumn fx:id="colMarca" text="Marca" />
+                              <TableColumn fx:id="colColor" prefWidth="75.0" text="Color" />
+                              <TableColumn fx:id="colConsumo" prefWidth="154.0" text="Consumo eléctrico" />
+                              <TableColumn fx:id="colPrecio" prefWidth="76.0" text="Precio" />
+                              <TableColumn fx:id="colStock" prefWidth="74.0" text="Stock" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>

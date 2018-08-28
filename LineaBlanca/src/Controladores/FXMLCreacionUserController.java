@@ -90,7 +90,7 @@ public class FXMLCreacionUserController extends FXMLLoginController implements I
     public boolean verificarDatos(MouseEvent event){
         if(this.TxtCI==null||this.TxtCI.getText().equals("")||this.TxtFName.getText().equals("")||
                 this.TxtLName.getText().equals("")||this.TxtMail.getText().equals("")||
-                this.TxtUser.getText().equals("")||this.TxtUser.getText().equals("")||
+                this.TxtUser.getText().equals("")||
                 this.TxtPwd.getText().equals("")||this.TxtLocalId.getText().equals(""))
             return false;
         return true;
@@ -102,8 +102,9 @@ public class FXMLCreacionUserController extends FXMLLoginController implements I
             Statement stmt;
             try {
                 stmt = super.getConn().createStatement();
-                ResultSet rs = stmt.executeQuery(query_stmt);
-                this.acceptDialogue();
+                try(ResultSet rs = stmt.executeQuery(query_stmt)){
+                    this.acceptDialogue();
+                }                
             } catch (SQLException ex) {
                 this.errorDialogue();
                 Logger.getLogger(FXMLRegistrarProductosController.class.getName()).log(Level.SEVERE, null, ex);

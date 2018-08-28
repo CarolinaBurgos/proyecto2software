@@ -5,7 +5,9 @@
  */
 package Modelo;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
+
+
 
 /**
  *

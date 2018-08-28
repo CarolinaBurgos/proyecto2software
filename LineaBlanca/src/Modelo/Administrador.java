@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import Modelo.chainofresponsibility.Vendedor;
 import java.util.Date;
 
 /**

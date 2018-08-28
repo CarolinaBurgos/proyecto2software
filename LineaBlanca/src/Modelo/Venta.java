@@ -5,6 +5,8 @@
  */
 package Modelo;
 
+import Modelo.strategy.Pago;
+import Modelo.chainofresponsibility.Vendedor;
 import java.util.ArrayList;
 import java.util.Date;
 

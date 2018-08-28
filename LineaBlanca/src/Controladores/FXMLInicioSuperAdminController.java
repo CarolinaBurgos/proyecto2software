@@ -35,159 +35,159 @@ import javafx.event.EventHandler;
  */
 public class FXMLInicioSuperAdminController extends ConexionesDataBase implements Initializable {
 
-    Connection conn;
-   
-    Escenario sc;
-    JFXSnackbar sb;
-    
-    @FXML
-    
-    AnchorPane rootPane;
+    private Connection conn;
 
-    
+    private Escenario sc;
+    private JFXSnackbar sb;
+
+    @FXML
+
+    private AnchorPane rootPane;
+
     @FXML
     private Button BtnLogOut, permisos, productos, ventas, usuarios, inventario, clientes;
 
-    
-    Stage perm_stage, prod_stage, users_stage,inven_stage, ventas_stage, clientes_stage;
-    
-    int numpet;
+    private Stage perm_stage, prod_stage, users_stage, inven_stage, ventas_stage, clientes_stage;
+
+    private int numpet;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-         ConexionesDataBase.conect();
-         this.conn = super.getConn();         
-         numpet=0;
-         sc = new  Escenario();
-         mostrarPeticiones();
-         perm_stage=new Stage();
-         prod_stage=new Stage();
-         users_stage=new Stage();
-         inven_stage=new Stage();
-         ventas_stage = new Stage();
-         clientes_stage=new Stage();
 
-    }    
-    
-    
+        ConexionesDataBase.conect();
+        this.conn = super.getConn();
+        numpet = 0;
+        sc = new Escenario();
+        mostrarPeticiones();
+        perm_stage = new Stage();
+        prod_stage = new Stage();
+        users_stage = new Stage();
+        inven_stage = new Stage();
+        ventas_stage = new Stage();
+        clientes_stage = new Stage();
+
+    }
+
     @FXML
-     public void logOut(MouseEvent event){
-         
-        sc.cambioEscenaActual(event, Constantes.LOGIN_HEIGHT, Constantes.LOGIN_WIDTH, "/Views/FXMLLogin.fxml"); 
+    public void logOut(MouseEvent event) {
+
+        sc.cambioEscenaActual(event, Constantes.LOGIN_HEIGHT, Constantes.LOGIN_WIDTH, "/Views/FXMLLogin.fxml");
         perm_stage.close();
         prod_stage.close();
         users_stage.close();
         inven_stage.close();
         ventas_stage.close();
-    }   
-          @FXML   
-    public void crearProducto(){
-        
-        prod_stage=sc.abrirNuevaVentana("Administración de Productos", "/Views/FXMLRegistrarProductos.fxml");
+    }
+
+    @FXML
+    public void crearProducto() {
+
+        prod_stage = sc.abrirNuevaVentana("Administración de Productos", "/Views/FXMLRegistrarProductos.fxml");
 
     }
-    
-              @FXML   
-        public void goToClientes(){
-        
-        prod_stage=sc.abrirNuevaVentana("Clientes", "/Views/FXMLBusquedaGenerica.fxml");
+
+    @FXML
+    public void goToClientes() {
+
+        prod_stage = sc.abrirNuevaVentana("Clientes", "/Views/FXMLBusquedaGenerica.fxml");
 
     }
-    
-    
-         @FXML   
-    public void goToUsers(){
-        
-        users_stage=sc.abrirNuevaVentana("Administracion de usuarios", "/Views/FXMLCreacionUser.fxml");
-        
-    }
-        @FXML
-    public void inventario(){
-        
-        inven_stage=sc.abrirNuevaVentana("Búsqueda en inventario", "/Views/FXMLBusquedaGenerica.fxml");
 
-    
+    @FXML
+    public void goToUsers() {
+
+        users_stage = sc.abrirNuevaVentana("Administracion de usuarios", "/Views/FXMLCreacionUser.fxml");
+
     }
-    
-    
-    public List<Peticion> buscarPeticionesPendientes(){
-        
-        List <Peticion> p=new ArrayList<>();
-        try {
-            
-            
-            String query = "SELECT id_peticion, id_empleado, id_venta, aprobacion_pendiente, peticion_aceptada, razon_modificacion\n" +
-                    "	FROM \"LBSASQL\".\"Peticion_modif_venta\"   WHERE aprobacion_pendiente = 'true';";
-            
-            Statement smnt= this.conn.createStatement();
-            ResultSet rs = smnt.executeQuery(query);
-            
-            
-            while (rs.next()){
-            
-                p.add(new Peticion(rs.getInt("id_peticion"),
-                                            rs.getString("id_empleado"),
-                                            rs.getInt("id_venta"),
-                                            rs.getBoolean("aprobacion_pendiente"),
-                                            rs.getBoolean("peticion_aceptada"),
-                                            rs.getString("razon_modificacion")
-                ));
+
+    @FXML
+    public void inventario() {
+
+        inven_stage = sc.abrirNuevaVentana("Búsqueda en inventario", "/Views/FXMLBusquedaGenerica.fxml");
+
+    }
+
+    public List<Peticion> buscarPeticionesPendientes() {
+
+        List<Peticion> p = new ArrayList<>();
+        try (Statement smnt = this.conn.createStatement()) {
+
+            String query = "SELECT id_peticion, id_empleado, id_venta, aprobacion_pendiente, peticion_aceptada, razon_modificacion\n"
+                    + "	FROM \"LBSASQL\".\"Peticion_modif_venta\"   WHERE aprobacion_pendiente = 'true';";
+
+            try (ResultSet rs = smnt.executeQuery(query)) {
+                while (rs.next()) {
+
+                    p.add(new Peticion(rs.getInt("id_peticion"),
+                            rs.getString("id_empleado"),
+                            rs.getInt("id_venta"),
+                            rs.getBoolean("aprobacion_pendiente"),
+                            rs.getBoolean("peticion_aceptada"),
+                            rs.getString("razon_modificacion")
+                    ));
+                }
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-            return p;
-        
+
+        return p;
+
     }
-    
-    private EventHandler abrirPeticiones(JFXSnackbar bar){
-        
-        EventHandler handler=new EventHandler() {
-            
-            
+
+    private EventHandler abrirPeticiones(JFXSnackbar bar) {
+
+        EventHandler handler = new EventHandler() {
+
             @Override
             public void handle(Event event) {
                 bar.unregisterSnackbarContainer(rootPane);
-                perm_stage=sc.abrirNuevaVentana("Peticiones", "/Views/FXMLPermisos.fxml");
+                perm_stage = sc.abrirNuevaVentana("Peticiones", "/Views/FXMLPermisos.fxml");
 
-                    }
+            }
         };
-        
-        
+
         return handler;
-    
-    } 
-    
-    @FXML 
-    public void mostrarPeticiones(){
-        
-        List <Peticion> peticiones = buscarPeticionesPendientes();
-        numpet=peticiones.size();
-        
-        String mensaje="Bienvenido, tiene "+numpet+" peticion(es) pendiente(s)";
-        String accion="Abrir";
-        
+
+    }
+
+    @FXML
+    public void mostrarPeticiones() {
+
+        List<Peticion> peticiones = buscarPeticionesPendientes();
+        numpet = peticiones.size();
+
+        String mensaje = "Bienvenido, tiene " + numpet + " peticion(es) pendiente(s)";
+        String accion = "Abrir";
+
 // configurando notificaciones
         sb = sc.notificacionSnackbar(rootPane);
-        
-        if (numpet>0)sb.show(mensaje,accion, abrirPeticiones(sb));
-         
-        else sb.show("Bienvenido, no tiene ninguna notificación por el momento.",5000);
-    
+
+        if (numpet > 0) {
+            sb.show(mensaje, accion, abrirPeticiones(sb));
+        } else {
+            sb.show("Bienvenido, no tiene ninguna notificación por el momento.", 5000);
+        }
+
     }
-    
-   @FXML
-    public void abrirVentas(MouseEvent event){
-        
-        ventas_stage=sc.abrirNuevaVentana("Ventas", "/Views/FXMLBusquedaGenerica.fxml");
-    
+
+    @FXML
+    public void abrirVentas(MouseEvent event) {
+
+        ventas_stage = sc.abrirNuevaVentana("Ventas", "/Views/FXMLBusquedaGenerica.fxml");
+
     }
-    
-    
-    
+
+    public Escenario getSc() {
+        return sc;
+    }
+
+    public void setSc(Escenario sc) {
+        this.sc = sc;
+    }
+
 }

@@ -64,8 +64,10 @@ public class FXMLRegistrarProductosController extends FXMLLoginController implem
             Statement stmt;
             try {
                 stmt = super.getConn().createStatement();
-                ResultSet rs = stmt.executeQuery(query_stmt);
-                this.acceptDialogue();
+                try(ResultSet rs = stmt.executeQuery(query_stmt)){
+                    this.acceptDialogue();
+                }
+                
             } catch (SQLException ex) {
                 this.errorDialogue();
                 Logger.getLogger(FXMLRegistrarProductosController.class.getName()).log(Level.SEVERE, null, ex);

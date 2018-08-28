@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package Modelo.strategy;
 
 /**
  *
  * @author Angel Moya
  */
-public class PagoCredito {
+public class PagoEfectivo {
     
 }

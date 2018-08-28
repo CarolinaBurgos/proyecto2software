@@ -51,15 +51,15 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.sc=new Escenario();
+        this.sc = new Escenario();
         super.connectar();
     }
 
     @FXML
-    private void volverAlMenuAnterior(MouseEvent e){
-        try{
+    private void volverAlMenuAnterior(MouseEvent e) {
+        try {
             sc.cambioEscenaActual(e, 610, 920, "/Views/FXMLInicioVendedor.fxml");
-        }catch(Exception ex){
+        } catch (Exception ex) {
 
             failure(ex.toString());
         }
@@ -90,9 +90,8 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
                 + "nombre, correo, direccion, fecha_creacion, fecha_ultima_actualizacion, reg_eliminado)\n"
                 + "VALUES (?,? ,?,?, ?, ?);";
 
-        try {
-            //INSERTAR EN CLIENTE
-            PreparedStatement st = super.getConnection().prepareStatement(query);
+        try (PreparedStatement st = super.getConnection().prepareStatement(query)) {
+
             st.setString(1, nombre);
             st.setString(2, mail);
             st.setString(3, direccion);
@@ -101,21 +100,22 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
             st.setBoolean(6, false);
             st.executeUpdate();
 
-            System.out.println("Cliente registrado con éxito");
+            try (Statement smnt = super.getConnection().createStatement()) {
+                try (ResultSet rs = smnt.executeQuery("SELECT id_cliente FROM \"LBSASQL\".\"Cliente\" ORDER BY id_cliente DESC LIMIT 1;")) {
+                    int key;
 
-            Statement smnt = super.getConnection().createStatement();
-            ResultSet rs = smnt.executeQuery("SELECT id_cliente FROM \"LBSASQL\".\"Cliente\" ORDER BY id_cliente DESC LIMIT 1;");
-            int key;
+                    if (rs != null && rs.next()) {
+                        System.out.println("key");
+                        key = rs.getInt(1);
+                        if (numero_identidad.length() == 13) {
+                            insertarClienteContribuyenteReg(numero_identidad, key, nombre, false);
+                        } else if (numero_identidad.length() == 10) {
+                            insertarClienteCiudadano(numero_identidad, key);
+                        } else {
+                            failure("Numero invalido de caracteres");
+                        }
 
-            if (rs != null && rs.next()) {
-                System.out.println("key");
-                key = rs.getInt(1);
-                if (numero_identidad.length() == 13) {
-                    insertarClienteContribuyenteReg(numero_identidad, key, nombre, false);
-                } else if (numero_identidad.length() == 10) {
-                    insertarClienteCiudadano(numero_identidad, key);
-                } else {
-                    failure("Numero invalido de caracteres");
+                    }
                 }
 
             }
@@ -166,19 +166,17 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
         }
 
     }
-  
-    
-    
-    private void failure(String error){
-            Alert failure = sc.alertaGenerica("ERROR", "Problema: \n>>"+error, "Error al realizar la acción.", Alert.AlertType.ERROR);
-            failure.showAndWait();
-    
+
+    private void failure(String error) {
+        Alert failure = sc.alertaGenerica("ERROR", "Problema: \n>>" + error, "Error al realizar la acción.", Alert.AlertType.ERROR);
+        failure.showAndWait();
+
     }
-    private void success(String data){
-        
-            Alert success = sc.alertaGenerica("Cliente agregado", "Cliente agregado: \n>>"+data, "Accion realizada con éxito.", Alert.AlertType.NONE);
-            success.showAndWait();
-    
+
+    private void success(String data) {
+
+        Alert success = sc.alertaGenerica("Cliente agregado", "Cliente agregado: \n>>" + data, "Accion realizada con éxito.", Alert.AlertType.NONE);
+        success.showAndWait();
 
     }
 
