@@ -105,7 +105,7 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
     
       private void startColumns(){
           this.ColID.setCellValueFactory(new PropertyValueFactory<>("id"));
-          this.ColAr.setCellValueFactory(new PropertyValueFactory<>("articulo"));
+          this.ColAr.setCellValueFactory(new PropertyValueFactory<>("articulogit"));
           this.ColCant.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
           this.ColVent.setCellValueFactory(new PropertyValueFactory<>("ventas"));   
           
