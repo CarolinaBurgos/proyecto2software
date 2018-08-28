@@ -88,7 +88,7 @@ public class FXMLCreacionUserController extends FXMLLoginController implements I
     }
     
     public boolean verificarDatos(MouseEvent event){
-        if(this.TxtCI.getText().equals("")||this.TxtFName.getText().equals("")||
+        if(this.TxtCI==null||this.TxtCI.getText().equals("")||this.TxtFName.getText().equals("")||
                 this.TxtLName.getText().equals("")||this.TxtMail.getText().equals("")||
                 this.TxtUser.getText().equals("")||this.TxtUser.getText().equals("")||
                 this.TxtPwd.getText().equals("")||this.TxtLocalId.getText().equals(""))

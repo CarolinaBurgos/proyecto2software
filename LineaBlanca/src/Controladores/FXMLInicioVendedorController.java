@@ -23,6 +23,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -31,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 
@@ -216,8 +219,12 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
      public void addClientes(MouseEvent event){
         
         try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLRegistrarClientes.fxml")));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLRegistrarClientes.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage prod_stage = new Stage();
+            prod_stage.setTitle("Administración de Clientes");
+            prod_stage.setScene(new Scene(root1)); 
+            prod_stage.show();
             }catch(IOException e){
                 Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -225,12 +232,14 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     
     public void logOut(MouseEvent event){
         try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
-                
-            }catch(IOException e){
-                Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, e);
-            }
+            
+            Node n = (Node) event.getSource();
+            n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
+                      
+            
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     }

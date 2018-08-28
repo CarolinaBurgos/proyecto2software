@@ -54,8 +54,9 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
     }
 
     private void setAccordingToPermissions() {
-        if (super.getEmpleado().getPermiso().equalsIgnoreCase("Vendedor")
-                || super.getEmpleado().getPermiso().equalsIgnoreCase("Gerente")) {
+        if (FXMLLoginController.user.getPermiso().equalsIgnoreCase("Vendedor")
+                || FXMLLoginController.user.getPermiso().equalsIgnoreCase("Gerente")) {
+            this.TabUsers = new Tab();
             this.TabUsers.setDisable(true);
         }
     }
