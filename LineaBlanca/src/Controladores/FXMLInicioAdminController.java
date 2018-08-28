@@ -6,6 +6,7 @@
 package Controladores;
 
 import Conexion.ConexionesDataBase;
+import Constantes.Constantes;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -25,6 +26,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class FXMLInicioAdminController extends ConexionesDataBase implements Initializable {
 
+    Escenario sc;
     Connection conn;
     
     @FXML
@@ -40,34 +42,23 @@ public class FXMLInicioAdminController extends ConexionesDataBase implements Ini
     public void initialize(URL url, ResourceBundle rb) {
          ConexionesDataBase.conect();
          this.conn = super.getConn();
+         sc=new Escenario();
     }    
     
      public void logOut(MouseEvent event){
-        try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
-            }catch(IOException e){
-                System.out.println(e);
-            }
+         
+        sc.cambioEscenaActual(event, Constantes.LOGIN_HEIGHT, Constantes.LOGIN_WIDTH, "/Views/FXMLLogin.fxml"); 
     }
      
     
     public void crearProducto(MouseEvent event){
-        try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLRegistrarProductos.fxml")));
-            }catch(IOException e){
-                System.out.println(e);
-            }
+        
+        sc.cambioEscenaActual(event, Constantes.REGP_HEIGHT, Constantes.REGP_WIDTH, "/Views/FXMLRegistrarProductos.fxml");
     }
     
     public void goToUsers(MouseEvent event){
-        try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLBusquedaGenerica.fxml")));
-            }catch(IOException e){
-                System.out.println(e);
-            }
+        
+        sc.cambioEscenaActual(event, Constantes.LOGIN_WIDTH, Constantes.REGP_WIDTH, "/Views/FXMLBusquedaGenerica.fxml");
         
     }
 }

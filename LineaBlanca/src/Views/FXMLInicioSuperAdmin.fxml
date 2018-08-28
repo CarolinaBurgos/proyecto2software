@@ -98,7 +98,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <Button fx:id="clientes" mnemonicParsing="false" prefHeight="71.0" prefWidth="145.0" text="Clientes" />
+            <Button fx:id="clientes" mnemonicParsing="false" onMouseClicked="#goToClientes" prefHeight="71.0" prefWidth="145.0" text="Clientes" />
         </items>
       </SplitPane>
    </children>

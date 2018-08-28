@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import Constantes.Constantes;
 import Modelo.Reporte;
 import Modelo.ReporteArticulo;
 import Modelo.ReporteCliente;
@@ -41,6 +42,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class FXMLInicioGerenteController extends ControlLogin implements Initializable {
 
+    Escenario sc;
      @FXML
     private TextField TxtIDVendedor;
      
@@ -73,6 +75,7 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.connectar();
+        sc=new Escenario();
         conn = this.getConn();
         this.startColumns();
         this.startLabels();
@@ -80,24 +83,13 @@ public class FXMLInicioGerenteController extends ControlLogin implements Initial
     
     
      public void logOut(MouseEvent event){
-         try {
-             Node n = (Node) event.getSource();
-             n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
-         } catch (IOException ex) {
-             Logger.getLogger(FXMLInicioGerenteController.class.getName()).log(Level.SEVERE, null, ex);
-         }            
+        
+        sc.cambioEscenaActual(event, Constantes.LOGIN_HEIGHT, Constantes.LOGIN_WIDTH, "/Views/FXMLLogin.fxml");            
     }
      
       public void doSearch(MouseEvent event){
         
-        try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLBusquedaGenerica.fxml")));
-                
-                
-            }catch(IOException e){
-                Logger.getLogger(FXMLInicioGerenteController.class.getName()).log(Level.SEVERE, null, e);
-            }
+        sc.cambioEscenaActual(event, Constantes.LOGIN_WIDTH, Constantes.REGP_WIDTH, "/Views/FXMLBusquedaGenerica.fxml");
     }
     
       private void startColumns(){

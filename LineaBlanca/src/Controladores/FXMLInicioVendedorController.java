@@ -5,8 +5,8 @@
  */
 package Controladores;
 
+import Constantes.Constantes;
 import Modelo.*;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
@@ -21,8 +21,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -40,6 +38,8 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class FXMLInicioVendedorController extends ControlLogin implements Initializable {
+    
+    Escenario sc;
     private double total,totalConIva;
     @FXML
     private TextField TxtNumFactura,TxtCIclient,TxtCantidad;
@@ -72,7 +72,9 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         super.connectar();
+        sc = new Escenario();
         conn = this.getConn();
         obtenerNumeroFactura();
         this.TxtNombreVendedor.setText(FXMLLoginController.user.getNombre()+" "+FXMLLoginController.user.getApellido());
@@ -195,6 +197,7 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     
    
     public void BuscarCompra(MouseEvent eevent) {
+        
         String query = "SELECT com.id_cliente,art.id_articulo,art.descripcion,art.marca,art.precio_cliente_sin_iva,artven.cantidad_articulo from \"LBSASQL\".\"Compra\" com join \"LBSASQL\".\"Articulos_vendidos\" artven on com.id_compra=artven.id_compra join \"LBSASQL\".\"Articulo\" art on artven.id_articulo=art.id_articulo join \"LBSASQL\".\"Cliente\" cli on com.id_cliente=cli.id_cliente join  \"LBSASQL\".\"Cliente\" clie on clie.id_cliente=com.id_cliente WHERE com.id_compra="+ this.TxtNumFactura.getText()+"";
         try(Statement stmt = conn.createStatement()) {
             ObservableList<ArticuloVenta> row = FXCollections.observableArrayList();
@@ -213,24 +216,16 @@ public class FXMLInicioVendedorController extends ControlLogin implements Initia
     }
     
             
-     public void addClientes(MouseEvent event){
-        
-        try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLRegistrarClientes.fxml")));
-            }catch(IOException e){
-                Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, e);
-            }
-    }
+        public void addClientes(MouseEvent event){
+
+            sc.cambioEscenaActual(event, Constantes.LOGIN_HEIGHT, Constantes.LOGIN_WIDTH, "/Views/FXMLRegistrarClientes.fxml");
+
+       }
     
-    public void logOut(MouseEvent event){
-        try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
-                
-            }catch(IOException e){
-                Logger.getLogger(FXMLInicioVendedorController.class.getName()).log(Level.SEVERE, null, e);
-            }
-    }
+        public void logOut(MouseEvent event){
+
+            sc.cambioEscenaActual(event, Constantes.LOGIN_HEIGHT, Constantes.LOGIN_WIDTH, "/Views/FXMLLogin.fxml"); 
+
+        }
 
     }

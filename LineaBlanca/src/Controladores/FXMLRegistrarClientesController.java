@@ -51,14 +51,14 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.sc=new Escenario();
         super.connectar();
     }    
     
     @FXML
     private void volverAlMenuAnterior(MouseEvent e){
         try{
-            Node n = (Node) e.getSource();
-            n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLInicioVendedor.fxml")));
+            sc.cambioEscenaActual(e, 610, 920, "/Views/FXMLInicioVendedor.fxml");
         }catch(Exception ex){
             failure(ex.toString());
         }
@@ -179,18 +179,13 @@ public class FXMLRegistrarClientesController extends FXMLLoginController impleme
     
     
     private void failure(String error){
-            Alert failure;
-            failure = new Alert (Alert.AlertType.ERROR);
-            failure.setTitle("Error al realizar la acción.");
-            failure.setContentText("Problema: \n>>"+error);
+            Alert failure = sc.alertaGenerica("ERROR", "Problema: \n>>"+error, "Error al realizar la acción.", Alert.AlertType.ERROR);
             failure.showAndWait();
     
     }
     private void success(String data){
-            Alert success;
-            success = new Alert (Alert.AlertType.INFORMATION);
-            success.setTitle("Accion realizada con éxito.");
-            success.setContentText("Cliente agregado: \n>>"+data);
+        
+            Alert success = sc.alertaGenerica("Cliente agregado", "Cliente agregado: \n>>"+data, "Accion realizada con éxito.", Alert.AlertType.NONE);
             success.showAndWait();
     
     }

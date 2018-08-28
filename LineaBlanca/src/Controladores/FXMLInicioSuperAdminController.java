@@ -6,22 +6,16 @@
 package Controladores;
 
 import Conexion.ConexionesDataBase;
+import Constantes.Constantes;
 import Modelo.Peticion;
-import com.jfoenix.controls.JFXButton;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.SplitPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -31,11 +25,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.layout.HBox;
-import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -46,6 +37,8 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
 
     Connection conn;
    
+    Escenario sc;
+    JFXSnackbar sb;
     
     @FXML
     
@@ -56,7 +49,7 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
     private Button BtnLogOut, permisos, productos, ventas, usuarios, inventario, clientes;
 
     
-    Stage perm_stage, prod_stage, users_stage,inven_stage, ventas_stage;
+    Stage perm_stage, prod_stage, users_stage,inven_stage, ventas_stage, clientes_stage;
     
     int numpet;
     /**
@@ -66,82 +59,56 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
     public void initialize(URL url, ResourceBundle rb) {
         
          ConexionesDataBase.conect();
-         this.conn = super.getConn();
-         //inicializando las peticiones pendientes
+         this.conn = super.getConn();         
          numpet=0;
-          List <Peticion> peticiones = buscarPeticionesPendientes();
-         numpet=peticiones.size();
-         
+         sc = new  Escenario();
+         mostrarPeticiones();
          perm_stage=new Stage();
          prod_stage=new Stage();
          users_stage=new Stage();
          inven_stage=new Stage();
-        ventas_stage = new Stage();
+         ventas_stage = new Stage();
+         clientes_stage=new Stage();
 
     }    
     
     
-    
-    
-    
     @FXML
      public void logOut(MouseEvent event){
-        try{
-                
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLLogin.fxml")));
-                perm_stage.close();
-                prod_stage.close();
-                users_stage.close();
-                inven_stage.close();
-                ventas_stage.close();
-            }catch(IOException e){
-                System.out.println(e);
-            }
+         
+        sc.cambioEscenaActual(event, Constantes.LOGIN_HEIGHT, Constantes.LOGIN_WIDTH, "/Views/FXMLLogin.fxml"); 
+        perm_stage.close();
+        prod_stage.close();
+        users_stage.close();
+        inven_stage.close();
+        ventas_stage.close();
     }   
           @FXML   
-    public void crearProducto(MouseEvent event){
-        try{
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLRegistrarProductos.fxml"));
-                    Parent root1 = (Parent) fxmlLoader.load();
-                    prod_stage.setTitle("Administración de Productos");
-                    prod_stage.setScene(new Scene(root1)); 
-                    prod_stage.show();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void crearProducto(){
+        
+        prod_stage=sc.abrirNuevaVentana("Administración de Productos", "/Views/FXMLRegistrarProductos.fxml");
+
     }
+    
+              @FXML   
+        public void goToClientes(){
+        
+        prod_stage=sc.abrirNuevaVentana("Clientes", "/Views/FXMLBusquedaGenerica.fxml");
+
+    }
+    
+    
          @FXML   
-    public void goToUsers(MouseEvent event){
-                try{
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLCreacionUser.fxml"));
-                    Parent root1 = (Parent) fxmlLoader.load();
-                    users_stage.setTitle("Administración de usuarios");
-                    users_stage.setScene(new Scene(root1)); 
-                    users_stage.show();
-                      
-            
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void goToUsers(){
+        
+        users_stage=sc.abrirNuevaVentana("Administracion de usuarios", "/Views/FXMLCreacionUser.fxml");
         
     }
         @FXML
-    public void inventario(MouseEvent event){
+    public void inventario(){
         
-        try{
-            
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLBusquedaGenerica.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            inven_stage.setTitle("Búsqueda");
-            inven_stage.setScene(new Scene(root1)); 
-            inven_stage.show();
-                      
-            
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        inven_stage=sc.abrirNuevaVentana("Búsqueda en inventario", "/Views/FXMLBusquedaGenerica.fxml");
+
     
     }
     
@@ -186,18 +153,8 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
             @Override
             public void handle(Event event) {
                 bar.unregisterSnackbarContainer(rootPane);
-                
-                try{
+                perm_stage=sc.abrirNuevaVentana("Peticiones", "/Views/FXMLPermisos.fxml");
 
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLPermisos.fxml"));
-                    Parent root = (Parent) fxmlLoader.load();
-                    perm_stage.setTitle("Peticiones");
-                    perm_stage.setScene(new Scene(root)); 
-                    perm_stage.show();
-
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
-                }
                     }
         };
         
@@ -209,42 +166,27 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
     @FXML 
     public void mostrarPeticiones(){
         
-                 //configurando notificaciones
-         JFXSnackbar sb= new JFXSnackbar(rootPane);
-         sb.setLayoutX(530);
-         sb.setLayoutY(410);
-         if (numpet>0)sb.show("Bienvenido, tiene "+
-                 numpet
-                 +" peticion(es) de permiso pendiente(s)", 
-                 "Abrir peticiones pendientes",
-                 abrirPeticiones(sb));
+        List <Peticion> peticiones = buscarPeticionesPendientes();
+        numpet=peticiones.size();
+        
+        String mensaje="Bienvenido, tiene "+numpet+" peticion(es) pendiente(s)";
+        String accion="Abrir";
+        
+// configurando notificaciones
+        sb = sc.notificacionSnackbar(rootPane);
+        
+        if (numpet>0)sb.show(mensaje,accion, abrirPeticiones(sb));
          
-         else sb.show("No hay peticiones pendientes",5000);
-    
-    
+        else sb.show("Bienvenido, no tiene ninguna notificación por el momento.",5000);
     
     }
     
    @FXML
     public void abrirVentas(MouseEvent event){
         
-        try{
-            
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/FXMLInicioVendedor.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            ventas_stage.setTitle("Ventas");
-            ventas_stage.setScene(new Scene(root1)); 
-            ventas_stage.show();
-                      
-            
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ventas_stage=sc.abrirNuevaVentana("Ventas", "/Views/FXMLBusquedaGenerica.fxml");
     
     }
-    
-    
-    
     
     
     

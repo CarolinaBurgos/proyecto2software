@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.TranslateTransition;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,6 +60,7 @@ public class FXMLCreacionUserController extends FXMLLoginController implements I
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb);
         prepareSlideMenuAnimation();
+        sc=new Escenario();
     }    
 
     private void prepareSlideMenuAnimation() {

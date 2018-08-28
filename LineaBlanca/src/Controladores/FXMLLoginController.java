@@ -18,13 +18,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import Conexion.*;
 import Modelo.Empleado;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,9 +34,15 @@ import javax.swing.JOptionPane;
  */
 public class FXMLLoginController extends ControlLogin implements Initializable {
     
+    Escenario sc;
     public static Empleado user = null;
 
+    public FXMLLoginController() {
+    }
+
     
+    @FXML 
+    AnchorPane root;
     @FXML
     private TextField lblUser;
     
@@ -54,6 +60,7 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
     @Override
     public void initialize(URL  url, ResourceBundle rb) {
         super.connectar();
+        sc=new Escenario();
         
     }  
     
@@ -76,8 +83,9 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
         System.out.println(state);
         if(state){
             try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLInicio"+requestedUser+".fxml")));
+                
+                sc.cambioEscenaActual(event, 720, 920, "/Views/FXMLInicio"+requestedUser+".fxml");
+             
                 
             }catch(Exception e){
                 System.out.println(e);
@@ -140,4 +148,7 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
     public void errorDialogue(){
         JOptionPane.showMessageDialog(null, "Problema con conexion", "Error de ingreso", JOptionPane.ERROR_MESSAGE);
     }
+    
+    
+    
 }

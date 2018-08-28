@@ -58,6 +58,7 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
         this.conn = super.getConn();
         //sacando las peticiones pendientes
         this.pets = this.buscarPeticionesPendientes();
+        this.sc=new Escenario();
         //mostrando las peticiones en un cuadro
         localControl= new HashMap<>();
         acPeticiones.getPanes().addAll(verPeticiones(pets));
@@ -157,6 +158,7 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
         int rem=removerPeticion(btn.getText());
         Alert alerta= modificarPeticion(rem,true);
         alerta.showAndWait();
+        
     
     }
     
@@ -189,13 +191,15 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
     
     public Alert modificarPeticion(int id, boolean fue_aceptado){
     
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        String header="";
+        Alert alert;
+        
+        String header;
         
         if (fue_aceptado==true) header="aceptada";
         else header="rechazada";
         
         try {
+            
             String peticion_query="UPDATE \"LBSASQL\".\"Peticion_modif_venta\"\n" +
                     "	SET aprobacion_pendiente=?, peticion_aceptada=?,"
                     + "fecha_actualizacion=current_timestamp\n" +
@@ -205,15 +209,14 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
             st.setBoolean(2, fue_aceptado);
             st.executeUpdate();
             
-            alert.setTitle("Estado de la peticion");
-            alert.setContentText("Los cambios han ido guardados con éxito.");
-            alert.setHeaderText("La peticion ha sido "+header);
+            
+            alert=sc.alertaGenerica("Estado de la peticion", "Los cambios han ido guardados con éxito.", "La peticion ha sido "+header, Alert.AlertType.INFORMATION);
             
             return alert;
         } catch (SQLException ex) {
             Logger.getLogger(FXMLPermisosController.class.getName()).log(Level.SEVERE, null, ex);
-            alert.setTitle("SQL Exception");
-            alert.setContentText(ex.toString());
+            alert=sc.alertaGenerica("SQL Exception", ex.toString(), "Excepcion", Alert.AlertType.ERROR);
+            alert.showAndWait();
         }
         return alert;
     }

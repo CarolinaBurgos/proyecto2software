@@ -14,7 +14,7 @@ import java.sql.Connection;
  */
 public class ControlLogin  extends ConexionesDataBase{
     
-    private Connection conn; 
+    protected Connection conn; 
     
     public ControlLogin(){
         

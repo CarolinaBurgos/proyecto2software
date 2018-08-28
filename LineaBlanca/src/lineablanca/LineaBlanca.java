@@ -20,7 +20,7 @@ import javafx.stage.StageStyle;
  * @author user
  */
 public class LineaBlanca extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
        

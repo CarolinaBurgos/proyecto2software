@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import Constantes.Constantes;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -31,7 +32,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author user
  */
-public class FXMLBusquedaGenericaController extends FXMLLoginController implements Initializable {
+public class FXMLBusquedaGenericaController extends ControlBusqueda implements Initializable {
 
     @FXML
     private ComboBox ComboElectBus;
@@ -49,13 +50,15 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        super.initialize(url, rb);
+        this.connectar();
         this.setAccordingToPermissions();
+        this.permiso=FXMLLoginController.user.getPermiso();
+        this.sc=new Escenario();
     }
 
     private void setAccordingToPermissions() {
-        if (super.getEmpleado().getPermiso().equalsIgnoreCase("Vendedor")
-                || super.getEmpleado().getPermiso().equalsIgnoreCase("Gerente")) {
+        if (permiso.equalsIgnoreCase("Vendedor")
+                || permiso.equalsIgnoreCase("Gerente")) {
             this.TabUsers.setDisable(true);
         }
     }
@@ -73,7 +76,7 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
     public void BuscarClientes(MouseEvent event) {
 
         String query_llamada_procedure = "SELECT * From BuscarEmpleadoUsuario('" + this.ClientesCI.getText() + "')";
-        try (Statement state = super.getConnection().createStatement()) {
+        try (Statement state = this.conn.createStatement()) {
             try (ResultSet rs = state.executeQuery(query_llamada_procedure);) {
                 this.FillTables(rs);
                 if (rs.next()) {
@@ -97,7 +100,7 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
         Statement state;
         String query_llamada_procedure = "SELECT * FROM BuscarEmpleadoUsuario('" + this.UserCI.getText() + "')";
         try {
-            state = super.getConnection().createStatement();
+            state = this.conn.createStatement();
             ResultSet rs = state.executeQuery(query_llamada_procedure);
             this.FillTables(rs);
             if (rs.next()) {
@@ -121,7 +124,7 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
     public void BuscarArticulos(MouseEvent event) {
 
         String query_llamada_procedure = this.definirBusqueda(event);
-        try (Statement state = super.getConnection().createStatement()) {
+        try (Statement state = this.conn.createStatement()) {
             try (ResultSet rs = state.executeQuery(query_llamada_procedure);) {
                 this.FillTables(rs);
                 if (rs.next()) {
@@ -155,14 +158,10 @@ public class FXMLBusquedaGenericaController extends FXMLLoginController implemen
     }
 
     public void salir(MouseEvent event) {
-        try {
-            String view = returnView(this.getEmpleado().getPermiso());
-
-            Node n = (Node) event.getSource();
-            n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLInicio" + view + ".fxml")));
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLBusquedaGenericaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+            String view = returnView(this.permiso);
+            sc.cambioEscenaActual(event, Constantes.AD_HEIGHT, Constantes.AD_WIDTH, "/Views/FXMLInicio" + view + ".fxml");
+  
 
     }
 

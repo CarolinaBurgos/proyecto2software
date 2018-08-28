@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import Constantes.Constantes;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -13,7 +14,6 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,7 +37,7 @@ public class FXMLRegistrarProductosController extends FXMLLoginController implem
     /**
      * Initializes the controller class.
      */
-    
+   
     @FXML
     private TextArea AreaDesc;
     @FXML
@@ -104,14 +104,11 @@ public class FXMLRegistrarProductosController extends FXMLLoginController implem
     public void goBack(MouseEvent event){
         String permiso="Admin";
         if(super.getEmpleado().getPermiso().startsWith("super"))
+            
             permiso = "SuperAdmin";
         
-        try{
-                Node n = (Node) event.getSource();
-                n.getScene().setRoot(FXMLLoader.load(getClass().getResource("/Views/FXMLOInicio"+permiso+".fxml")));
-            }catch(IOException e){
-                System.out.println(e);
-            }
+        this.sc.cambioEscenaActual(event, Constantes.AD_HEIGHT, Constantes.AD_WIDTH, "/Views/FXMLOInicio"+permiso+".fxml");
+           
     }
     
 }
