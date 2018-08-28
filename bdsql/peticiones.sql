@@ -7,12 +7,12 @@ CREATE TABLE "LBSASQL"."Peticion_modif_venta"
     id_peticion serial NOT NULL,
     id_empleado char(10) NOT NULL,
     id_venta int NOT NULL,
-    aprobacion_pendiente boolean NOT NULL,
-    peticion_aceptada boolean NOT NULL,
+    aprobacion_pendiente boolean NOT NULL default 'true',
+    peticion_aceptada boolean NOT NULL default 'false',
 	razon_modificacion varchar(250) NOT NULL,
     fecha_actualizacion timestamp without time zone DEFAULT current_timestamp NOT NULL,
     fecha_envio_peticion timestamp without time zone DEFAULT current_timestamp NOT NULL,
-
+	es_valida boolean NOT NULL default 'true',
     PRIMARY KEY (id_peticion),
 	CONSTRAINT id_venta FOREIGN KEY (id_venta)
         REFERENCES "LBSASQL"."Compra" (id_compra) MATCH SIMPLE
@@ -32,5 +32,5 @@ COMMENT ON TABLE "LBSASQL"."Peticion_modif_venta"
     IS 'Aqui se almacenan las peticiones de modificacion de venta';
 	
 --valor de prueba	
-	INSERT INTO "LBSASQL"."Peticion_modif_venta"(id_empleado, id_venta, aprobacion_pendiente, peticion_aceptada, razon_modificacion, fecha_actualizacion, fecha_envio_peticion)
-	VALUES ('234757689' , 1, true, false,'Se facturo un producto erroneo y se cobro $100 extra al cliente', current_timestamp, current_timestamp);
+	INSERT INTO "LBSASQL"."Peticion_modif_venta"(id_empleado, id_venta, razon_modificacion, fecha_actualizacion, fecha_envio_peticion)
+	VALUES ('234757689' , 1, 'Se facturo un producto erroneo y se cobro $100 extra al cliente', current_timestamp, current_timestamp);
