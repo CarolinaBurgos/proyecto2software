@@ -42,14 +42,14 @@ public class FXMLBusquedaGenericaController extends ControlBusqueda implements I
 
     @FXML
     private ComboBox ComboElectBus;
-    private ComboBox ComboElectCat;
-    private Button BtnBuscar, BtnSalir;
-    private TextField TxtNombre, TxtDescripcion;
-    private TableView TableContent;
-    private Tab TabArticulos, TabUsers, TabClientes;
-    private TextField UserCI, UserNombre, UserCargo, TxtUser, UserMail, UserDireccion, UserApellido;
-    private Button ClientesBuscar;
-    private TextField ClientesCI, ClientesNombre, ClientesDireccion, ClientesMail;
+    @FXML private ComboBox ComboElectCat;
+    @FXML private Button BtnBuscar, BtnSalir;
+    @FXML private TextField TxtNombre, TxtDescripcion;
+    @FXML private TableView TableContent;
+    @FXML private Tab TabArticulos, TabUsers, TabClientes;
+    @FXML private TextField UserCI, UserNombre, UserCargo, TxtUser, UserMail, UserDireccion, UserApellido;
+    @FXML private Button ClientesBuscar;
+    @FXML private TextField ClientesCI, ClientesNombre, ClientesDireccion, ClientesMail;
     @FXML
     private TableColumn<Articulo, String> colCo, colDe, colCa, colMarca, colConsumo,
             colColor, colPrecio, colStock;

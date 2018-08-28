@@ -110,7 +110,7 @@ public class FXMLInicioSuperAdminController extends ConexionesDataBase implement
 
     }
 
-    public List<Peticion> buscarPeticionesPendientes() {
+    private List<Peticion> buscarPeticionesPendientes() {
 
         List<Peticion> p = new ArrayList<>();
         try (Statement smnt = this.conn.createStatement()) {

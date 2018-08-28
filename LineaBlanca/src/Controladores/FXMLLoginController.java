@@ -81,9 +81,11 @@ public class FXMLLoginController extends ControlLogin implements Initializable {
 
         if (state) {
             try {
-
-                sc.cambioEscenaActual(event, 720, 920, "/Views/FXMLInicio" + requestedUser + ".fxml");
-
+                if(requestedUser.equals("Vendedor")){
+                    sc.cambioEscenaActual(event, 620, 920, "/Views/FXMLInicio" + requestedUser + ".fxml");
+                }else{
+                sc.cambioEscenaActual(event, 620, 740, "/Views/FXMLInicio" + requestedUser + ".fxml");
+                }
             } catch (Exception e) {
                 Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, e);
             }

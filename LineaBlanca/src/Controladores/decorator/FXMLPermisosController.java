@@ -217,4 +217,32 @@ public class FXMLPermisosController extends FXMLInicioSuperAdminController imple
         return alert;
     }
 
+    private List<Peticion> buscarPeticionesPendientes() {
+
+        List<Peticion> p = new ArrayList<>();
+        try (Statement smnt = this.conn.createStatement()) {
+
+            String query = "SELECT id_peticion, id_empleado, id_venta, aprobacion_pendiente, peticion_aceptada, razon_modificacion\n"
+                    + "	FROM \"LBSASQL\".\"Peticion_modif_venta\"   WHERE aprobacion_pendiente = 'true';";
+
+            try (ResultSet rs = smnt.executeQuery(query)) {
+                while (rs.next()) {
+
+                    p.add(new Peticion(rs.getInt("id_peticion"),
+                            rs.getString("id_empleado"),
+                            rs.getInt("id_venta"),
+                            rs.getBoolean("aprobacion_pendiente"),
+                            rs.getBoolean("peticion_aceptada"),
+                            rs.getString("razon_modificacion")
+                    ));
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLInicioSuperAdminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return p;
+
+    }
 }
